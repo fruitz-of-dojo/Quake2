@@ -1352,7 +1352,11 @@ void CL_RequestNextDownload (void)
 			while (precache_tex < numtexinfo) {
 				char fn[MAX_OSPATH];
 
+#if defined (__APPLE__) || defined (MACOSX)
+				snprintf(fn, MAX_OSPATH, "textures/%s.wal", map_surfaces[precache_tex++].rname);
+#else
 				sprintf(fn, "textures/%s.wal", map_surfaces[precache_tex++].rname);
+#endif /* __APPLE__ || MACOSX */
 				if (!CL_CheckOrDownloadFile(fn))
 					return; // started a download
 			}
@@ -1828,7 +1832,9 @@ void CL_Shutdown(void)
 	
 	if (isdown)
 	{
+#if !defined (__APPLE__) && !defined (MACOSX)
 		printf ("recursive shutdown\n");
+#endif /* !__APPLE__ && !MACOSX */
 		return;
 	}
 	isdown = true;
@@ -1837,7 +1843,9 @@ void CL_Shutdown(void)
 
 	CDAudio_Shutdown ();
 	S_Shutdown();
+
 	IN_Shutdown ();
+
 	VID_Shutdown();
 }
 

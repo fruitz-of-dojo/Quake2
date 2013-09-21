@@ -195,7 +195,11 @@ void SV_SpawnServer (char *server, char *spawnpoint, server_state_t serverstate,
 	strcpy (sv.configstrings[CS_NAME], server);
 	if (Cvar_VariableValue ("deathmatch"))
 	{
+#if defined (__APPLE__) || defined (MACOSX)
+		snprintf(sv.configstrings[CS_AIRACCEL], MAX_QPATH, "%g", sv_airaccelerate->value);
+#else
 		sprintf(sv.configstrings[CS_AIRACCEL], "%g", sv_airaccelerate->value);
+#endif /* __APPLE__ || MACOSX */
 		pm_airaccelerate = sv_airaccelerate->value;
 	}
 	else

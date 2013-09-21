@@ -20,8 +20,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "g_local.h"
 #include "m_player.h"
 
-void ClientUserinfoChanged (edict_t *ent, char *userinfo);
-
 void SP_misc_teleporter_dest (edict_t *ent);
 
 //
@@ -53,7 +51,11 @@ static void SP_FixCoopSpots (edict_t *self)
 		VectorSubtract(self->s.origin, spot->s.origin, d);
 		if (VectorLength(d) < 384)
 		{
+#if defined (__APPLE__) || defined (MACOSX)
+			if ((!self->targetname) || strcasecmp(self->targetname, spot->targetname) != 0)
+#else
 			if ((!self->targetname) || stricmp(self->targetname, spot->targetname) != 0)
+#endif /* __APPLE__ || MACOSX */
 			{
 //				gi.dprintf("FixCoopSpots changed %s at %s targetname from %s to %s\n", self->classname, vtos(self->s.origin), self->targetname, spot->targetname);
 				self->targetname = spot->targetname;
@@ -71,7 +73,11 @@ static void SP_CreateCoopSpots (edict_t *self)
 {
 	edict_t	*spot;
 
+#if defined (__APPLE__) || defined (MACOSX)
+	if(strcasecmp(level.mapname, "security") == 0)
+#else
 	if(stricmp(level.mapname, "security") == 0)
+#endif /* __APPLE__ || MACOSX */
 	{
 		spot = G_Spawn();
 		spot->classname = "info_player_coop";
@@ -109,7 +115,11 @@ void SP_info_player_start(edict_t *self)
 {
 	if (!coop->value)
 		return;
+#if defined (__APPLE__) || defined (MACOSX)
+	if(strcasecmp(level.mapname, "security") == 0)
+#else
 	if(stricmp(level.mapname, "security") == 0)
+#endif /* __APPLE__ || MACOSX */
 	{
 		// invoke one of our gross, ugly, disgusting hacks
 		self->think = SP_CreateCoopSpots;
@@ -142,6 +152,22 @@ void SP_info_player_coop(edict_t *self)
 		return;
 	}
 
+#if defined (__APPLE__) || defined (MACOSX)
+	if((strcasecmp(level.mapname, "jail2") == 0)   ||
+	   (strcasecmp(level.mapname, "jail4") == 0)   ||
+	   (strcasecmp(level.mapname, "mine1") == 0)   ||
+	   (strcasecmp(level.mapname, "mine2") == 0)   ||
+	   (strcasecmp(level.mapname, "mine3") == 0)   ||
+	   (strcasecmp(level.mapname, "mine4") == 0)   ||
+	   (strcasecmp(level.mapname, "lab") == 0)     ||
+	   (strcasecmp(level.mapname, "boss1") == 0)   ||
+	   (strcasecmp(level.mapname, "fact3") == 0)   ||
+	   (strcasecmp(level.mapname, "biggun") == 0)  ||
+	   (strcasecmp(level.mapname, "space") == 0)   ||
+	   (strcasecmp(level.mapname, "command") == 0) ||
+	   (strcasecmp(level.mapname, "power2") == 0) ||
+	   (strcasecmp(level.mapname, "strike") == 0))
+#else
 	if((stricmp(level.mapname, "jail2") == 0)   ||
 	   (stricmp(level.mapname, "jail4") == 0)   ||
 	   (stricmp(level.mapname, "mine1") == 0)   ||
@@ -156,6 +182,7 @@ void SP_info_player_coop(edict_t *self)
 	   (stricmp(level.mapname, "command") == 0) ||
 	   (stricmp(level.mapname, "power2") == 0) ||
 	   (stricmp(level.mapname, "strike") == 0))
+#endif /* __APPLE__ || MACOSX */
 	{
 		// invoke one of our gross, ugly, disgusting hacks
 		self->think = SP_FixCoopSpots;
@@ -543,6 +570,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	self->client->invincible_framenum = 0;
 	self->client->breather_framenum = 0;
 	self->client->enviro_framenum = 0;
+	self->flags &= ~FL_POWER_ARMOR;
 
 	// clear inventory
 	memset(self->client->pers.inventory, 0, sizeof(self->client->pers.inventory));
@@ -686,7 +714,7 @@ void SaveClientData (void)
 			continue;
 		game.clients[i].pers.health = ent->health;
 		game.clients[i].pers.max_health = ent->max_health;
-		game.clients[i].pers.powerArmorActive = (ent->flags & FL_POWER_ARMOR);
+		game.clients[i].pers.savedFlags = (ent->flags & (FL_GODMODE|FL_NOTARGET|FL_POWER_ARMOR));
 		if (coop->value)
 			game.clients[i].pers.score = ent->client->resp.score;
 	}
@@ -696,8 +724,7 @@ void FetchClientEntData (edict_t *ent)
 {
 	ent->health = ent->client->pers.health;
 	ent->max_health = ent->client->pers.max_health;
-	if (ent->client->pers.powerArmorActive)
-		ent->flags |= FL_POWER_ARMOR;
+	ent->flags |= ent->client->pers.savedFlags;
 	if (coop->value)
 		ent->client->resp.score = ent->client->pers.score;
 }
@@ -1217,11 +1244,18 @@ void ClientBeginDeathmatch (edict_t *ent)
 	// locate ent at a spawn point
 	PutClientInServer (ent);
 
-	// send effect
-	gi.WriteByte (svc_muzzleflash);
-	gi.WriteShort (ent-g_edicts);
-	gi.WriteByte (MZ_LOGIN);
-	gi.multicast (ent->s.origin, MULTICAST_PVS);
+	if (level.intermissiontime)
+	{
+		MoveClientToIntermission (ent);
+	}
+	else
+	{
+		// send effect
+		gi.WriteByte (svc_muzzleflash);
+		gi.WriteShort (ent-g_edicts);
+		gi.WriteByte (MZ_LOGIN);
+		gi.multicast (ent->s.origin, MULTICAST_PVS);
+	}
 
 	gi.bprintf (PRINT_HIGH, "%s entered the game\n", ent->client->pers.netname);
 
@@ -1332,6 +1366,11 @@ void ClientUserinfoChanged (edict_t *ent, char *userinfo)
 //ZOID
 		gi.configstring (CS_PLAYERSKINS+playernum, va("%s\\%s", ent->client->pers.netname, s) );
 
+//ZOID
+	// set player name field (used in id_state view)
+	gi.configstring (CS_GENERAL+playernum, ent->client->pers.netname);
+//ZOID
+
 	// fov
 	if (deathmatch->value && ((int)dmflags->value & DF_FIXED_FOV))
 	{
@@ -1376,6 +1415,11 @@ qboolean ClientConnect (edict_t *ent, char *userinfo)
 
 	// check to see if they are on the banned IP list
 	value = Info_ValueForKey (userinfo, "ip");
+	if (SV_FilterPacket(value)) {
+		Info_SetValueForKey(userinfo, "rejmsg", "Banned.");
+		return false;
+	}
+
 
 	// check for a password
 	value = Info_ValueForKey (userinfo, "password");
@@ -1395,7 +1439,7 @@ qboolean ClientConnect (edict_t *ent, char *userinfo)
 		// clear the respawning variables
 //ZOID -- force team join
 		ent->client->resp.ctf_team = -1;
-		ent->client->resp.id_state = false; 
+		ent->client->resp.id_state = true; 
 //ZOID
 		InitClientResp (ent->client);
 		if (!game.autosaved || !ent->client->pers.weapon)

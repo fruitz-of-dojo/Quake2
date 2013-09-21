@@ -345,7 +345,7 @@ BoxOnPlaneSide
 Returns 1, 2, or 1 + 2
 ==================
 */
-#if !id386
+#if !id386 || defined __linux__
 int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	float	dist1, dist2;
@@ -1053,7 +1053,11 @@ char	*va(char *format, ...)
 	static char		string[1024];
 	
 	va_start (argptr, format);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (string, 1024, format,argptr);
+#else
 	vsprintf (string, format,argptr);
+#endif /* __APPLE__ ||ÊMACOSX */
 	va_end (argptr);
 
 	return string;	
@@ -1223,9 +1227,18 @@ int Q_strcasecmp (char *s1, char *s2)
 
 void Com_sprintf (char *dest, int size, char *fmt, ...)
 {
-	int		len;
 	va_list		argptr;
-	char	bigbuffer[0x10000];
+        
+#if defined (__APPLE__) || defined (MACOSX)
+
+	va_start (argptr,fmt);
+	vsnprintf (dest,size,fmt,argptr);
+	va_end (argptr);
+
+#else
+
+	int		len;
+	char		bigbuffer[0x10000];
 
 	va_start (argptr,fmt);
 	len = vsprintf (bigbuffer,fmt,argptr);
@@ -1233,6 +1246,8 @@ void Com_sprintf (char *dest, int size, char *fmt, ...)
 	if (len >= size)
 		Com_Printf ("Com_sprintf: overflow of %i in %i\n", len, size);
 	strncpy (dest, bigbuffer, size-1);
+
+#endif /* __APPLE__ ||ÊMACOSX */
 }
 
 /*

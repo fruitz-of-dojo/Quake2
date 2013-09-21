@@ -102,9 +102,19 @@ void GL_ScreenShot_f (void)
 	byte		*buffer;
 	char		picname[80]; 
 	char		checkname[MAX_OSPATH];
-	int			i, c, temp;
+	int		i;
 	FILE		*f;
+#if !defined (__APPLE__) && !defined (MACOSX)
+	int		c, temp;
+#else
+	unsigned int	myRow;
+	byte *			myBottom = NULL;
+	byte *			myTop = NULL;
+	byte			myStore;
 
+	extern qboolean	GLimp_Screenshot (char *, unsigned char *, unsigned int, unsigned int, unsigned int);
+#endif /* !__APPLE__ && !MACOSX */        
+        
 	// create the scrnshots directory if it doesn't exist
 	Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot", ri.FS_Gamedir());
 	Sys_Mkdir (checkname);
@@ -112,7 +122,12 @@ void GL_ScreenShot_f (void)
 // 
 // find a file name to save it to 
 // 
+
+#if defined (__APPLE__) || defined (MACOSX)
+	strcpy(picname,"quake00.png");
+#else
 	strcpy(picname,"quake00.tga");
+#endif /* __APPLE__ || MACOSX */
 
 	for (i=0 ; i<=99 ; i++) 
 	{ 
@@ -130,6 +145,42 @@ void GL_ScreenShot_f (void)
 		return;
  	}
 
+#if defined (__APPLE__) || defined (MACOSX)
+	
+	myRow	= vid.width * 3;
+	buffer	= malloc (myRow * vid.height);
+
+	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+
+	// mirror the buffer [only vertical]:
+	myTop		= buffer;
+	myBottom	= buffer + myRow * (vid.height - 1);
+
+	while (myTop < myBottom)
+	{
+		for (i = 0; i < myRow; i++)
+		{
+			myStore		= myTop[i];
+			myTop[i]	= myBottom[i];
+			myBottom[i]	= myStore;
+		}
+		
+		myTop		+= myRow;
+		myBottom	-= myRow;
+	}
+
+	if (GLimp_Screenshot (checkname, buffer, vid.width, vid.height, myRow) != 0)
+	{
+		ri.Con_Printf (PRINT_ALL, "Wrote %s\n", picname);
+	}
+	else
+	{
+		ri.Con_Printf (PRINT_ALL, "Failed to write %s\n", picname);
+	}
+
+	free (buffer);
+
+#else
 
 	buffer = malloc(vid.width*vid.height*3 + 18);
 	memset (buffer, 0, 18);
@@ -157,6 +208,8 @@ void GL_ScreenShot_f (void)
 
 	free (buffer);
 	ri.Con_Printf (PRINT_ALL, "Wrote %s\n", picname);
+
+#endif /* __APPLE__ || MACOSX */
 } 
 
 /*

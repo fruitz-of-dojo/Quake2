@@ -224,7 +224,11 @@ model_t *Mod_ForName (char *name, qboolean crash)
 	//
 	// load the file
 	//
+#if defined (__APPLE__) || defined (MACOSX)
+	modfilelen = ri.FS_LoadFile (mod->name, (void **) &buf);
+#else
 	modfilelen = ri.FS_LoadFile (mod->name, &buf);
+#endif /* __APPLE__ || MACOSX */
 	if (!buf)
 	{
 		if (crash)

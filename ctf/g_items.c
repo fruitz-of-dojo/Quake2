@@ -2211,7 +2211,11 @@ tank commander's head
 		"item_flag_team1",
 		CTFPickup_Flag,
 		NULL,
+#if defined (__APPLE__) || defined (MACOSX)
+		(void *) CTFDrop_Flag, //Should this be null if we don't want players to drop it manually?
+#else
 		CTFDrop_Flag, //Should this be null if we don't want players to drop it manually?
+#endif /* __APPLE__ || MACOSX */
 		NULL,
 		"ctf/flagtk.wav",
 		"players/male/flag1.md2", EF_FLAG1,
@@ -2234,7 +2238,11 @@ tank commander's head
 		"item_flag_team2",
 		CTFPickup_Flag,
 		NULL,
+#if defined (__APPLE__) || defined (MACOSX)
+		(void *) CTFDrop_Flag, //Should this be null if we don't want players to drop it manually?
+#else
 		CTFDrop_Flag, //Should this be null if we don't want players to drop it manually?
+#endif /* __APPLE__ || MACOSX */
 		NULL,
 		"ctf/flagtk.wav",
 		"players/male/flag2.md2", EF_FLAG2,

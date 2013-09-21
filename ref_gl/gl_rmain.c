@@ -20,11 +20,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 // r_main.c
 #include "gl_local.h"
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+#include <ctype.h>
+
+extern void strlwr (char *theString);
+
+#endif /* __APPLE__ ||ÊMACOSX */
+
 void R_Clear (void);
 
 viddef_t	vid;
 
 refimport_t	ri;
+
+#if !defined (__APPLE__) && !defined (MACOSX)
+
+int GL_TEXTURE0, GL_TEXTURE1;
+
+#endif /* !__APPLE__ && !MACOSX */
 
 model_t		*r_worldmodel;
 
@@ -95,6 +109,9 @@ cvar_t	*gl_particle_att_c;
 cvar_t	*gl_ext_swapinterval;
 cvar_t	*gl_ext_palettedtexture;
 cvar_t	*gl_ext_multitexture;
+#if defined (__APPLE__) || defined (MACOSX)
+cvar_t	*gl_arb_multitexture;
+#endif /* __APPLE__ || MACOSX */
 cvar_t	*gl_ext_pointparameters;
 cvar_t	*gl_ext_compiled_vertex_array;
 
@@ -875,6 +892,8 @@ void	R_SetGL2D (void)
 	qglColor4f (1,1,1,1);
 }
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 static void GL_DrawColoredStereoLinePair( float r, float g, float b, float y )
 {
 	qglColor3f( r, g, b );
@@ -916,6 +935,7 @@ static void GL_DrawStereoPattern( void )
 	}
 }
 
+#endif /* !__APPLE__ && !MACOSX */
 
 /*
 ====================
@@ -994,7 +1014,11 @@ void R_Register( void )
 	gl_modulate = ri.Cvar_Get ("gl_modulate", "1", CVAR_ARCHIVE );
 	gl_log = ri.Cvar_Get( "gl_log", "0", 0 );
 	gl_bitdepth = ri.Cvar_Get( "gl_bitdepth", "0", 0 );
+#if defined (__APPLE__) || defined (MACOSX)
+	gl_mode = ri.Cvar_Get( "gl_mode", "0", CVAR_ARCHIVE );
+#else
 	gl_mode = ri.Cvar_Get( "gl_mode", "3", CVAR_ARCHIVE );
+#endif /* __APPLE__ || MACOSX */
 	gl_lightmap = ri.Cvar_Get ("gl_lightmap", "0", 0);
 	gl_shadows = ri.Cvar_Get ("gl_shadows", "0", CVAR_ARCHIVE );
 	gl_dynamic = ri.Cvar_Get ("gl_dynamic", "1", 0);
@@ -1020,9 +1044,23 @@ void R_Register( void )
 	gl_vertex_arrays = ri.Cvar_Get( "gl_vertex_arrays", "0", CVAR_ARCHIVE );
 
 	gl_ext_swapinterval = ri.Cvar_Get( "gl_ext_swapinterval", "1", CVAR_ARCHIVE );
+
+        // <AWE> because of a problem with current [MacOS X v10.1.2, 5P48] Nvidia drivers:
+#if defined (__APPLE__) || defined (MACOSX)
+	gl_ext_palettedtexture = ri.Cvar_Get( "gl_ext_palettedtexture", "0", CVAR_ARCHIVE );
+#else
 	gl_ext_palettedtexture = ri.Cvar_Get( "gl_ext_palettedtexture", "1", CVAR_ARCHIVE );
+#endif /* __APPLE__ || MACOSX */
+
+#if defined (__APPLE__) || defined (MACOSX)
+	gl_ext_multitexture = ri.Cvar_Get( "gl_ext_multitexture", "0", CVAR_ARCHIVE );
+	gl_arb_multitexture = ri.Cvar_Get( "gl_arb_multitexture", "0", CVAR_ARCHIVE );
+#else
 	gl_ext_multitexture = ri.Cvar_Get( "gl_ext_multitexture", "1", CVAR_ARCHIVE );
+#endif /* __APPLE__ || MACOSX */
+
 	gl_ext_pointparameters = ri.Cvar_Get( "gl_ext_pointparameters", "1", CVAR_ARCHIVE );
+
 	gl_ext_compiled_vertex_array = ri.Cvar_Get( "gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE );
 
 	gl_drawbuffer = ri.Cvar_Get( "gl_drawbuffer", "GL_BACK", 0 );
@@ -1100,7 +1138,53 @@ qboolean R_SetMode (void)
 R_Init
 ===============
 */
+
+#if defined (__APPLE__) || defined (MACOSX)
+
+// <AWE> the plain "strstr ()" method is just crap! It's ambiguous!
+
+qboolean	GL_ExtensionSupported (const char *theExtension)
+{
+    int				myLength;
+    const char *	myCurPos;
+    char *			myExtStart;
+	char *			myTerminator;
+
+    if (theExtension == NULL || gl_config.extensions_string == NULL || strchr (theExtension, ' ') != NULL  || *theExtension == '\0')
+    {
+        return (false);
+    }
+
+    myCurPos = gl_config.extensions_string;
+    myLength = strlen(theExtension);
+    
+    while (1)
+    {
+        myExtStart = strstr (myCurPos, theExtension);
+		
+        if (myExtStart == NULL)
+        {
+            break;
+        }
+
+        myTerminator = myExtStart + myLength;
+		
+        if ((myExtStart == myCurPos || *(myExtStart - 1) == ' ') && (*myTerminator == ' ' || *myTerminator == '\0'))
+        {
+            return (true);
+        }
+
+        myCurPos = myTerminator;
+    }
+
+    return (false);
+}
+
+qboolean R_Init( void *hinstance, void *hWnd )
+#else
 int R_Init( void *hinstance, void *hWnd )
+#endif /* __APPLE__ ||ÊMACOSX */
+
 {	
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -1217,6 +1301,10 @@ int R_Init( void *hinstance, void *hWnd )
 		ri.Cvar_Set( "scr_drawall", "0" );
 	}
 
+#ifdef __linux__
+	ri.Cvar_SetValue( "gl_finish", 1 );
+#endif
+
 	// MCD has buffering issues
 	if ( gl_config.renderer == GL_RENDERER_MCD )
 	{
@@ -1243,9 +1331,13 @@ int R_Init( void *hinstance, void *hWnd )
 	/*
 	** grab extensions
 	*/
-#ifdef WIN32
+#if defined (__APPLE__) || defined (MACOSX)
+        if (GL_ExtensionSupported ("GL_EXT_compiled_vertex_array") == true ||
+            GL_ExtensionSupported ("GL_SGI_compiled_vertex_array") == true)
+#else
 	if ( strstr( gl_config.extensions_string, "GL_EXT_compiled_vertex_array" ) || 
 		 strstr( gl_config.extensions_string, "GL_SGI_compiled_vertex_array" ) )
+#endif /* __APPLE__ || MACOSX */
 	{
 		ri.Con_Printf( PRINT_ALL, "...enabling GL_EXT_compiled_vertex_array\n" );
 		qglLockArraysEXT = ( void * ) qwglGetProcAddress( "glLockArraysEXT" );
@@ -1256,6 +1348,75 @@ int R_Init( void *hinstance, void *hWnd )
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_compiled_vertex_array not found\n" );
 	}
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+#if GL_ARB_multisample 
+        if (GL_ExtensionSupported ("GL_ARB_multisample") == true)
+        {
+            GLint		myValue;
+            extern long		gGLCurARBMultiSamples;
+            
+            qglGetIntegerv (GL_SAMPLES_ARB, &myValue);
+//            gGLCurARBMultiSamples = myValue;
+//            ri.Cvar_SetValue ("gl_arb_multisample", (float) myValue);
+            qglGetIntegerv (GL_SAMPLE_BUFFERS_ARB, &myValue);
+            if (myValue > 0 && gGLCurARBMultiSamples > 1)
+            {
+                qglEnable (GL_MULTISAMPLE_ARB);
+            }
+            ri.Con_Printf (PRINT_ALL, "...enabling GL_ARB_multisample\n");
+        }
+        else
+        {
+            extern long		gGLMaxARBMultiSampleBuffers;
+            extern long		gGLCurARBMultiSamples;
+        
+            gGLMaxARBMultiSampleBuffers = 0;
+            gGLCurARBMultiSamples = 0;
+
+            ri.Con_Printf (PRINT_ALL, "...GL_ARB_multisample not found\n");
+        }
+#endif /* GL_ARB_multisample */
+
+#if GL_EXT_texture_filter_anisotropic
+        if (GL_ExtensionSupported ("GL_EXT_texture_filter_anisotropic" ) == true)
+        {
+            qglEnableAnisotropicTexture (true);
+            ri.Con_Printf (PRINT_ALL, "...enabling GL_EXT_texture_filter_anisotropic\n");
+        }
+        else
+        {
+            qglEnableAnisotropicTexture (false);
+            ri.Con_Printf (PRINT_ALL, "...GL_EXT_texture_filter_anisotropic not found\n");
+        }
+#endif /* GL_EXT_texture_filter_anisotropic */
+        {
+            extern qboolean	gGLTruformAvailable;
+            
+            gGLTruformAvailable = false;
+            if (GL_ExtensionSupported ("GL_ATIX_pn_triangles") == true)
+            {
+                qglPNTrianglesiATIX  = qwglGetProcAddress ("qglPNTrianglesiATIX");
+                qglPNTrianglesfATIX  = qwglGetProcAddress ("qglPNTrianglesfATIX");
+                
+                if (qglPNTrianglesiATIX != NULL && qglPNTrianglesfATIX != NULL)
+                {
+                    ri.Con_Printf (PRINT_ALL, "...enabling GL_ATIX_pn_triangles\n");
+                    gGLTruformAvailable = true;
+                }
+            }
+            
+            if (gGLTruformAvailable == false)
+            {
+                qglPNTrianglesiATIX = NULL;
+                qglPNTrianglesfATIX = NULL;
+                
+                ri.Con_Printf (PRINT_ALL, "...GL_ATIX_pn_triangles not found\n");
+            }
+        }
+#endif /* __APPLE__ || MACOSX */
+
+#ifdef _WIN32
 	if ( strstr( gl_config.extensions_string, "WGL_EXT_swap_control" ) )
 	{
 		qwglSwapIntervalEXT = ( BOOL (WINAPI *)(int)) qwglGetProcAddress( "wglSwapIntervalEXT" );
@@ -1265,6 +1426,7 @@ int R_Init( void *hinstance, void *hWnd )
 	{
 		ri.Con_Printf( PRINT_ALL, "...WGL_EXT_swap_control not found\n" );
 	}
+#endif
 
 	if ( strstr( gl_config.extensions_string, "GL_EXT_point_parameters" ) )
 	{
@@ -1284,8 +1446,34 @@ int R_Init( void *hinstance, void *hWnd )
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_point_parameters not found\n" );
 	}
 
-	if ( strstr( gl_config.extensions_string, "GL_EXT_paletted_texture" ) && 
-		 strstr( gl_config.extensions_string, "GL_EXT_shared_texture_palette" ) )
+#ifdef __linux__
+	if ( strstr( gl_config.extensions_string, "3DFX_set_global_palette" ))
+	{
+		if ( gl_ext_palettedtexture->value )
+		{
+			ri.Con_Printf( PRINT_ALL, "...using 3DFX_set_global_palette\n" );
+			qgl3DfxSetPaletteEXT = ( void ( APIENTRY * ) (GLuint *) )qwglGetProcAddress( "gl3DfxSetPaletteEXT" );
+			qglColorTableEXT = Fake_glColorTableEXT;
+		}
+		else
+		{
+			ri.Con_Printf( PRINT_ALL, "...ignoring 3DFX_set_global_palette\n" );
+		}
+	}
+	else
+	{
+		ri.Con_Printf( PRINT_ALL, "...3DFX_set_global_palette not found\n" );
+	}
+#endif
+
+	if ( !qglColorTableEXT &&
+#if defined (__APPLE__) || defined (MACOSX)
+                GL_ExtensionSupported ("GL_EXT_paletted_texture") == true &&
+                GL_ExtensionSupported ("GL_EXT_shared_texture_palette") == true )
+#else
+		strstr( gl_config.extensions_string, "GL_EXT_paletted_texture" ) && 
+		strstr( gl_config.extensions_string, "GL_EXT_shared_texture_palette" ) )
+#endif /* __APPLE__ ||ÊMACOSX */
 	{
 		if ( gl_ext_palettedtexture->value )
 		{
@@ -1302,13 +1490,64 @@ int R_Init( void *hinstance, void *hWnd )
 		ri.Con_Printf( PRINT_ALL, "...GL_EXT_shared_texture_palette not found\n" );
 	}
 
-	if ( strstr( gl_config.extensions_string, "GL_SGIS_multitexture" ) )
+#if ENABLE_MULTI_TEXTURE_EXT
+#if defined (__APPLE__) || defined (MACOSX)
+	if (GL_ExtensionSupported ("GL_ARB_multitexture") == true)
+	{
+                GLint	myMaxTextureUnits;
+    
+                glGetIntegerv (GL_MAX_TEXTURE_UNITS_ARB, &myMaxTextureUnits);
+                ri.Con_Printf( PRINT_ALL, "...found %d texture units\n", myMaxTextureUnits);
+		if (myMaxTextureUnits > 1 && gl_arb_multitexture != NULL && gl_arb_multitexture->value)
+#else
+	if ( strstr( gl_config.extensions_string, "GL_ARB_multitexture" ) )
 	{
 		if ( gl_ext_multitexture->value )
+#endif /* __APPLE__ || MACOSX */
+		{
+			ri.Con_Printf( PRINT_ALL, "...using GL_ARB_multitexture\n" );
+			qglMTexCoord2fSGIS = ( void * ) qwglGetProcAddress( "glMultiTexCoord2fARB" );
+			qglActiveTextureARB = ( void * ) qwglGetProcAddress( "glActiveTextureARB" );
+			qglClientActiveTextureARB = ( void * ) qwglGetProcAddress( "glClientActiveTextureARB" );
+#if !defined (__APPLE__) && !defined (MACOSX)
+			GL_TEXTURE0 = GL_TEXTURE0_ARB;
+			GL_TEXTURE1 = GL_TEXTURE1_ARB;
+#endif /* !__APPLE__ && !MACOSX */
+		}
+		else
+		{
+			ri.Con_Printf( PRINT_ALL, "...ignoring GL_ARB_multitexture\n" );
+		}
+	}
+	else
+	{
+		ri.Con_Printf( PRINT_ALL, "...GL_ARB_multitexture not found\n" );
+	}
+#endif /* ENABLE_MULTI_TEXTURE_EXT */
+
+#if defined (__APPLE__) && defined (MACOSX)
+	if (GL_ExtensionSupported (gl_config.extensions_string, "GL_SGIS_multitexture") == true)
+#else
+	if ( strstr( gl_config.extensions_string, "GL_SGIS_multitexture" ) )
+#endif /* __APPLE__ || MACOSX */
+	{
+		if ( qglActiveTextureARB )
+		{
+			ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n" );
+		}
+#if defined (__APPLE__) || defined (MACOSX)
+		else if ( gl_arb_multitexture->value )
+#else
+		else if ( gl_ext_multitexture->value )
+#endif /* __APPLE__ || MACOSX */
 		{
 			ri.Con_Printf( PRINT_ALL, "...using GL_SGIS_multitexture\n" );
 			qglMTexCoord2fSGIS = ( void * ) qwglGetProcAddress( "glMTexCoord2fSGIS" );
 			qglSelectTextureSGIS = ( void * ) qwglGetProcAddress( "glSelectTextureSGIS" );
+#if !defined (__APPLE__) && !defined (MACOSX)
+			GL_TEXTURE0 = GL_TEXTURE0_SGIS;
+			GL_TEXTURE1 = GL_TEXTURE1_SGIS;
+#endif /* !__APPLE__ && !MACOSX */
 		}
 		else
 		{
@@ -1319,7 +1558,6 @@ int R_Init( void *hinstance, void *hWnd )
 	{
 		ri.Con_Printf( PRINT_ALL, "...GL_SGIS_multitexture not found\n" );
 	}
-#endif
 
 	GL_SetDefaultState();
 
@@ -1338,6 +1576,10 @@ int R_Init( void *hinstance, void *hWnd )
 	err = qglGetError();
 	if ( err != GL_NO_ERROR )
 		ri.Con_Printf (PRINT_ALL, "glGetError() = 0x%x\n", err);
+
+#if defined (__APPLE__) || defined (MACOSX)
+        return (0);
+#endif /* __APPLE__ ||ÊMACOSX */
 }
 
 /*
@@ -1671,7 +1913,11 @@ void Sys_Error (char *error, ...)
 	char		text[1024];
 
 	va_start (argptr, error);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (text, 1024, error, argptr);
+#else
 	vsprintf (text, error, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	ri.Sys_Error (ERR_FATAL, "%s", text);
@@ -1683,7 +1929,11 @@ void Com_Printf (char *fmt, ...)
 	char		text[1024];
 
 	va_start (argptr, fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (text, 1024, fmt, argptr);
+#else
 	vsprintf (text, fmt, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	ri.Con_Printf (PRINT_ALL, "%s", text);

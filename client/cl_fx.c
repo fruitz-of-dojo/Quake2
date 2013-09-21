@@ -2183,7 +2183,11 @@ void CL_AddParticles (void)
 {
 	cparticle_t		*p, *next;
 	float			alpha;
+#if defined (__APPLE__) || defined (MACOSX)
+	float			time = 0.0f, time2;
+#else
 	float			time, time2;
+#endif /* __APPLE__ || MACOSX */
 	vec3_t			org;
 	int				color;
 	cparticle_t		*active, *tail;

@@ -49,15 +49,15 @@ void GL_SetTexturePalette( unsigned palette[256] )
 	int i;
 	unsigned char temptable[768];
 
-	for ( i = 0; i < 256; i++ )
-	{
-		temptable[i*3+0] = ( palette[i] >> 0 ) & 0xff;
-		temptable[i*3+1] = ( palette[i] >> 8 ) & 0xff;
-		temptable[i*3+2] = ( palette[i] >> 16 ) & 0xff;
-	}
-
 	if ( qglColorTableEXT && gl_ext_palettedtexture->value )
 	{
+		for ( i = 0; i < 256; i++ )
+		{
+			temptable[i*3+0] = ( palette[i] >> 0 ) & 0xff;
+			temptable[i*3+1] = ( palette[i] >> 8 ) & 0xff;
+			temptable[i*3+2] = ( palette[i] >> 16 ) & 0xff;
+		}
+
 		qglColorTableEXT( GL_SHARED_TEXTURE_PALETTE_EXT,
 						   GL_RGB,
 						   256,
@@ -69,22 +69,22 @@ void GL_SetTexturePalette( unsigned palette[256] )
 
 void GL_EnableMultitexture( qboolean enable )
 {
-	if ( !qglSelectTextureSGIS )
+	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
 		return;
 
 	if ( enable )
 	{
-		GL_SelectTexture( GL_TEXTURE1_SGIS );
+		GL_SelectTexture( GL_TEXTURE1 );
 		qglEnable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
 	}
 	else
 	{
-		GL_SelectTexture( GL_TEXTURE1_SGIS );
+		GL_SelectTexture( GL_TEXTURE1 );
 		qglDisable( GL_TEXTURE_2D );
 		GL_TexEnv( GL_REPLACE );
 	}
-	GL_SelectTexture( GL_TEXTURE0_SGIS );
+	GL_SelectTexture( GL_TEXTURE0 );
 	GL_TexEnv( GL_REPLACE );
 }
 
@@ -92,23 +92,34 @@ void GL_SelectTexture( GLenum texture )
 {
 	int tmu;
 
-	if ( !qglSelectTextureSGIS )
+	if ( !qglSelectTextureSGIS && !qglActiveTextureARB )
 		return;
 
-	if ( texture == GL_TEXTURE0_SGIS )
+	if ( texture == GL_TEXTURE0 )
+	{
 		tmu = 0;
+	}
 	else
+	{
 		tmu = 1;
+	}
 
 	if ( tmu == gl_state.currenttmu )
+	{
 		return;
+	}
 
 	gl_state.currenttmu = tmu;
 
-	if ( tmu == 0 )
-		qglSelectTextureSGIS( GL_TEXTURE0_SGIS );
-	else
-		qglSelectTextureSGIS( GL_TEXTURE1_SGIS );
+	if ( qglSelectTextureSGIS )
+	{
+		qglSelectTextureSGIS( texture );
+	}
+	else if ( qglActiveTextureARB )
+	{
+		qglActiveTextureARB( texture );
+		qglClientActiveTextureARB( texture );
+	}
 }
 
 void GL_TexEnv( GLenum mode )
@@ -137,7 +148,7 @@ void GL_Bind (int texnum)
 void GL_MBind( GLenum target, int texnum )
 {
 	GL_SelectTexture( target );
-	if ( target == GL_TEXTURE0_SGIS )
+	if ( target == GL_TEXTURE0 )
 	{
 		if ( gl_state.currenttextures[0] == texnum )
 			return;
@@ -640,7 +651,11 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 		}
 	}
 	else if (targa_header.image_type==10) {   // Runlength encoded RGB images
+#if defined (__APPLE__) || defined (MACOSX)
+		unsigned char red = 0x00,green = 0x00,blue = 0x00,alphabyte = 0x00,packetHeader,packetSize,j;
+#else
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
+#endif /* __APPLE__ || MACOSX */
 		for(row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; ) {
@@ -1162,9 +1177,15 @@ static qboolean IsPowerOf2( int value )
 }
 */
 
+#if defined (__APPLE__) || defined (MACOSX)
+static unsigned		trans[512*256];
+#endif /* __APPLE__ || MACOSX */
+
 qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboolean is_sky )
 {
+#if !defined (__APPLE__) && !defined (MACOSX)
 	unsigned	trans[512*256];
+#endif /* !__APPLE__ && !MACOSX */
 	int			i, s;
 	int			p;
 
@@ -1220,6 +1241,10 @@ qboolean GL_Upload8 (byte *data, int width, int height,  qboolean mipmap, qboole
 
 		return GL_Upload32 (trans, width, height, mipmap);
 	}
+
+#if defined (__APPLE__) || defined (MACOSX)
+        return (0);
+#endif /* __APPLE__ || MACOSX */
 }
 
 
@@ -1511,7 +1536,11 @@ void	GL_InitImages (void)
 
 	if ( qglColorTableEXT )
 	{
+#if defined (__APPLE__) || defined (MACOSX)
+		ri.FS_LoadFile( "pics/16to8.dat", (void **) &gl_state.d_16to8table );
+#else
 		ri.FS_LoadFile( "pics/16to8.dat", &gl_state.d_16to8table );
+#endif /* __APPLE__ ||ÊMACOSX */
 		if ( !gl_state.d_16to8table )
 			ri.Sys_Error( ERR_FATAL, "Couldn't load pics/16to8.pcx");
 	}
@@ -1557,13 +1586,14 @@ GL_ShutdownImages
 void	GL_ShutdownImages (void)
 {
 	int		i;
-	image_t	*image;
+	image_t		*image;
 
 	for (i=0, image=gltextures ; i<numgltextures ; i++, image++)
 	{
 		if (!image->registration_sequence)
 			continue;		// free image_t slot
 		// free it
+
 		qglDeleteTextures (1, &image->texnum);
 		memset (image, 0, sizeof(*image));
 	}

@@ -246,9 +246,17 @@ void SVCmd_WriteIP_f (void)
 	game = gi.cvar("game", "", 0);
 
 	if (!*game->string)
+#if defined (__APPLE__) || defined (MACOSX)
+		snprintf (name, MAX_OSPATH, "%s/listip.cfg", GAMEVERSION);
+#else
 		sprintf (name, "%s/listip.cfg", GAMEVERSION);
+#endif /* __APPLE__ ||ÊMACOSX */
 	else
+#if defined (__APPLE__) || defined (MACOSX)
+		snprintf (name, MAX_OSPATH, "%s/listip.cfg", game->string);
+#else
 		sprintf (name, "%s/listip.cfg", game->string);
+#endif /* __APPLE__ ||ÊMACOSX */
 
 	gi.cprintf (NULL, PRINT_HIGH, "Writing %s.\n", name);
 

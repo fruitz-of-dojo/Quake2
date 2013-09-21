@@ -173,7 +173,11 @@ static int CheckPowerArmor (edict_t *ent, vec3_t point, vec3_t normal, int damag
 	gclient_t	*client;
 	int			save;
 	int			power_armor_type;
+#if defined (__APPLE__) || defined (MACOSX)
+        int			index = 0;
+#else
 	int			index;
+#endif /* __APPLE__ || MACOSX */
 	int			damagePerCell;
 	int			pa_te_type;
 	int			power;

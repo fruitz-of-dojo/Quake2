@@ -466,9 +466,13 @@ extern	spawn_temp_t	st;
 extern	int	sm_meat_index;
 extern	int	snd_fry;
 
+#if !defined(__APPLE__) && !defined(MACOSX)
+
 extern	int	jacket_armor_index;
 extern	int	combat_armor_index;
 extern	int	body_armor_index;
+
+#endif // !__APPLE__ && !MACOSX
 
 
 // means of death
@@ -536,6 +540,8 @@ extern	cvar_t	*instantweap;
 extern	cvar_t	*password;
 extern	cvar_t	*g_select_empty;
 extern	cvar_t	*dedicated;
+
+extern	cvar_t	*filterban;
 
 extern	cvar_t	*sv_gravity;
 extern	cvar_t	*sv_maxvelocity;
@@ -767,6 +773,7 @@ void InitClientPersistant (gclient_t *client);
 void InitClientResp (gclient_t *client);
 void InitBodyQue (void);
 void ClientBeginServerFrame (edict_t *ent);
+void ClientUserinfoChanged (edict_t *ent, char *userinfo);
 
 //
 // g_player.c
@@ -819,6 +826,10 @@ void SaveClientData (void);
 void FetchClientEntData (edict_t *ent);
 void EndDMLevel (void);
 
+//
+// g_svcmds.c
+//
+qboolean SV_FilterPacket (char *from);
 
 //============================================================================
 
@@ -845,7 +856,7 @@ typedef struct
 	// values saved and restored from edicts when changing levels
 	int			health;
 	int			max_health;
-	qboolean	powerArmorActive;
+	int			savedFlags;
 
 	int			selected_item;
 	int			inventory[MAX_ITEMS];
@@ -879,6 +890,7 @@ typedef struct
 	float		ctf_flagsince;
 	float		ctf_lastfraggedcarrier;
 	qboolean	id_state;
+	float		lastidtime;
 	qboolean	voted; // for elections
 	qboolean	ready;
 	qboolean	admin;

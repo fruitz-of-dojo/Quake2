@@ -19,6 +19,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "client.h"
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+#include <ctype.h>
+
+#endif /* __APPLE__ || MACOSX */
+
 /*
 
 key up events are sent even if in console mode
@@ -61,7 +67,12 @@ keyname_t keynames[] =
 	{"LEFTARROW", K_LEFTARROW},
 	{"RIGHTARROW", K_RIGHTARROW},
 
+#if defined(__APPLE__) || defined(MACOSX)
+	{"OPTION", K_ALT},
+#else
 	{"ALT", K_ALT},
+#endif /* APPLE || MACOSX */
+
 	{"CTRL", K_CTRL},
 	{"SHIFT", K_SHIFT},
 	
@@ -85,9 +96,22 @@ keyname_t keynames[] =
 	{"HOME", K_HOME},
 	{"END", K_END},
 
+#if defined (__APPLE__) || defined (MACOSX)
+	{"F13", K_F13},
+	{"F14", K_F14},
+	{"F15", K_F15},
+        {"CAPSLOCK", K_CAPSLOCK},
+        {"NUMLOCK", K_NUMLOCK},
+        {"COMMAND", K_COMMAND},
+#endif /* __APPLE__ ||ÊMACOSX */
+
 	{"MOUSE1", K_MOUSE1},
 	{"MOUSE2", K_MOUSE2},
 	{"MOUSE3", K_MOUSE3},
+#if defined (__APPLE__) || defined (MACOSX)
+	{"MOUSE4", K_MOUSE4},
+	{"MOUSE5", K_MOUSE5},
+#endif /* __APPLE__ || MACOSX */
 
 	{"JOY1", K_JOY1},
 	{"JOY2", K_JOY2},
@@ -127,6 +151,25 @@ keyname_t keynames[] =
 	{"AUX31", K_AUX31},
 	{"AUX32", K_AUX32},
 
+#if defined (__APPLE__) || defined (MACOSX)
+        {"KP_0", K_KP_INS},
+        {"KP_1", K_KP_END},
+        {"KP_2", K_KP_DOWNARROW},
+        {"KP_3", K_KP_PGDN},
+        {"KP_4", K_KP_LEFTARROW},
+        {"KP_5", K_KP_5},
+        {"KP_6", K_KP_RIGHTARROW},
+        {"KP_7", K_KP_HOME},
+        {"KP_8", K_KP_UPARROW},
+        {"KP_9", K_KP_PGUP},
+        {"KP_SLASH", K_KP_SLASH},
+	{"KP_MINUS", K_KP_MINUS},
+	{"KP_PLUS", K_KP_PLUS},
+	{"KP_MULT", K_KP_MULT},
+	{"KP_ENTER", K_KP_ENTER},
+	{"KP_DOT", K_KP_DEL},
+        {"KP_EQUAL", K_KP_EQUAL},
+#else
 	{"KP_HOME",			K_KP_HOME },
 	{"KP_UPARROW",		K_KP_UPARROW },
 	{"KP_PGUP",			K_KP_PGUP },
@@ -142,6 +185,7 @@ keyname_t keynames[] =
 	{"KP_SLASH",		K_KP_SLASH },
 	{"KP_MINUS",		K_KP_MINUS },
 	{"KP_PLUS",			K_KP_PLUS },
+#endif /* __APPLE__ || MACOSX */
 
 	{"MWHEELUP", K_MWHEELUP },
 	{"MWHEELDOWN", K_MWHEELDOWN },
@@ -238,9 +282,21 @@ void Key_Console (int key)
 	case K_KP_DEL:
 		key = '.';
 		break;
+#if defined (__APPLE__) || defined (MACOSX)
+        case K_KP_MULT:
+                key = '*';
+                break;
+        case K_KP_EQUAL:
+                key = '=';
+                break;
+#endif /* __APPLE__ || MACOSX */
 	}
 
+#if defined (__APPLE__) || defined (MACOSX)
+	if ( ( toupper( key ) == 'V' && keydown[K_COMMAND] ) ||
+#else
 	if ( ( toupper( key ) == 'V' && keydown[K_CTRL] ) ||
+#endif /* __APPLE__ || MACOSX */
 		 ( ( ( key == K_INS ) || ( key == K_KP_INS ) ) && keydown[K_SHIFT] ) )
 	{
 		char *cbd;
@@ -457,6 +513,19 @@ int Key_StringToKeynum (char *str)
 	if (!str[1])
 		return str[0];
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+        if (!Q_strcasecmp (str, "ALT"))
+        {
+            for (kn=keynames ; kn->name ; kn++)
+            {
+                if (!Q_strcasecmp ("OPTION", kn->name))
+                    return (kn->keynum);
+            }
+        }
+
+#endif /* APPLE || MACOSX */
+
 	for (kn=keynames ; kn->name ; kn++)
 	{
 		if (!Q_strcasecmp(str,kn->name))
@@ -522,6 +591,15 @@ void Key_SetBinding (int keynum, char *binding)
 	strcpy (new, binding);
 	new[l] = 0;
 	keybindings[keynum] = new;	
+
+#if defined (__APPLE__) || defined (MACOSX)
+        if (keynum == K_F12)
+        {
+            extern void	IN_SetF12EjectEnabled (qboolean theState);
+            
+            IN_SetF12EjectEnabled (keybindings[keynum][0] == 0x00);
+        }
+#endif /* __APPLE__ ||ÊMACOSX */
 }
 
 /*
@@ -678,6 +756,10 @@ void Key_Init (void)
 	consolekeys[K_KP_PGUP] = true;
 	consolekeys[K_PGDN] = true;
 	consolekeys[K_KP_PGDN] = true;
+#if defined (__APPLE__) || defined (MACOSX)
+        consolekeys[K_KP_MULT] = true;
+        consolekeys[K_KP_EQUAL] = true;
+#endif /* __APPLE__ || MACOSX */
 	consolekeys[K_SHIFT] = true;
 	consolekeys[K_INS] = true;
 	consolekeys[K_KP_INS] = true;
@@ -753,6 +835,16 @@ void Key_Event (int key, qboolean down, unsigned time)
 	// update auto-repeat status
 	if (down)
 	{
+#if defined (__APPLE__) || defined (MACOSX)
+                extern int	Sys_CheckSpecialKeys (int theKey);
+            
+                // don't accept key down events at the loading screen!
+                if (cls.disable_screen == true || Sys_CheckSpecialKeys (key) != 0)
+                {
+                    return;
+                }
+#endif /* __APPLE__ || MACOSX */
+
 		key_repeats[key]++;
 		if (key != K_BACKSPACE 
 			&& key != K_PAUSE 
@@ -784,7 +876,8 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	// any key during the attract mode will bring up the menu
-	if (cl.attractloop && cls.key_dest != key_menu)
+	if (cl.attractloop && cls.key_dest != key_menu &&
+		!(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
 	// menu key is hardcoded, so the user can never unbind it

@@ -99,8 +99,12 @@ void UpdateChaseCam(edict_t *ent)
 		char s[1024];
 
 		ent->client->update_chase = false;
+#if defined (__APPLE__) || defined (MACOSX)
+		snprintf(s, 1024, "xv 0 yb -68 string2 \"Chasing %s\"", targ->client->pers.netname);
+#else
 		sprintf(s, "xv 0 yb -68 string2 \"Chasing %s\"",
 			targ->client->pers.netname);
+#endif /* __APPLE__ || MACOSX */
 		gi.WriteByte (svc_layout);
 		gi.WriteString (s);
 		gi.unicast(ent, false);

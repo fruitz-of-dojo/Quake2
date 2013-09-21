@@ -124,7 +124,11 @@ Writes a delta update of an entity_state_t list to the message.
 */
 void SV_EmitPacketEntities (client_frame_t *from, client_frame_t *to, sizebuf_t *msg)
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	entity_state_t	*oldent = NULL, *newent = NULL;
+#else
 	entity_state_t	*oldent, *newent;
+#endif /* __APPLE__ ||ÊMACOSX */
 	int		oldindex, newindex;
 	int		oldnum, newnum;
 	int		from_num_entities;

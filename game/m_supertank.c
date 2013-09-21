@@ -67,6 +67,68 @@ void supertank_reattack1(edict_t *self);
 
 mframe_t supertank_frames_stand []=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL }
+#else
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
@@ -127,6 +189,7 @@ mframe_t supertank_frames_stand []=
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t	supertank_move_stand = {FRAME_stand_1, FRAME_stand_60, supertank_frames_stand, NULL};
 	
@@ -138,6 +201,26 @@ void supertank_stand (edict_t *self)
 
 mframe_t supertank_frames_run [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_run, 12,	TreadSound },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL },
+	{ ai_run, 12,	NULL }
+#else
 	ai_run, 12,	TreadSound,
 	ai_run, 12,	NULL,
 	ai_run, 12,	NULL,
@@ -156,6 +239,7 @@ mframe_t supertank_frames_run [] =
 	ai_run, 12,	NULL,
 	ai_run, 12,	NULL,
 	ai_run, 12,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t	supertank_move_run = {FRAME_forwrd_1, FRAME_forwrd_18, supertank_frames_run, NULL};
 
@@ -166,6 +250,26 @@ mmove_t	supertank_move_run = {FRAME_forwrd_1, FRAME_forwrd_18, supertank_frames_
 
 mframe_t supertank_frames_forward [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_walk, 4,	TreadSound },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL },
+	{ ai_walk, 4,	NULL }
+#else
 	ai_walk, 4,	TreadSound,
 	ai_walk, 4,	NULL,
 	ai_walk, 4,	NULL,
@@ -184,6 +288,7 @@ mframe_t supertank_frames_forward [] =
 	ai_walk, 4,	NULL,
 	ai_walk, 4,	NULL,
 	ai_walk, 4,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t	supertank_move_forward = {FRAME_forwrd_1, FRAME_forwrd_18, supertank_frames_forward, NULL};
 
@@ -207,6 +312,26 @@ void supertank_run (edict_t *self)
 
 mframe_t supertank_frames_turn_right [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	TreadSound },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	TreadSound,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -225,11 +350,32 @@ mframe_t supertank_frames_turn_right [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_turn_right = {FRAME_right_1, FRAME_right_18, supertank_frames_turn_right, supertank_run};
 
 mframe_t supertank_frames_turn_left [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	TreadSound },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	TreadSound,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -248,39 +394,87 @@ mframe_t supertank_frames_turn_left [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_turn_left = {FRAME_left_1, FRAME_left_18, supertank_frames_turn_left, supertank_run};
 
 
 mframe_t supertank_frames_pain3 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_pain3 = {FRAME_pain3_9, FRAME_pain3_12, supertank_frames_pain3, supertank_run};
 
 mframe_t supertank_frames_pain2 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_pain2 = {FRAME_pain2_5, FRAME_pain2_8, supertank_frames_pain2, supertank_run};
 
 mframe_t supertank_frames_pain1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_pain1 = {FRAME_pain1_1, FRAME_pain1_4, supertank_frames_pain1, supertank_run};
 
 mframe_t supertank_frames_death1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	BossExplode }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -305,11 +499,32 @@ mframe_t supertank_frames_death1 [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	BossExplode
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t supertank_move_death = {FRAME_death_1, FRAME_death_24, supertank_frames_death1, supertank_dead};
 
 mframe_t supertank_frames_backward[] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_walk, 0,	TreadSound },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL },
+	{ ai_walk, 0,	NULL }
+#else
 	ai_walk, 0,	TreadSound,
 	ai_walk, 0,	NULL,
 	ai_walk, 0,	NULL,
@@ -328,22 +543,61 @@ mframe_t supertank_frames_backward[] =
 	ai_walk, 0,	NULL,
 	ai_walk, 0,	NULL,
 	ai_walk, 0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t	supertank_move_backward = {FRAME_backwd_1, FRAME_backwd_18, supertank_frames_backward, NULL};
 
 mframe_t supertank_frames_attack4[]=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t supertank_move_attack4 = {FRAME_attak4_1, FRAME_attak4_6, supertank_frames_attack4, supertank_run};
 
 mframe_t supertank_frames_attack3[]=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -371,11 +625,41 @@ mframe_t supertank_frames_attack3[]=
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t supertank_move_attack3 = {FRAME_attak3_1, FRAME_attak3_27, supertank_frames_attack3, supertank_run};
 
 mframe_t supertank_frames_attack2[]=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	NULL },
+	{ ai_charge,	0,	supertankRocket },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	supertankRocket },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	supertankRocket },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_charge,	0,	NULL,
 	ai_charge,	0,	NULL,
 	ai_charge,	0,	NULL,
@@ -403,23 +687,48 @@ mframe_t supertank_frames_attack2[]=
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_attack2 = {FRAME_attak2_1, FRAME_attak2_27, supertank_frames_attack2, supertank_run};
 
 mframe_t supertank_frames_attack1[]=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge,	0,	supertankMachineGun },
+	{ ai_charge,	0,	supertankMachineGun },
+	{ ai_charge,	0,	supertankMachineGun },
+	{ ai_charge,	0,	supertankMachineGun },
+	{ ai_charge,	0,	supertankMachineGun },
+	{ ai_charge,	0,	supertankMachineGun },
+#else
 	ai_charge,	0,	supertankMachineGun,
 	ai_charge,	0,	supertankMachineGun,
 	ai_charge,	0,	supertankMachineGun,
 	ai_charge,	0,	supertankMachineGun,
 	ai_charge,	0,	supertankMachineGun,
 	ai_charge,	0,	supertankMachineGun,
-
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_attack1 = {FRAME_attak1_1, FRAME_attak1_6, supertank_frames_attack1, supertank_reattack1};
 
 mframe_t supertank_frames_end_attack1[]=
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -434,6 +743,7 @@ mframe_t supertank_frames_end_attack1[]=
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t supertank_move_end_attack1 = {FRAME_attak1_7, FRAME_attak1_20, supertank_frames_end_attack1, supertank_run};
 

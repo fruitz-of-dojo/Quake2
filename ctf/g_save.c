@@ -164,7 +164,7 @@ void InitGame (void)
 	// latched vars
 	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
-	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
+        gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
 
 	maxclients = gi.cvar ("maxclients", "4", CVAR_SERVERINFO | CVAR_LATCH);
 	deathmatch = gi.cvar ("deathmatch", "0", CVAR_LATCH);
@@ -193,6 +193,7 @@ void InitGame (void)
 	instantweap = gi.cvar ("instantweap", "0", CVAR_SERVERINFO);
 //ZOID
  	password = gi.cvar ("password", "", CVAR_USERINFO);
+	filterban = gi.cvar ("filterban", "1", 0);
 
 	g_select_empty = gi.cvar ("g_select_empty", "0", CVAR_ARCHIVE);
 
@@ -302,6 +303,10 @@ void WriteField2 (FILE *f, field_t *field, byte *base)
 			fwrite (*(char **)p, len, 1, f);
 		}
 		break;
+#if defined (__APPLE__) || defined (MACOSX)
+        default:
+                break;
+#endif /* __APPLE__ ||ÊMACOSX */
 	}
 }
 
@@ -448,7 +453,9 @@ void WriteGame (char *filename, qboolean autosave)
 		gi.error ("Couldn't open %s", filename);
 
 	memset (str, 0, sizeof(str));
+
 	strcpy (str, __DATE__);
+	
 	fwrite (str, sizeof(str), 1, f);
 
 	game.autosaved = autosave;

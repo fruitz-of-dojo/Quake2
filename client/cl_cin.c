@@ -185,7 +185,6 @@ void SCR_StopCinematic (void)
 		cin.restart_sound = false;
 		CL_Snd_Restart_f ();
 	}
-
 }
 
 /*

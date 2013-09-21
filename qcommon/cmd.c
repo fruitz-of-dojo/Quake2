@@ -392,6 +392,24 @@ void Cmd_Exec_f (void)
 	memcpy (f2, f, len);
 	f2[len] = 0;
 
+#if (defined (__APPLE__) || defined (MACOSX)) && defined (CMD_FIX_LINE_BREAKS)
+
+        {
+            char 	*f3 = f2;
+
+            while (*f3 != 0x00)
+            {
+                if (*f3 == 0x0D)
+                {
+                    *f3 = 0x0A;
+                }
+                
+                f3++;
+            }
+        }
+        
+#endif /* (__APPLE__ || MACOSX) && CMD_FIX_LINE_BREAKS */
+
 	Cbuf_InsertText (f2);
 
 	Z_Free (f2);

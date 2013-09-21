@@ -28,7 +28,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  include <windows.h>
 #endif
 
-#include <GL/gl.h>
+#if defined (__APPLE__) || defined (MACOSX)
+#  include <OpenGL/gl.h>
+#  include <OpenGL/glext.h>
+#else
+#  include <GL/gl.h>
+#endif /* __APPLE__ ||ÊMACOSX */
+
+#ifdef __linux__
+//#include <GL/fxmesa.h>
+#include <GL/glx.h>
+#endif
 
 qboolean QGL_Init( const char *dllname );
 void     QGL_Shutdown( void );
@@ -107,7 +117,11 @@ extern  void ( APIENTRY * qglDrawBuffer )(GLenum mode);
 extern  void ( APIENTRY * qglDrawElements )(GLenum mode, GLsizei count, GLenum type, const GLvoid *indices);
 extern  void ( APIENTRY * qglDrawPixels )(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels);
 extern  void ( APIENTRY * qglEdgeFlag )(GLboolean flag);
+#if defined (__APPLE__) || defined (MACOSX)
+extern  void ( APIENTRY * qglEdgeFlagPointer )(GLsizei stride, const GLboolean *pointer);
+#else
 extern  void ( APIENTRY * qglEdgeFlagPointer )(GLsizei stride, const GLvoid *pointer);
+#endif /* __APPLE__ || MACOSX */
 extern  void ( APIENTRY * qglEdgeFlagv )(const GLboolean *flag);
 extern  void ( APIENTRY * qglEnable )(GLenum cap);
 extern  void ( APIENTRY * qglEnableClientState )(GLenum array);
@@ -337,8 +351,13 @@ extern  void ( APIENTRY * qglTexGenf )(GLenum coord, GLenum pname, GLfloat param
 extern  void ( APIENTRY * qglTexGenfv )(GLenum coord, GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglTexGeni )(GLenum coord, GLenum pname, GLint param);
 extern  void ( APIENTRY * qglTexGeniv )(GLenum coord, GLenum pname, const GLint *params);
+#if defined (__APPLE__) || defined (MACOSX)
+extern  void ( APIENTRY * qglTexImage1D )(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+extern  void ( APIENTRY * qglTexImage2D )(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+#else
 extern  void ( APIENTRY * qglTexImage1D )(GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
 extern  void ( APIENTRY * qglTexImage2D )(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels);
+#endif /* __APPLE__ || MACOSX */
 extern  void ( APIENTRY * qglTexParameterf )(GLenum target, GLenum pname, GLfloat param);
 extern  void ( APIENTRY * qglTexParameterfv )(GLenum target, GLenum pname, const GLfloat *params);
 extern  void ( APIENTRY * qglTexParameteri )(GLenum target, GLenum pname, GLint param);
@@ -384,6 +403,9 @@ extern	void ( APIENTRY * qglUnlockArraysEXT) (void);
 extern	void ( APIENTRY * qglMTexCoord2fSGIS)( GLenum, GLfloat, GLfloat );
 extern	void ( APIENTRY * qglSelectTextureSGIS)( GLenum );
 
+extern	void ( APIENTRY * qglActiveTextureARB)( GLenum );
+extern	void ( APIENTRY * qglClientActiveTextureARB)( GLenum );
+
 #ifdef _WIN32
 
 extern  int   ( WINAPI * qwglChoosePixelFormat )(HDC, CONST PIXELFORMATDESCRIPTOR *);
@@ -422,13 +444,55 @@ extern BOOL ( WINAPI * qwglSetDeviceGammaRampEXT ) ( const unsigned char *pRed, 
 
 #endif
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+extern void	qglEnableAnisotropicTexture (qboolean theState);
+extern void *	qwglGetProcAddress (char *symbol);
+extern void 	(*qglPNTrianglesiATIX) (GLenum pname, GLint param);
+extern void 	(*qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
+extern void 	(*qgl3DfxSetPaletteEXT) (GLuint *);
+
+#endif /* __APPLE__ || MACOSX */
+
+#ifdef __linux__
+
+// local function in dll
+extern void *qwglGetProcAddress(char *symbol);
+
+extern void (*qgl3DfxSetPaletteEXT)(GLuint *);
+
+/*
+//FX Mesa Functions
+extern fxMesaContext (*qfxMesaCreateContext)(GLuint win, GrScreenResolution_t, GrScreenRefresh_t, const GLint attribList[]);
+extern fxMesaContext (*qfxMesaCreateBestContext)(GLuint win, GLint width, GLint height, const GLint attribList[]);
+extern void (*qfxMesaDestroyContext)(fxMesaContext ctx);
+extern void (*qfxMesaMakeCurrent)(fxMesaContext ctx);
+extern fxMesaContext (*qfxMesaGetCurrentContext)(void);
+extern void (*qfxMesaSwapBuffers)(void);
+*/
+
+//GLX Functions
+extern XVisualInfo * (*qglXChooseVisual)( Display *dpy, int screen, int *attribList );
+extern GLXContext (*qglXCreateContext)( Display *dpy, XVisualInfo *vis, GLXContext shareList, Bool direct );
+extern void (*qglXDestroyContext)( Display *dpy, GLXContext ctx );
+extern Bool (*qglXMakeCurrent)( Display *dpy, GLXDrawable drawable, GLXContext ctx);
+extern void (*qglXCopyContext)( Display *dpy, GLXContext src, GLXContext dst, GLuint mask );
+extern void (*qglXSwapBuffers)( Display *dpy, GLXDrawable drawable );
+
+// 3dfxSetPaletteEXT shunt
+void Fake_glColorTableEXT( GLenum target, GLenum internalformat,
+                             GLsizei width, GLenum format, GLenum type,
+                             const GLvoid *table );
+
+#endif // linux
+
 /*
 ** extension constants
 */
-#define GL_POINT_SIZE_MIN_EXT				0x8126
-#define GL_POINT_SIZE_MAX_EXT				0x8127
+#define GL_POINT_SIZE_MIN_EXT			0x8126
+#define GL_POINT_SIZE_MAX_EXT			0x8127
 #define GL_POINT_FADE_THRESHOLD_SIZE_EXT	0x8128
-#define GL_DISTANCE_ATTENUATION_EXT			0x8129
+#define GL_DISTANCE_ATTENUATION_EXT		0x8129
 
 #ifdef __sgi
 #define GL_SHARED_TEXTURE_PALETTE_EXT		GL_TEXTURE_COLOR_TABLE_SGI
@@ -436,7 +500,16 @@ extern BOOL ( WINAPI * qwglSetDeviceGammaRampEXT ) ( const unsigned char *pRed, 
 #define GL_SHARED_TEXTURE_PALETTE_EXT		0x81FB
 #endif
 
-#define GL_TEXTURE0_SGIS					0x835E
-#define GL_TEXTURE1_SGIS					0x835F
+#define GL_TEXTURE0_SGIS			0x835E
+#define GL_TEXTURE1_SGIS			0x835F
+
+#if !defined (__APPLE__) && !defined (MACOSX)
+
+#define GL_TEXTURE0_ARB				0x84C0
+#define GL_TEXTURE1_ARB				0x84C1
+
+extern int GL_TEXTURE0, GL_TEXTURE1;
+
+#endif /* !__APPLE__ && !MACOSX */
 
 #endif

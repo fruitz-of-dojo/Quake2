@@ -43,7 +43,11 @@ void flipper_stand (edict_t *self);
 
 mframe_t flipper_frames_stand [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_stand, 0, NULL }
+#else
 	ai_stand, 0, NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 	
 mmove_t	flipper_move_stand = {FRAME_flphor01, FRAME_flphor01, flipper_frames_stand, NULL};
@@ -57,6 +61,34 @@ void flipper_stand (edict_t *self)
 
 mframe_t flipper_frames_run [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },	// 6
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },	// 10
+
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },	// 20
+
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL },
+	{ ai_run, FLIPPER_RUN_SPEED, NULL }	// 29
+#else
 	ai_run, FLIPPER_RUN_SPEED, NULL,	// 6
 	ai_run, FLIPPER_RUN_SPEED, NULL,
 	ai_run, FLIPPER_RUN_SPEED, NULL,
@@ -83,6 +115,7 @@ mframe_t flipper_frames_run [] =
 	ai_run, FLIPPER_RUN_SPEED, NULL,
 	ai_run, FLIPPER_RUN_SPEED, NULL,
 	ai_run, FLIPPER_RUN_SPEED, NULL		// 29
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t flipper_move_run_loop = {FRAME_flpver06, FRAME_flpver29, flipper_frames_run, NULL};
 
@@ -93,12 +126,21 @@ void flipper_run_loop (edict_t *self)
 
 mframe_t flipper_frames_run_start [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL }
+#else
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_run_start = {FRAME_flpver01, FRAME_flpver06, flipper_frames_run_start, flipper_run_loop};
 
@@ -110,6 +152,32 @@ void flipper_run (edict_t *self)
 /* Standard Swimming */ 
 mframe_t flipper_frames_walk [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL },
+	{ ai_walk, 4, NULL }
+#else
 	ai_walk, 4, NULL,
 	ai_walk, 4, NULL,
 	ai_walk, 4, NULL,
@@ -134,6 +202,7 @@ mframe_t flipper_frames_walk [] =
 	ai_walk, 4, NULL,
 	ai_walk, 4, NULL,
 	ai_walk, 4, NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t flipper_move_walk = {FRAME_flphor01, FRAME_flphor24, flipper_frames_walk, NULL};
 
@@ -144,11 +213,19 @@ void flipper_walk (edict_t *self)
 
 mframe_t flipper_frames_start_run [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, NULL },
+	{ ai_run, 8, flipper_run }
+#else
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, NULL,
 	ai_run, 8, flipper_run
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_start_run = {FRAME_flphor01, FRAME_flphor05, flipper_frames_start_run, NULL};
 
@@ -159,21 +236,37 @@ void flipper_start_run (edict_t *self)
 
 mframe_t flipper_frames_pain2 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL }
+#else
 	ai_move, 0, NULL,
 	ai_move, 0, NULL,
 	ai_move, 0,	NULL,
 	ai_move, 0,	NULL,
 	ai_move, 0, NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_pain2 = {FRAME_flppn101, FRAME_flppn105, flipper_frames_pain2, flipper_run};
 
 mframe_t flipper_frames_pain1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL },
+	{ ai_move, 0, NULL }
+#else
 	ai_move, 0, NULL,
 	ai_move, 0, NULL,
 	ai_move, 0,	NULL,
 	ai_move, 0,	NULL,
 	ai_move, 0, NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_pain1 = {FRAME_flppn201, FRAME_flppn205, flipper_frames_pain1, flipper_run};
 
@@ -192,6 +285,28 @@ void flipper_preattack (edict_t *self)
 
 mframe_t flipper_frames_attack [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge, 0,	flipper_preattack },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	flipper_bite },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	NULL },
+	{ ai_charge, 0,	flipper_bite },
+	{ ai_charge, 0,	NULL }
+#else
 	ai_charge, 0,	flipper_preattack,
 	ai_charge, 0,	NULL,
 	ai_charge, 0,	NULL,
@@ -212,6 +327,7 @@ mframe_t flipper_frames_attack [] =
 	ai_charge, 0,	NULL,
 	ai_charge, 0,	flipper_bite,
 	ai_charge, 0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_attack = {FRAME_flpbit01, FRAME_flpbit20, flipper_frames_attack, flipper_run};
 
@@ -260,6 +376,69 @@ void flipper_dead (edict_t *self)
 
 mframe_t flipper_frames_death [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL },
+	{ ai_move, 0,	 NULL }
+#else
 	ai_move, 0,	 NULL,
 	ai_move, 0,	 NULL,
 	ai_move, 0,	 NULL,
@@ -321,6 +500,7 @@ mframe_t flipper_frames_death [] =
 	ai_move, 0,	 NULL,
 	ai_move, 0,	 NULL,
 	ai_move, 0,	 NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t flipper_move_death = {FRAME_flpdth01, FRAME_flpdth56, flipper_frames_death, flipper_dead};
 

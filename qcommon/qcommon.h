@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../game/q_shared.h"
 
 
-#define	VERSION		3.19
+#define	VERSION		3.21
 
 #define	BASEDIRNAME	"baseq2"
 
@@ -722,8 +722,12 @@ MISC
 ==============================================================
 */
 
-
-#define	ERR_FATAL	0		// exit the entire game with a popup window
+#if defined (__APPLE__) || defined (MACOSX)
+# ifdef ERR_FATAL
+# undef ERR_FATAL
+# endif
+#endif /* __APPLE__ || MACOSX */
+#define	ERR_FATAL		0		// exit the entire game with a popup window
 #define	ERR_DROP	1		// print to console and disconnect from game
 #define	ERR_QUIT	2		// not an error, just a normal exit
 

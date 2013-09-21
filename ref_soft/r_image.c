@@ -300,7 +300,11 @@ void LoadTGA (char *name, byte **pic, int *width, int *height)
 		}
 	}
 	else if (targa_header.image_type==10) {   // Runlength encoded RGB images
+#if defined (__APPLE__) || defined (MACOSX)
+		unsigned char red = 0x00,green = 0x00,blue = 0x00,alphabyte = 0x00,packetHeader,packetSize,j;
+#else
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
+#endif /* __APPLE__ || MACOSX */
 		for(row=rows-1; row>=0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
 			for(column=0; column<columns; ) {

@@ -1,31 +1,27 @@
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+// "cd_null.c" - NULL CD driver, required for the dedicated server.
+//
+// Written by:	awe                         [mailto:awe@fruitz-of-dojo.de].
+//		        ©2001-2006 Fruitz Of Dojo   [http://www.fruitz-of-dojo.de].
+//
+// Quake IIª is copyrighted by id software  [http://www.idsoftware.com].
+//
+// Version History:
+// v1.0.0: Initial release.
+//
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#pragma mark Includes
+
 #include "../client/client.h"
 
-void CDAudio_Play(int track, qboolean looping)
+#pragma mark -
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+void	CDAudio_Stop (void)
 {
 }
 
-
-void CDAudio_Stop(void)
-{
-}
-
-
-void CDAudio_Resume(void)
-{
-}
-
-
-void CDAudio_Update(void)
-{
-}
-
-
-int CDAudio_Init(void)
-{
-	return 0;
-}
-
-
-void CDAudio_Shutdown(void)
-{
-}
+//------------------------------------------------------------------------------------------------------------------------------------------------------------

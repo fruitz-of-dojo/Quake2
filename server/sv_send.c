@@ -71,7 +71,11 @@ void SV_ClientPrintf (client_t *cl, int level, char *fmt, ...)
 		return;
 	
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (string, 1024, fmt,argptr);
+#else
 	vsprintf (string, fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 	
 	MSG_WriteByte (&cl->netchan.message, svc_print);
@@ -94,7 +98,11 @@ void SV_BroadcastPrintf (int level, char *fmt, ...)
 	int			i;
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (string, 2048, fmt,argptr);
+#else
 	vsprintf (string, fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 	
 	// echo to console
@@ -137,7 +145,11 @@ void SV_BroadcastCommand (char *fmt, ...)
 	if (!sv.state)
 		return;
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (string, 1024, fmt,argptr);
+#else
 	vsprintf (string, fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	MSG_WriteByte (&sv.multicast, svc_stufftext);

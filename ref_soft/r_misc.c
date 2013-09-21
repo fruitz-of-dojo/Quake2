@@ -539,6 +539,8 @@ void R_SurfacePatch (void)
 */ 
 
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 /* 
 ============== 
 WritePCXfile 
@@ -609,8 +611,62 @@ void WritePCXfile (char *filename, byte *data, int width, int height,
 
 	free (pcx);
 } 
- 
 
+#else
+
+/* 
+============== 
+WritePNGFile 
+============== 
+*/ 
+
+void WritePNGFile (char *theFileName, byte *theData, int theWidth, int theHeight, int theRowBytes) 
+{
+    extern qboolean	SWimp_Screenshot (char *, unsigned char *, unsigned int, unsigned int, unsigned int);
+    unsigned int	mySize = theWidth * theHeight;
+	unsigned int	myColorIndex;
+	unsigned int	i;
+	unsigned int	j;
+    unsigned char *	myRawRGBData = NULL;
+	unsigned char *	myRGBPixel = NULL;
+    
+    // get some temp memory for the RGB data:
+    myRGBPixel = myRawRGBData = malloc (mySize * 3);
+	
+    if (myRawRGBData == NULL)
+    {
+        ri.Con_Printf (PRINT_ALL, "SCR_ScreenShot_f: not enough memory\n");
+    } 
+	else
+	{
+		// convert the indexed color data to RGB raw data:
+		for (i = 0; i < theHeight; i++)
+		{
+			for (j = 0; j < theWidth; j++)
+			{
+				myColorIndex = *(theData++) * 4;
+				*(myRGBPixel++) = sw_state.currentpalette[myColorIndex++];
+				*(myRGBPixel++) = sw_state.currentpalette[myColorIndex++];
+				*(myRGBPixel++) = sw_state.currentpalette[myColorIndex];
+			}
+			theData += theRowBytes - theWidth;
+		}
+
+		// finally write the PNG file:
+		if (SWimp_Screenshot (theFileName, myRawRGBData, theWidth, theHeight, theWidth * 3))
+		{
+			ri.Con_Printf (PRINT_ALL, "Wrote %s\n", theFileName);
+		}
+		else
+		{
+			ri.Con_Printf (PRINT_ALL, "Failed to write %s\n", theFileName);
+		}
+		
+		free (myRawRGBData);
+	}
+} 
+
+#endif /* !__APPLE__ && !MACOSX */
 
 /* 
 ================== 
@@ -619,11 +675,13 @@ R_ScreenShot_f
 */  
 void R_ScreenShot_f (void) 
 { 
-	int			i; 
+	int		i; 
 	char		pcxname[80]; 
 	char		checkname[MAX_OSPATH];
 	FILE		*f;
+#if !defined (__APPLE__) && !defined (MACOSX)
 	byte		palette[768];
+#endif /* !__APPLE__ && !MACOSX */
 
 	// create the scrnshots directory if it doesn't exist
 	Com_sprintf (checkname, sizeof(checkname), "%s/scrnshot", ri.FS_Gamedir());
@@ -632,7 +690,11 @@ void R_ScreenShot_f (void)
 // 
 // find a file name to save it to 
 // 
+#if defined (__APPLE__) || defined (MACOSX)
+	strcpy(pcxname,"quake00.png");
+#else
 	strcpy(pcxname,"quake00.pcx");
+#endif /* __APPLE__ || MACOSX */
 		
 	for (i=0 ; i<=99 ; i++) 
 	{ 
@@ -646,10 +708,17 @@ void R_ScreenShot_f (void)
 	} 
 	if (i==100) 
 	{
-		ri.Con_Printf (PRINT_ALL, "R_ScreenShot_f: Couldn't create a PCX"); 
+#if defined (__APPLE__) || defined (MACOSX)
+		ri.Con_Printf (PRINT_ALL, "SCR_ScreenShot_f: Couldn't create a PNG file\n");
+#else
+		ri.Con_Printf (PRINT_ALL, "R_ScreenShot_f: Couldn't create a PCX");
+#endif /* __APPLE__ ||ÊMACOSX */
 		return;
 	}
 
+#if defined (__APPLE__) || defined (MACOSX)
+	WritePNGFile (checkname, vid.buffer, vid.width, vid.height, vid.rowbytes);
+#else
 	// turn the current 32 bit palette into a 24 bit palette
 	for (i=0 ; i<256 ; i++)
 	{
@@ -665,6 +734,8 @@ void R_ScreenShot_f (void)
 	WritePCXfile (checkname, vid.buffer, vid.width, vid.height, vid.rowbytes,
 				  palette);
 
-	ri.Con_Printf (PRINT_ALL, "Wrote %s\n", checkname);
+        ri.Con_Printf (PRINT_ALL, "Wrote %s\n", checkname);
+#endif /* __APPLE__ || MACOSX */
+
 } 
 

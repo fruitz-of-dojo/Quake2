@@ -51,7 +51,7 @@ vec5_t	r_clip_verts[2][MAXWORKINGVERTS+2];
 
 static int		s_minindex, s_maxindex;
 
-static void R_DrawPoly( qboolean iswater );
+static void R_DrawPoly( int iswater );
 
 /*
 ** R_DrawSpanletOpaque
@@ -508,13 +508,18 @@ void R_DrawSpanlet66Stipple( void )
 ** Clips the winding at clip_verts[clip_current] and changes clip_current
 ** Throws out the back side
 */
+
 int R_ClipPolyFace (int nump, clipplane_t *pclipplane)
 {
 	int		i, outcount;
 	float	dists[MAXWORKINGVERTS+3];
 	float	frac, clipdist, *pclipnormal;
 	float	*in, *instep, *outstep, *vert2;
-
+#if defined (__APPLE__) || defined (MACOSX)
+        // <awe> required because of a compiler bug [gcc3], see below...
+        unsigned char	cmp1, cmp2;
+        
+#endif /* __APPLE__ ||ÊMACOSX */
 	clipdist = pclipplane->dist;
 	pclipnormal = pclipplane->normal;
 	
@@ -559,14 +564,28 @@ int R_ClipPolyFace (int nump, clipplane_t *pclipplane)
 		if (dists[i] == 0 || dists[i+1] == 0)
 			continue;
 
+#if defined (__APPLE__) || defined (MACOSX)
+                // <AWE> an "equal" comparision nested between two "greater than comprision" will
+                //	 cause the gcc3 to bail out because of a bug, our fix:
+                cmp1 = dists[i] > 0;
+                cmp2 = dists[i+1] > 0;
+                
+                if (cmp1 == cmp2)
+                    continue;
+                    
+                // shoudl save some cycles compared to:
+                //if ((dists[i] > 0 && dists[i] > 0) || (dists[i] <= 0 && dists[i] <= 0))
+                //    continue;
+#else
 		if ( (dists[i] > 0) == (dists[i+1] > 0) )
 			continue;
+#endif /* __APPLE__ || MACOSX */
 			
-	// split it into a new vertex
+                // split it into a new vertex
 		frac = dists[i] / (dists[i] - dists[i+1]);
 			
 		vert2 = instep + sizeof (vec5_t) / sizeof (float);
-		
+
 		outstep[0] = instep[0] + frac*(vert2[0] - instep[0]);
 		outstep[1] = instep[1] + frac*(vert2[1] - instep[1]);
 		outstep[2] = instep[2] + frac*(vert2[2] - instep[2]);
@@ -576,14 +595,15 @@ int R_ClipPolyFace (int nump, clipplane_t *pclipplane)
 		outstep += sizeof (vec5_t) / sizeof (float);
 		outcount++;
 	}	
-	
+
 	return outcount;
 }
 
 /*
 ** R_PolygonDrawSpans
 */
-void R_PolygonDrawSpans(espan_t *pspan, qboolean iswater )
+// PGM - iswater was qboolean. changed to allow passing more flags
+void R_PolygonDrawSpans(espan_t *pspan, int iswater )
 {
 	int			count;
 	fixed16_t	snext, tnext;
@@ -592,8 +612,12 @@ void R_PolygonDrawSpans(espan_t *pspan, qboolean iswater )
 
 	s_spanletvars.pbase = cacheblock;
 
-	if ( iswater )
+//PGM
+	if ( iswater & SURF_WARP)
 		r_turb_turb = sintable + ((int)(r_newrefdef.time*SPEED)&(CYCLE-1));
+	else if (iswater & SURF_FLOWING)
+		r_turb_turb = blanktable;
+//PGM
 
 	sdivzspanletstepu = d_sdivzstepu * AFFINE_SPANLET_SIZE;
 	tdivzspanletstepu = d_tdivzstepu * AFFINE_SPANLET_SIZE;
@@ -749,7 +773,7 @@ NextSpan:
 */
 void R_PolygonScanLeftEdge (void)
 {
-	int			i, v, itop, ibottom, lmaxindex;
+	int		i, v, itop, ibottom, lmaxindex;
 	emitpoint_t	*pvert, *pnext;
 	espan_t		*pspan;
 	float		du, dv, vtop, vbottom, slope;
@@ -889,7 +913,8 @@ void R_PolygonScanRightEdge (void)
 /*
 ** R_ClipAndDrawPoly
 */
-void R_ClipAndDrawPoly( float alpha, qboolean isturbulent, qboolean textured )
+// PGM - isturbulent was qboolean. changed to int to allow passing more flags
+void R_ClipAndDrawPoly ( float alpha, int isturbulent, qboolean textured )
 {
 	emitpoint_t	outverts[MAXWORKINGVERTS+3], *pout;
 	float		*pv;
@@ -1047,12 +1072,14 @@ void R_BuildPolygonFromSurface(msurface_t *fa)
 		VectorSubtract( vec3_origin, r_polydesc.vpn, r_polydesc.vpn );
 	}
 
-	if ( fa->texinfo->flags & SURF_WARP )
+// PGM 09/16/98
+	if ( fa->texinfo->flags & (SURF_WARP|SURF_FLOWING) )
 	{
 		r_polydesc.pixels       = fa->texinfo->image->pixels[0];
 		r_polydesc.pixel_width  = fa->texinfo->image->width;
 		r_polydesc.pixel_height = fa->texinfo->image->height;
 	}
+// PGM 09/16/98
 	else
 	{
 		surfcache_t *scache;
@@ -1123,7 +1150,8 @@ void R_PolygonCalculateGradients (void)
 **
 ** This should NOT be called externally since it doesn't do clipping!
 */
-static void R_DrawPoly( qboolean iswater )
+// PGM - iswater was qboolean. changed to support passing more flags
+static void R_DrawPoly( int iswater )
 {
 	int			i, nump;
 	float		ymin, ymax;
@@ -1194,10 +1222,20 @@ void R_DrawAlphaSurfaces( void )
 	{
 		R_BuildPolygonFromSurface( s );
 
+//=======
+//PGM
+//		if (s->texinfo->flags & SURF_TRANS66)
+//			R_ClipAndDrawPoly( 0.60f, ( s->texinfo->flags & SURF_WARP) != 0, true );
+//		else
+//			R_ClipAndDrawPoly( 0.30f, ( s->texinfo->flags & SURF_WARP) != 0, true );
+
+		// PGM - pass down all the texinfo flags, not just SURF_WARP.
 		if (s->texinfo->flags & SURF_TRANS66)
-			R_ClipAndDrawPoly( 0.60f, ( s->texinfo->flags & SURF_WARP) != 0, true );
+			R_ClipAndDrawPoly( 0.60f, (s->texinfo->flags & SURF_WARP|SURF_FLOWING), true );
 		else
-			R_ClipAndDrawPoly( 0.30f, ( s->texinfo->flags & SURF_WARP) != 0, true );
+			R_ClipAndDrawPoly( 0.30f, (s->texinfo->flags & SURF_WARP|SURF_FLOWING), true );
+//PGM
+//=======
 
 		s = s->nextalphasurface;
 	}

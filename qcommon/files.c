@@ -554,7 +554,10 @@ Called to find where to write a file (demos, savegames, etc)
 */
 char *FS_Gamedir (void)
 {
-	return fs_gamedir;
+	if (*fs_gamedir)
+		return fs_gamedir;
+	else
+		return BASEDIRNAME;
 }
 
 /*
@@ -856,8 +859,11 @@ void FS_InitFilesystem (void)
 	// allows the game to run from outside the data tree
 	//
 	fs_cddir = Cvar_Get ("cddir", "", CVAR_NOSET);
+
 	if (fs_cddir->string[0])
+        {
 		FS_AddGameDirectory (va("%s/"BASEDIRNAME, fs_cddir->string) );
+        }
 
 	//
 	// start up with baseq2 by default

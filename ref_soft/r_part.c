@@ -597,7 +597,9 @@ void R_DrawParticles (void)
 {
 	particle_t *p;
 	int         i;
+#if id386 && !defined __linux__
 	extern unsigned long fpu_sp24_cw, fpu_chop_cw;
+#endif
 
 	VectorScale( vright, xscaleshrink, r_pright );
 	VectorScale( vup, yscaleshrink, r_pup );

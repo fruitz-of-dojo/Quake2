@@ -26,12 +26,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static void	 Action_DoEnter( menuaction_s *a );
 static void	 Action_Draw( menuaction_s *a );
 static void  Menu_DrawStatusBar( const char *string );
+#if !defined (__APPLE__) && !defined (MACOSX)
 static void	 Menulist_DoEnter( menulist_s *l );
+#endif /* !__APPLE__ && !MACOSX */
 static void	 MenuList_Draw( menulist_s *l );
 static void	 Separator_Draw( menuseparator_s *s );
 static void	 Slider_DoSlide( menuslider_s *s, int dir );
 static void	 Slider_Draw( menuslider_s *s );
+#if !defined (__APPLE__) && !defined (MACOSX)
 static void	 SpinControl_DoEnter( menulist_s *s );
+#endif /* !__APPLE__ && !MACOSX */
 static void	 SpinControl_Draw( menulist_s *s );
 static void	 SpinControl_DoSlide( menulist_s *s, int dir );
 
@@ -194,7 +198,11 @@ qboolean Field_Key( menufield_s *f, int key )
 	/*
 	** support pasting from the clipboard
 	*/
+#if defined (__APPLE__) || defined (MACOSX)
+	if ( ( toupper( key ) == 'V' && keydown[K_COMMAND] ) ||
+#else
 	if ( ( toupper( key ) == 'V' && keydown[K_CTRL] ) ||
+#endif /* __APPLE__ || MACOSX */
 		 ( ( ( key == K_INS ) || ( key == K_KP_INS ) ) && keydown[K_SHIFT] ) )
 	{
 		char *cbd;
@@ -418,7 +426,9 @@ void Menu_DrawStatusBar( const char *string )
 	if ( string )
 	{
 		int l = strlen( string );
+#if !defined (__APPLE__) && !defined (MACOSX)
 		int maxrow = VID_HEIGHT / 8;
+#endif /* !__APPLE__ && !MACOSX */
 		int maxcol = VID_WIDTH / 8;
 		int col = maxcol / 2 - l / 2;
 
@@ -552,6 +562,8 @@ int Menu_TallySlots( menuframework_s *menu )
 	return total;
 }
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 void Menulist_DoEnter( menulist_s *l )
 {
 	int start;
@@ -563,6 +575,8 @@ void Menulist_DoEnter( menulist_s *l )
 	if ( l->generic.callback )
 		l->generic.callback( l );
 }
+
+#endif /* !__APPLE__ && !MACOSX */
 
 void MenuList_Draw( menulist_s *l )
 {
@@ -625,6 +639,8 @@ void Slider_Draw( menuslider_s *s )
 	Draw_Char( ( int ) ( 8 + RCOLUMN_OFFSET + s->generic.parent->x + s->generic.x + (SLIDER_RANGE-1)*8 * s->range ), s->generic.y + s->generic.parent->y, 131);
 }
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 void SpinControl_DoEnter( menulist_s *s )
 {
 	s->curvalue++;
@@ -634,6 +650,8 @@ void SpinControl_DoEnter( menulist_s *s )
 	if ( s->generic.callback )
 		s->generic.callback( s );
 }
+
+#endif /* !__APPLE__ && !MACOSX */
 
 void SpinControl_DoSlide( menulist_s *s, int dir )
 {
@@ -658,16 +676,47 @@ void SpinControl_Draw( menulist_s *s )
 							s->generic.y + s->generic.parent->y, 
 							s->generic.name );
 	}
+#if defined (__APPLE__) || defined (MACOSX)
+        if (s->itemnames[s->curvalue] == NULL)
+        {
+            return;
+        }
+#endif /* __APPLE__ ||ÊMACOSX */
 	if ( !strchr( s->itemnames[s->curvalue], '\n' ) )
 	{
 		Menu_DrawString( RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, s->itemnames[s->curvalue] );
 	}
 	else
 	{
+#if defined (__APPLE__) || defined (MACOSX)
+		strncpy( buffer, s->itemnames[s->curvalue], 99);
+                {
+                    char	*myLineBreak = strchr( buffer, '\n' );
+                    
+                    if (myLineBreak != NULL)
+                    {
+                        *myLineBreak = 0x00;
+                    }
+                }
+#else
 		strcpy( buffer, s->itemnames[s->curvalue] );
 		*strchr( buffer, '\n' ) = 0;
+#endif /* __APPLE__ ||ÊMACOSX */
+
 		Menu_DrawString( RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y, buffer );
+#if defined (__APPLE__) || defined (MACOSX)
+                {
+                    char	*myLineBreak = strchr( buffer, '\n' );
+                    
+                    if (myLineBreak == NULL)
+                    {
+                        return;
+                    }
+                    strncpy( buffer, myLineBreak + 1, 99);
+                }
+#else
 		strcpy( buffer, strchr( s->itemnames[s->curvalue], '\n' ) + 1 );
+#endif /* __APPLE__ || MACOSX */
 		Menu_DrawString( RCOLUMN_OFFSET + s->generic.x + s->generic.parent->x, s->generic.y + s->generic.parent->y + 10, buffer );
 	}
 }

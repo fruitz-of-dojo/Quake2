@@ -158,9 +158,9 @@ void CL_RegisterTEntSounds (void)
 	cl_sfx_lightning = S_RegisterSound ("weapons/tesla.wav");
 	cl_sfx_disrexp = S_RegisterSound ("weapons/disrupthit.wav");
 	// version stuff
-	sprintf (name, "weapons/sound%d.wav", ROGUE_VERSION_ID);
-	if (name[0] == 'w')
-		name[0] = 'W';
+//	sprintf (name, "weapons/sound%d.wav", ROGUE_VERSION_ID);
+//	if (name[0] == 'w')
+//		name[0] = 'W';
 //PGM
 }	
 
@@ -1353,7 +1353,11 @@ void CL_AddPlayerBeams (void)
 	float		yaw, pitch;
 	float		forward;
 	float		len, steps;
-	int			framenum;
+#if defined (__APPLE__) || defined (MACOSX)
+	int		framenum = 0;
+#else
+	int		framenum;
+#endif /* __APPLE__ || MACOSX */
 	float		model_length;
 	
 	float		hand_multiplier;
@@ -1669,6 +1673,10 @@ void CL_AddExplosions (void)
 			ent->skinnum = 0;
 			ent->flags |= RF_TRANSLUCENT;
 			break;
+#if defined (__APPLE__) || defined (MACOSX)
+                default:
+                        break;
+#endif /* __APPLE__ || MACOSX */
 		}
 
 		if (ex->type == ex_free)

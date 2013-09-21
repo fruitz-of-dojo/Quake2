@@ -67,7 +67,11 @@ void PF_dprintf (char *fmt, ...)
 	va_list		argptr;
 	
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg, 1024, fmt, argptr);
+#else
 	vsprintf (msg, fmt, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	Com_Printf ("%s", msg);
@@ -85,7 +89,11 @@ void PF_cprintf (edict_t *ent, int level, char *fmt, ...)
 {
 	char		msg[1024];
 	va_list		argptr;
-	int			n;
+#if defined (__APPLE__) || defined (MACOSX)
+	int		n = 0;
+#else
+	int		n;
+#endif /* __APPLE__ || MACOSX */
 
 	if (ent)
 	{
@@ -95,7 +103,11 @@ void PF_cprintf (edict_t *ent, int level, char *fmt, ...)
 	}
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg, 1024, fmt, argptr);
+#else
 	vsprintf (msg, fmt, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	if (ent)
@@ -123,7 +135,11 @@ void PF_centerprintf (edict_t *ent, char *fmt, ...)
 		return;	// Com_Error (ERR_DROP, "centerprintf to a non-client");
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg, 1024, fmt, argptr);
+#else
 	vsprintf (msg, fmt, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	MSG_WriteByte (&sv.multicast,svc_centerprint);
@@ -145,7 +161,11 @@ void PF_error (char *fmt, ...)
 	va_list		argptr;
 	
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg, 1024, fmt, argptr);
+#else
 	vsprintf (msg, fmt, argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	Com_Error (ERR_DROP, "Game Error: %s", msg);
@@ -199,6 +219,7 @@ void PF_Configstring (int index, char *val)
 
 	// change the string in sv
 	strcpy (sv.configstrings[index], val);
+
 	
 	if (sv.state != ss_loading)
 	{	// send the update to everyone

@@ -31,8 +31,12 @@ extern	char	key_lines[32][MAXCMDLINE];
 extern	int		edit_line;
 extern	int		key_linepos;
 		
-
+// <AWE> DrawString conflicts with QuickDraw's DrawString on MacOS X:
+#if defined (__APPLE__) || defined (MACOSX)
+void Con_DrawString (int x, int y, char *s)
+#else
 void DrawString (int x, int y, char *s)
+#endif /* __APPLE__ ||ÊMACOSX */
 {
 	while (*s)
 	{
@@ -530,12 +534,20 @@ void Con_DrawNotify (void)
 	{
 		if (chat_team)
 		{
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (8, v, "say_team:");
+#else
 			DrawString (8, v, "say_team:");
+#endif /* __APPLE__ || MACOSX */                        
 			skip = 11;
 		}
 		else
 		{
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (8, v, "say:");
+#else
 			DrawString (8, v, "say:");
+#endif /* __APPLE__ || MACOSX */ 
 			skip = 5;
 		}
 
@@ -575,6 +587,9 @@ void Con_DrawConsole (float frac)
 	int				lines;
 	char			version[64];
 	char			dlbar[1024];
+#if defined (__APPLE__) || defined (MACOSX)
+        int			dlbarlen;
+#endif /* __APPLE__ || MACOSX */
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
@@ -666,7 +681,12 @@ void Con_DrawConsole (float frac)
 		dlbar[i++] = '\x82';
 		dlbar[i] = 0;
 
+#if defined (__APPLE__) || defined (MACOSX)
+                dlbarlen = strlen(dlbar);
+		snprintf(dlbar + dlbarlen, 1024 - dlbarlen, " %02d%%", cls.downloadpercent);
+#else
 		sprintf(dlbar + strlen(dlbar), " %02d%%", cls.downloadpercent);
+#endif /* __APPLE__ || MACOSX */
 
 		// draw it
 		y = con.vislines-12;

@@ -169,7 +169,7 @@ void InitGame (void)
 	// latched vars
 	sv_cheats = gi.cvar ("cheats", "0", CVAR_SERVERINFO|CVAR_LATCH);
 	gi.cvar ("gamename", GAMEVERSION , CVAR_SERVERINFO | CVAR_LATCH);
-	gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
+        gi.cvar ("gamedate", __DATE__ , CVAR_SERVERINFO | CVAR_LATCH);
 
 	maxclients = gi.cvar ("maxclients", "4", CVAR_SERVERINFO | CVAR_LATCH);
 	maxspectators = gi.cvar ("maxspectators", "4", CVAR_SERVERINFO);
@@ -184,6 +184,7 @@ void InitGame (void)
 	timelimit = gi.cvar ("timelimit", "0", CVAR_SERVERINFO);
 	password = gi.cvar ("password", "", CVAR_USERINFO);
 	spectator_password = gi.cvar ("spectator_password", "", CVAR_USERINFO);
+	needpass = gi.cvar ("needpass", "0", CVAR_SERVERINFO);
 	filterban = gi.cvar ("filterban", "1", 0);
 
 	g_select_empty = gi.cvar ("g_select_empty", "0", CVAR_ARCHIVE);
@@ -305,15 +306,23 @@ void WriteField2 (FILE *f, field_t *field, byte *base)
 		return;
 
 	p = (void *)(base + field->ofs);
+#if defined (__APPLE__) || defined (MACOSX)
+        if (field->type == F_LSTRING)
+        {
+#else
+
 	switch (field->type)
 	{
 	case F_LSTRING:
+#endif /* __APPLE__ ||ÊMACOSX */
 		if ( *(char **)p )
 		{
 			len = strlen(*(char **)p) + 1;
 			fwrite (*(char **)p, len, 1, f);
 		}
+#if !defined (__APPLE__) && !defined (MACOSX)
 		break;
+#endif /* !__APPLE__ && !MACOSX */
 	}
 }
 
@@ -471,7 +480,9 @@ void WriteGame (char *filename, qboolean autosave)
 		gi.error ("Couldn't open %s", filename);
 
 	memset (str, 0, sizeof(str));
+
 	strcpy (str, __DATE__);
+
 	fwrite (str, sizeof(str), 1, f);
 
 	game.autosaved = autosave;

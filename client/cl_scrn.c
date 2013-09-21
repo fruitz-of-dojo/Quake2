@@ -1040,10 +1040,19 @@ void SCR_ExecuteLayoutString (char *s)
 			time = atoi(token);
 
 			DrawAltString (x+32, y, ci->name);
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (x+32, y+8,  "Score: ");
+#else
 			DrawString (x+32, y+8,  "Score: ");
+#endif /* __APPLE__ || MACOSX */
 			DrawAltString (x+32+7*8, y+8,  va("%i", score));
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (x+32, y+16, va("Ping:  %i", ping));
+			Con_DrawString (x+32, y+24, va("Time:  %i", time));
+#else
 			DrawString (x+32, y+16, va("Ping:  %i", ping));
 			DrawString (x+32, y+24, va("Time:  %i", time));
+#endif /* __APPLE__ || MACOSX */
 
 			if (!ci->icon)
 				ci = &cl.baseclientinfo;
@@ -1077,12 +1086,20 @@ void SCR_ExecuteLayoutString (char *s)
 			if (ping > 999)
 				ping = 999;
 
+#if defined (__APPLE__) || defined (MACOSX)
+			snprintf(block, 80, "%3d %3d %-12.12s", score, ping, ci->name);
+#else
 			sprintf(block, "%3d %3d %-12.12s", score, ping, ci->name);
+#endif /* __APPLE__ || MACOSX */
 
 			if (value == cl.playernum)
 				DrawAltString (x, y, block);
 			else
+#if defined (__APPLE__) || defined (MACOSX)
+				Con_DrawString (x, y, block);
+#else
 				DrawString (x, y, block);
+#endif /* __APPLE__ ||ÊMACOSX */
 			continue;
 		}
 
@@ -1173,7 +1190,11 @@ void SCR_ExecuteLayoutString (char *s)
 			index = cl.frame.playerstate.stats[index];
 			if (index < 0 || index >= MAX_CONFIGSTRINGS)
 				Com_Error (ERR_DROP, "Bad stat_string index");
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (x, y, cl.configstrings[index]);
+#else
 			DrawString (x, y, cl.configstrings[index]);
+#endif /* __APPLE__ || MACOSX */
 			continue;
 		}
 
@@ -1187,7 +1208,11 @@ void SCR_ExecuteLayoutString (char *s)
 		if (!strcmp(token, "string"))
 		{
 			token = COM_Parse (&s);
+#if defined (__APPLE__) || defined (MACOSX)
+			Con_DrawString (x, y, token);
+#else
 			DrawString (x, y, token);
+#endif /* __APPLE__ || MACOSX */
 			continue;
 		}
 

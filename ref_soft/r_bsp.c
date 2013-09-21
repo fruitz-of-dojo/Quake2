@@ -452,7 +452,16 @@ int c_drawnode;
 R_RecursiveWorldNode
 ================
 */
+
+#if defined (__APPLE__) || defined (MACOSX)
+
+static void R_RecursiveWorldNode (mnode_t *node, int clipflags)
+
+#else
+
 void R_RecursiveWorldNode (mnode_t *node, int clipflags)
+
+#endif /* __APPLE__ ||ÊMACOSX */
 {
 	int			i, c, side, *pindex;
 	vec3_t		acceptpt, rejectpt;

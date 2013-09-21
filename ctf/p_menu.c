@@ -110,6 +110,9 @@ void PMenu_Do_Update(edict_t *ent)
 	pmenuhnd_t *hnd;
 	char *t;
 	qboolean alt = false;
+#if defined (__APPLE__) || defined (MACOSX)
+        int	stringlen;
+#endif /* __APPLE__ || MACOSX */
 
 	if (!ent->client->menu) {
 		gi.dprintf("warning:  ent has no menu\n");
@@ -128,7 +131,13 @@ void PMenu_Do_Update(edict_t *ent)
 			alt = true;
 			t++;
 		}
+#if defined (__APPLE__) || defined (MACOSX)
+                stringlen = strlen(string);
+                if (1400 - stringlen > 0)
+                    snprintf(string + stringlen, 1400 - stringlen, "yv %d ", 32 + i * 8);
+#else
 		sprintf(string + strlen(string), "yv %d ", 32 + i * 8);
+#endif /* __APPLE__ || MACOSX */
 		if (p->align == PMENU_ALIGN_CENTER)
 			x = 196/2 - strlen(t)*4 + 64;
 		else if (p->align == PMENU_ALIGN_RIGHT)
@@ -136,15 +145,45 @@ void PMenu_Do_Update(edict_t *ent)
 		else
 			x = 64;
 
-		sprintf(string + strlen(string), "xv %d ",
-			x - ((hnd->cur == i) ? 8 : 0));
+#if defined (__APPLE__) || defined (MACOSX)
+                stringlen = strlen(string);
+                if (1400 - stringlen > 0)
+                    snprintf(string + stringlen, 1400 - stringlen,
+#else
+		sprintf(string + strlen(string),
+#endif /* __APPLE__ || MACOSX */
+                        "xv %d ", x - ((hnd->cur == i) ? 8 : 0));
 
 		if (hnd->cur == i)
+#if defined (__APPLE__) || defined (MACOSX)
+                {
+                        stringlen = strlen(string);
+                        if (1400 - stringlen > 0)
+                            snprintf(string + stringlen, 1400 - stringlen, "string2 \"\x0d%s\" ", t);
+                }
+#else
 			sprintf(string + strlen(string), "string2 \"\x0d%s\" ", t);
+#endif /* __APPLE__ ||ÊMACOSX */
 		else if (alt)
+#if defined (__APPLE__) || defined (MACOSX)
+                {
+                        stringlen = strlen(string);
+                        if (1400 - stringlen > 0)
+                            snprintf(string + stringlen, 1400 - stringlen, "string2 \"%s\" ", t);
+                }
+#else
 			sprintf(string + strlen(string), "string2 \"%s\" ", t);
+#endif /* __APPLE__ ||ÊMACOSX */
 		else
+#if defined (__APPLE__) || defined (MACOSX)
+                {
+                        stringlen = strlen(string);
+                        if (1400 - stringlen > 0)
+                            snprintf(string + stringlen, 1400 - stringlen, "string \"%s\" ", t);
+                }
+#else
 			sprintf(string + strlen(string), "string \"%s\" ", t);
+#endif /* __APPLE__ ||ÊMACOSX */
 		alt = false;
 	}
 

@@ -1063,10 +1063,14 @@ static void MouseSpeedFunc( void *unused )
 	Cvar_SetValue( "sensitivity", s_options_sensitivity_slider.curvalue / 2.0F );
 }
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 static void NoAltTabFunc( void *unused )
 {
 	Cvar_SetValue( "win_noalttab", s_options_noalttab_box.curvalue );
 }
+
+#endif /* !__APPLE__ && !MACOSX */
 
 static float ClampCvar( float min, float max, float value )
 {
@@ -1115,24 +1119,17 @@ static void ControlsResetDefaultsFunc( void *unused )
 
 static void InvertMouseFunc( void *unused )
 {
-	if ( s_options_invertmouse_box.curvalue == 0 )
-	{
-		Cvar_SetValue( "m_pitch", fabs( m_pitch->value ) );
-	}
-	else
-	{
-		Cvar_SetValue( "m_pitch", -fabs( m_pitch->value ) );
-	}
+	Cvar_SetValue( "m_pitch", -m_pitch->value );
 }
 
 static void LookspringFunc( void *unused )
 {
-	Cvar_SetValue( "lookspring", s_options_lookspring_box.curvalue );
+	Cvar_SetValue( "lookspring", !lookspring->value );
 }
 
 static void LookstrafeFunc( void *unused )
 {
-	Cvar_SetValue( "lookstrafe", s_options_lookstrafe_box.curvalue );
+	Cvar_SetValue( "lookstrafe", !lookstrafe->value );
 }
 
 static void UpdateVolumeFunc( void *unused )
@@ -1273,7 +1270,11 @@ void Options_MenuInit( void )
 	s_options_sensitivity_slider.generic.name	= "mouse speed";
 	s_options_sensitivity_slider.generic.callback = MouseSpeedFunc;
 	s_options_sensitivity_slider.minvalue		= 2;
+#if defined (__APPLE__) || defined (MACOSX)
+	s_options_sensitivity_slider.maxvalue		= 64;
+#else        
 	s_options_sensitivity_slider.maxvalue		= 22;
+#endif /* __APPLE__ || MACOSX */
 
 	s_options_alwaysrun_box.generic.type = MTYPE_SPINCONTROL;
 	s_options_alwaysrun_box.generic.x	= 0;
@@ -1408,7 +1409,11 @@ END GAME MENU
 =============================================================================
 */
 static int credits_start_time;
+#if defined (__APPLE__) || defined (MACOSX)
+static char **credits;
+#else
 static const char **credits;
+#endif /* __APPLE__ || MACOSX */
 static char *creditsIndex[256];
 static char *creditsBuffer;
 static const char *idcredits[] =
@@ -1451,6 +1456,11 @@ static const char *idcredits[] =
 	"+LINUX PORT AND CTF",
 	"Dave \"Zoid\" Kirsch",
 	"",
+#if defined (__APPLE__) || defined (MACOSX)
+        "+MACOS X PORT",
+        "Axel \"awe\" Wefers",
+        "",
+#endif /* __APPLE__ || MACOSX */
 	"+CINEMATIC SEQUENCES",
 	"Ending Cinematic by Blur Studio - ",
 	"Venice, CA",
@@ -1822,11 +1832,15 @@ void M_Menu_Credits_f( void )
 {
 	int		n;
 	int		count;
-	char	*p;
+	char		*p;
 	int		isdeveloper = 0;
 
 	creditsBuffer = NULL;
+#if defined (__APPLE__) || defined (MACOSX)
+	count = FS_LoadFile ("credits", (void **) &creditsBuffer);
+#else
 	count = FS_LoadFile ("credits", &creditsBuffer);
+#endif /* __APPLE__ ||ÊMACOSX */
 	if (count != -1)
 	{
 		p = creditsBuffer;
@@ -1857,12 +1871,24 @@ void M_Menu_Credits_f( void )
 		isdeveloper = Developer_searchpath (1);
 		
 		if (isdeveloper == 1)			// xatrix
+#if defined (__APPLE__) || defined (__MACOSX)
+			credits = (char **) xatcredits;
+#else
 			credits = xatcredits;
+#endif /* __APPLE__ || MACOS X */
 		else if (isdeveloper == 2)		// ROGUE
+#if defined (__APPLE__) || defined (__MACOSX)
+			credits = (char **)  roguecredits;
+#else
 			credits = roguecredits;
+#endif /* __APPLE__ || MACOS X */
 		else
 		{
-			credits = idcredits;	
+#if defined (__APPLE__) || defined (__MACOSX)
+			credits = (char **) idcredits;
+#else
+			credits = idcredits;
+#endif /* __APPLE__ || MACOS X */
 		}
 
 	}
@@ -1939,6 +1965,7 @@ static void CreditsFunc( void *unused )
 
 void Game_MenuInit( void )
 {
+#if !defined (__APPLE__) && !defined (MACOSX)
 	static const char *difficulty_names[] =
 	{
 		"easy",
@@ -1946,6 +1973,7 @@ void Game_MenuInit( void )
 		"hard",
 		0
 	};
+#endif /* !__APPLE__ && !MACOSX */
 
 	s_game_menu.x = viddef.width * 0.50;
 	s_game_menu.nitems = 0;
@@ -2610,8 +2638,11 @@ void StartServer_MenuInit( void )
 	s_startmap_list.generic.x	= 0;
 	s_startmap_list.generic.y	= 0;
 	s_startmap_list.generic.name	= "initial map";
-	s_startmap_list.itemnames = mapnames;
-
+#if defined (__APPLE__) || defined (MACOSX)
+	s_startmap_list.itemnames = (const char **) mapnames;
+#else
+        s_startmap_list.itemnames = mapnames;
+#endif /* __APPLE__ ||ÊMACOSX */
 	s_rules_box.generic.type = MTYPE_SPINCONTROL;
 	s_rules_box.generic.x	= 0;
 	s_rules_box.generic.y	= 20;
@@ -3402,7 +3433,11 @@ static void RateCallback( void *unused )
 
 static void ModelCallback( void *unused )
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	s_player_skin_box.itemnames = (const char **) s_pmi[s_player_model_box.curvalue].skindisplaynames;
+#else
 	s_player_skin_box.itemnames = s_pmi[s_player_model_box.curvalue].skindisplaynames;
+#endif /* __APPLE__ || MACOSX */
 	s_player_skin_box.curvalue = 0;
 }
 
@@ -3577,6 +3612,10 @@ static qboolean PlayerConfig_ScanDirectories( void )
 	}
 	if ( dirnames )
 		FreeFileList( dirnames, ndirs );
+
+#if defined (__APPLE__) || defined (MACOSX)
+        return (true);
+#endif /* __APPLE__ ||ÊMACOSX */
 }
 
 static int pmicmpfnc( const void *_a, const void *_b )
@@ -3604,7 +3643,9 @@ static int pmicmpfnc( const void *_a, const void *_b )
 qboolean PlayerConfig_MenuInit( void )
 {
 	extern cvar_t *name;
+#if !defined (__APPLE__) && !defined(MACOSX)
 	extern cvar_t *team;
+#endif /* !__APPLE__ && !MACOSX */
 	extern cvar_t *skin;
 	char currentdirectory[1024];
 	char currentskin[1024];
@@ -3691,7 +3732,11 @@ qboolean PlayerConfig_MenuInit( void )
 	s_player_model_box.generic.callback = ModelCallback;
 	s_player_model_box.generic.cursor_offset = -48;
 	s_player_model_box.curvalue = currentdirectoryindex;
+#if defined (__APPLE__) || defined (MACOSX)
+	s_player_model_box.itemnames = (const char **) s_pmnames;
+#else
 	s_player_model_box.itemnames = s_pmnames;
+#endif /* __APPLE__ || MACOSX */
 
 	s_player_skin_title.generic.type = MTYPE_SEPARATOR;
 	s_player_skin_title.generic.name = "skin";
@@ -3705,7 +3750,11 @@ qboolean PlayerConfig_MenuInit( void )
 	s_player_skin_box.generic.callback = 0;
 	s_player_skin_box.generic.cursor_offset = -48;
 	s_player_skin_box.curvalue = currentskinindex;
+#if defined (__APPLE__) || defined (MACOSX)
+	s_player_skin_box.itemnames = (const char **) s_pmi[currentdirectoryindex].skindisplaynames;
+#else
 	s_player_skin_box.itemnames = s_pmi[currentdirectoryindex].skindisplaynames;
+#endif /* __APPLE__ ||ÊMACOSX */
 
 	s_player_hand_title.generic.type = MTYPE_SEPARATOR;
 	s_player_hand_title.generic.name = "handedness";
@@ -3783,7 +3832,9 @@ void PlayerConfig_MenuDraw( void )
 	if ( s_pmi[s_player_model_box.curvalue].skindisplaynames )
 	{
 		static int yaw;
+#if !defined (__APPLE__) && !defined (MACOSX)                
 		int maxframe = 29;
+#endif /* !__APPLE && !MACOSX */
 		entity_t entity;
 
 		memset( &entity, 0, sizeof( entity ) );

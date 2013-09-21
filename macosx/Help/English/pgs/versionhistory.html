@@ -1,0 +1,198 @@
+<HTML>
+
+<HEAD>
+<META HTTP-EQUIV="content-type" CONTENT="text/html;charset=iso-8859-1">
+<TITLE>Version History</TITLE>
+<META NAME="copyright" CONTENT="Copyright 2002 Fruitz Of Dojo. All Rights Reserved.">
+<META NAME="keywords" CONTENT="version history">
+<META NAME="description" CONTENT="The Version history of Quake II for MacOS X.">
+</HEAD>
+
+<BODY BGCOLOR="#ffffff" TOPMARGIN="0" LEFTMARGIN="0" MARGINHEIGHT="0" MARGINWIDTH="0">
+<DIV ALIGN="left">
+<A NAME="quake003">
+</A>
+<A NAME="xicnqua">
+</A>
+<TABLE WIDTH="352" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+    <TR ALIGN="left" VALIGN="top" HEIGHT="20">
+	<TD ALIGN="left" VALIGN="top" WIDTH="7" HEIGHT="20">
+        </TD>
+	<TD ALIGN="left" VALIGN="top" WIDTH="22" HEIGHT="20">
+            <IMG SRC="../gfx/quake2.gif" ALT="Quake II" HEIGHT="16" WIDTH="16">
+        </TD>
+	<TD ALIGN="left" VALIGN="top" WIDTH="308" HEIGHT="20">
+            <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+            <A HREF="../Quake%20II%20Help.html">Quake Help</A>
+            </FONT>
+        </TD>
+    </TR>
+</TABLE>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+    <TR HEIGHT="40">
+	<TD VALIGN="middle" WIDTH="7" HEIGHT="40">
+        </TD>
+	<TD WIDTH="100%" HEIGHT="40">
+            <FONT SIZE="4" FACE="Lucida Grande,Helvetica,Arial">
+            <B>Version History</B>
+            </FONT>
+        </TD>
+    </TR>
+</TABLE>
+
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="7">
+<TR>
+<TD>
+<P>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.1:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Recompiled as Universal Binary.</LI>
+	<LI>Redesigned startup dialog.</LI>
+    <LI>Optimized the software renderer for windowed modes.</LI>
+    <LI>Windowed modes (software renderer) are now resizeable.</LI>
+    <LI>The game will renderer inside the Dock document icon (instead of the application icon) if minimized.</LI>
+    <LI>Screenshots are now saved in PNG format.</LI>
+	<LI>Minor bug fixes.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.8:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Rewritten event handler. Solves performance problems that some users were experiencing.</LI>
+    <LI>Rewritten audio CD driver. Solves issue with interrupted audio CD playback that some users were experiencing.</LI>
+    <LI>Added support for MP3 and MP4 playback.</LI>
+    <LI>Added texture RAM check. Quake II will revert to the software renderer on failure.</LI>
+    <LI>Added option to switch between normal and overbright gamma (variable&quot;gl_overbright_gamma&quot;).</LI>
+    <LI>Added again support for the multitexture extension (via variable &quot;gl_arb_multitexture&quot;, the Classic MacOS version uses &quot;gl_ext_multitexture&quot;. This way multitexturing can't be activated by default.).</LI>
+    <LI>Mission packs can now be dragged onto the application icon even if Quake II is already running.</LI>
+    <LI>Added startup dialog for command-line parameters.</LI>
+    <LI>Added support for AppleScript.</LI>
+    <LI>New help.</LI>
+    <LI>F12 key will no longer eject medias if you bind a command to it.</LI>
+    <LI>Many minor changes.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.7:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Fixed &quot;app&quot; folder for MacOS X v10.1 or earlier.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.6:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Added support for FSAA via the variable &quot;gl_arb_multisample&quot; (currently MacOS X 10.2 only).</LI>
+    <LI>Added the command &quot;sys_hide&quot; for binding CMD_TAB functionality to a different key. Note: 10.2 will not pass the  CMD TAB key combination in fullscreen mode to Quake II.  If you want to get CMD TAB functionality, you have to bind &quot;sys_hide&quot; to a different key.</LI>
+    <LI>Added the variables &quot;vid_minrefresh&quot; and &quot;vid_maxrefresh&quot; for selecting the display refresh rate.</LI>
+    <LI>Added an icon for game plug-ins. The preferred extension for Game plug-ins is &quot;.q2plug&quot; now. The extension &quot;.bundle&quot; is still supported for backwards compatibility.</LI>
+    <LI>Fixed mouse lock after CMD-TABing.</LI>
+    <LI>Rebuild with GCC v3.1 under MacOS X v10.2.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.5:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Improved performance with the OpenGL renderer plug-in.</LI>
+    <LI>Support for Truform via the variable &quot;gl_truform&quot;.</LI>
+    <LI>Support for anisotropic texture filtering via the variable &quot;gl_anisotropic&quot;.</LI>
+    <LI>The mouse speed slider at the options let's you set higher values from now on.</LI>
+    <LI>Removed support for the multi-texture extension due to some users, which aren't able to read a file called &quot;Important - Performance&quot;.</LI>
+    <LI>From now on you will only be asked to locate the &quot;baseq2&quot; folder, if the application is not installed inside the same folder which holds the &quot;baseq2&quot; folder.</LI>
+    <LI>Many minor changes and fixes.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.4:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Fixed the invisible cursor bug at the &quot;baseq2&quot; folder selection dialog (introduced with v1.0.3).</LI>
+    <LI>Improved sound playback if sound quality is set to &quot;low&quot;.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.3:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Fixed a keypad handling bug.</LI>
+    <LI>Fixed an issue with CD playback which could cause an application hang.</LI>
+    <LI>Renderer specific variables are no longer forgotten if you switch the renderer type.</LI>
+    <LI>Screenshots are now saved in TIFF format, rather than PCX for the Software or TGA for the OpenGL renderer.</LI>
+    <LI>Included the Xatrix mission pack game plug-in.</LI>
+    <LI>Included the Rogue mission pack game plug-in.</LI>
+    <LI>Some minor improvements to the windowed mouse mode.</LI>
+    <LI>Many minor changes.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.2:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Fixed an application crash if &quot;config.cfg&quot; and &quot;autoexec.cfg&quot; files of Classic Quake II were used.</LI>
+    <LI>Fixed the keyboard repeat issue after application quit.</LI>
+    <LI>Fixed an issue with mouse pointer visibilty.</LI>
+    <LI>Mouse wheel support finally works.</LI>
+    <LI>Changed mouse acceleration handling [uses now IOKit].</LI>
+    <LI>Changed paste from &quot;ctrl-v&quot; to &quot;cmd-v&quot; (as it should be). The &quot;Edit/Paste&quot; menu works now, too.</LI>
+    <LI>Added support for up to 5 mouse buttons.</LI>
+    <LI>Added &quot;Connect To Server&quot; service.</LI>
+    <LI>Added application switching [via &quot;cmd-tab&quot;] in fullscreen mode.</LI>
+    <LI>Added application hide [via &quot;cmd-h&quot;] in fullscreen and windowed mode.</LI>
+    <LI>Added keyboard short cuts for minimize in windowed mode (&quot;cmd-m&quot;) and quit (&quot;cmd-q&quot;).</LI>
+    <LI>Added support for the numeric keypad.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0.1:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>The resolution list is now created dynamically.</LI>
+    <LI>Included &quot;Action Quake II&quot; game plug-in.</LI>
+    <LI>Added &quot;gl_force16bit&quot; command.</LI>
+    <LI>Added &quot;gl_swapinterval&quot; command for video sync. Available via the &quot;Video Options&quot; dialog, too.</LI>
+    <LI>Added rendering inside the Dock to the OpenGL plug-in (if window is minimized).</LI>
+    <LI>&quot;gl_ext_palettedtexture&quot; is now by default turned off, due to a bug with current Nvidia drivers.</LI>
+    <LI>&quot;gl_ext_multitexture&quot; is now possible, however default value is &quot;0&quot;, due to bad performance.</LI>
+    </FONT>
+</UL>
+<FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+v1.0:
+</FONT>
+<UL>
+    <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+    <LI>Initial release.</LI>
+    </FONT>
+</UL>
+</P>
+</TD>
+</TR>
+</TABLE>
+<TABLE WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="7">
+    <TR VALIGN="top">
+        <TD ALIGN="left">
+            <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+            </FONT>
+            </TD>
+	<TD ALIGN="right">
+            <FONT SIZE="2" FACE="Lucida Grande,Geneva,Arial">
+            </FONT>
+        </TD>
+    </TR>
+</TABLE>
+</DIV>
+</BODY>
+</HTML>

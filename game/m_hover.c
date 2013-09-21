@@ -64,6 +64,38 @@ void hover_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage
 
 mframe_t hover_frames_stand [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL },
+	{ ai_stand, 0, NULL }
+#else
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
@@ -94,11 +126,23 @@ mframe_t hover_frames_stand [] =
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL,
 	ai_stand, 0, NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t	hover_move_stand = {FRAME_stand01, FRAME_stand30, hover_frames_stand, NULL};
 
 mframe_t hover_frames_stop1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -108,11 +152,22 @@ mframe_t hover_frames_stop1 [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_stop1 = {FRAME_stop101, FRAME_stop109, hover_frames_stop1, NULL};
 
 mframe_t hover_frames_stop2 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -121,11 +176,44 @@ mframe_t hover_frames_stop2 [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_stop2 = {FRAME_stop201, FRAME_stop208, hover_frames_stop2, NULL};
 
 mframe_t hover_frames_takeoff [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	-2,	NULL },
+	{ ai_move,	5,	NULL },
+	{ ai_move,	-1,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	-1,	NULL },
+	{ ai_move,	-1,	NULL },
+	{ ai_move,	-1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	-6,	NULL },
+	{ ai_move,	-9,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	3,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	-2,	NULL,
 	ai_move,	5,	NULL,
@@ -156,11 +244,23 @@ mframe_t hover_frames_takeoff [] =
 	ai_move,	3,	NULL,
 	ai_move,	2,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_takeoff = {FRAME_takeof01, FRAME_takeof30, hover_frames_takeoff, NULL};
 
 mframe_t hover_frames_pain3 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -170,11 +270,26 @@ mframe_t hover_frames_pain3 [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_pain3 = {FRAME_pain301, FRAME_pain309, hover_frames_pain3, hover_run};
 
 mframe_t hover_frames_pain2 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -187,11 +302,42 @@ mframe_t hover_frames_pain2 [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_pain2 = {FRAME_pain201, FRAME_pain212, hover_frames_pain2, hover_run};
 
 mframe_t hover_frames_pain1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	-8,	NULL },
+	{ ai_move,	-4,	NULL },
+	{ ai_move,	-6,	NULL },
+	{ ai_move,	-4,	NULL },
+	{ ai_move,	-3,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	3,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	3,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	7,	NULL },
+	{ ai_move,	1,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	2,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	5,	NULL },
+	{ ai_move,	3,	NULL },
+	{ ai_move,	4,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	2,	NULL,
@@ -220,17 +366,59 @@ mframe_t hover_frames_pain1 [] =
 	ai_move,	5,	NULL,
 	ai_move,	3,	NULL,
 	ai_move,	4,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_pain1 = {FRAME_pain101, FRAME_pain128, hover_frames_pain1, hover_run};
 
 mframe_t hover_frames_land [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_land = {FRAME_land01, FRAME_land01, hover_frames_land, NULL};
 
 mframe_t hover_frames_forward [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -266,11 +454,49 @@ mframe_t hover_frames_forward [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_forward = {FRAME_forwrd01, FRAME_forwrd35, hover_frames_forward, NULL};
 
 mframe_t hover_frames_walk [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL },
+	{ ai_walk,	4,	NULL }
+#else
 	ai_walk,	4,	NULL,
 	ai_walk,	4,	NULL,
 	ai_walk,	4,	NULL,
@@ -306,11 +532,49 @@ mframe_t hover_frames_walk [] =
 	ai_walk,	4,	NULL,
 	ai_walk,	4,	NULL,
 	ai_walk,	4,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_walk = {FRAME_forwrd01, FRAME_forwrd35, hover_frames_walk, NULL};
 
 mframe_t hover_frames_run [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL },
+	{ ai_run,	10,	NULL }
+#else
 	ai_run,	10,	NULL,
 	ai_run,	10,	NULL,
 	ai_run,	10,	NULL,
@@ -346,11 +610,25 @@ mframe_t hover_frames_run [] =
 	ai_run,	10,	NULL,
 	ai_run,	10,	NULL,
 	ai_run,	10,	NULL
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_run = {FRAME_forwrd01, FRAME_forwrd35, hover_frames_run, NULL};
 
 mframe_t hover_frames_death1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	-10,	NULL },
+	{ ai_move,	3,	NULL },
+	{ ai_move,	5,	NULL },
+	{ ai_move,	4,	NULL },
+	{ ai_move,	7,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -362,11 +640,38 @@ mframe_t hover_frames_death1 [] =
 	ai_move,	5,	NULL,
 	ai_move,	4,	NULL,
 	ai_move,	7,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_death1 = {FRAME_death101, FRAME_death111, hover_frames_death1, hover_dead};
 
 mframe_t hover_frames_backward [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL },
+	{ ai_move,	0,	NULL }
+#else
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
@@ -391,30 +696,48 @@ mframe_t hover_frames_backward [] =
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL,
 	ai_move,	0,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_backward = {FRAME_backwd01, FRAME_backwd24, hover_frames_backward, NULL};
 
 mframe_t hover_frames_start_attack [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge,	1,	NULL },
+	{ ai_charge,	1,	NULL },
+	{ ai_charge,	1,	NULL }
+#else
 	ai_charge,	1,	NULL,
 	ai_charge,	1,	NULL,
 	ai_charge,	1,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_start_attack = {FRAME_attak101, FRAME_attak103, hover_frames_start_attack, hover_attack};
 
 mframe_t hover_frames_attack1 [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge,	-10,	hover_fire_blaster },
+	{ ai_charge,	-10,	hover_fire_blaster },
+	{ ai_charge,	0,	hover_reattack },
+#else
 	ai_charge,	-10,	hover_fire_blaster,
 	ai_charge,	-10,	hover_fire_blaster,
 	ai_charge,	0,		hover_reattack,
+#endif /* __APPLE__ || MACOSX */
 };
 mmove_t hover_move_attack1 = {FRAME_attak104, FRAME_attak106, hover_frames_attack1, NULL};
 
 
 mframe_t hover_frames_end_attack [] =
 {
+#if defined (__APPLE__) || defined (MACOSX)
+	{ ai_charge,	1,	NULL },
+	{ ai_charge,	1,	NULL }
+#else
 	ai_charge,	1,	NULL,
 	ai_charge,	1,	NULL
+#endif /* __APPLE__ ||ÊMACOSX */
 };
 mmove_t hover_move_end_attack = {FRAME_attak107, FRAME_attak108, hover_frames_end_attack, hover_run};
 

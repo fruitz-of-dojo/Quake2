@@ -135,7 +135,11 @@ void Netchan_OutOfBandPrint (int net_socket, netadr_t adr, char *format, ...)
 	static char		string[MAX_MSGLEN - 4];
 	
 	va_start (argptr, format);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (string, MAX_MSGLEN - 4,format,argptr);
+#else
 	vsprintf (string, format,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	Netchan_OutOfBand (net_socket, adr, strlen(string), (byte *)string);

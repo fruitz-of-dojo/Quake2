@@ -57,10 +57,27 @@ static vec3_t	s_alias_forward, s_alias_right, s_alias_up;
 
 #define NUMVERTEXNORMALS	162
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+    #ifdef GAME_HARD_LINKED
+
+    extern float	r_avertexnormals[NUMVERTEXNORMALS][3];
+
+    #else
+
+    float	r_avertexnormals[NUMVERTEXNORMALS][3] = {
+    #include "anorms.h"
+    };
+
+    #endif /* GAME_HARD_LINKED */
+
+#else
+
 float	r_avertexnormals[NUMVERTEXNORMALS][3] = {
 #include "anorms.h"
 };
 
+#endif /* __APPLE__ || MACOSX */
 
 void R_AliasSetUpLerpData( dmdl_t *pmdl, float backlerp );
 void R_AliasSetUpTransform (void);
@@ -81,11 +98,15 @@ typedef struct {
 	int	index1;
 } aedge_t;
 
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 static aedge_t	aedges[12] = {
 {0, 1}, {1, 2}, {2, 3}, {3, 0},
 {4, 5}, {5, 6}, {6, 7}, {7, 4},
 {0, 5}, {1, 4}, {2, 7}, {3, 6}
 };
+
+#endif /* !__APPLE__ && !MACOSX */
 
 #define BBOX_TRIVIAL_ACCEPT 0
 #define BBOX_MUST_CLIP_XY   1
@@ -105,7 +126,9 @@ unsigned long R_AliasCheckFrameBBox( daliasframe_t *frame, float worldxf[3][4] )
 	vec3_t        mins, maxs;
 	vec3_t        transformed_min, transformed_max;
 	qboolean      zclipped = false, zfullyclipped = true;
+#if !defined (__APPLE__) && !defined (MACOSX)
 	float         minz = 9999.0F;
+#endif /* !__APPLE__ && !MACOSX */
 
 	/*
 	** get the exact frame bounding box
@@ -1108,8 +1131,8 @@ void R_AliasDrawModel (void)
 
 		// PMM - added double
 		color = currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM);
-		// PMM - reordered, old code first
-/*
+		// PMM - reordered, new shells after old shells (so they get overriden)
+
 		if ( color == RF_SHELL_RED )
 			r_aliasblendcolor = SHELL_RED_COLOR;
 		else if ( color == RF_SHELL_GREEN )
@@ -1130,8 +1153,7 @@ void R_AliasDrawModel (void)
 		// pmm
 		else
 			r_aliasblendcolor = SHELL_WHITE_COLOR;
-*/
-		if ( color & RF_SHELL_RED )
+/*		if ( color & RF_SHELL_RED )
 		{
 			if ( ( color & RF_SHELL_BLUE) && ( color & RF_SHELL_GREEN) )
 				r_aliasblendcolor = SHELL_WHITE_COLOR;
@@ -1155,7 +1177,7 @@ void R_AliasDrawModel (void)
 			r_aliasblendcolor = SHELL_GREEN_COLOR;
 		else
 			r_aliasblendcolor = SHELL_WHITE_COLOR;
-
+*/
 
 		if ( currententity->alpha > 0.33 )
 			d_pdrawspans = R_PolysetDrawSpansConstant8_66;

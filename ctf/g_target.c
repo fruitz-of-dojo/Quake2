@@ -176,7 +176,11 @@ void SP_target_secret (edict_t *ent)
 	ent->svflags = SVF_NOCLIENT;
 	level.total_secrets++;
 	// map bug hack
+#if defined (__APPLE__) || defined (MACOSX)
+	if (!strcasecmp(level.mapname, "mine3") && ent->s.origin[0] == 280 && ent->s.origin[1] == -2048 && ent->s.origin[2] == -624)
+#else
 	if (!stricmp(level.mapname, "mine3") && ent->s.origin[0] == 280 && ent->s.origin[1] == -2048 && ent->s.origin[2] == -624)
+#endif /* __APPLE__ || MACOSX */
 		ent->message = "You have found a secret area.";
 }
 
@@ -309,7 +313,11 @@ void SP_target_changelevel (edict_t *ent)
 	}
 
 	// ugly hack because *SOMEBODY* screwed up their map
+#if defined (__APPLE__) || defined (MACOSX)
+   if((strcasecmp(level.mapname, "fact1") == 0) && (strcasecmp(ent->map, "fact3") == 0))
+#else
    if((stricmp(level.mapname, "fact1") == 0) && (stricmp(ent->map, "fact3") == 0))
+#endif /* __APPLE__ || MACOSX */
 	   ent->map = "fact3$secret1";
 
 	ent->use = use_target_changelevel;

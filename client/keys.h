@@ -56,14 +56,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	K_HOME			151
 #define	K_END			152
 
+#if defined (__APPLE__) || defined (MACOSX)
+
+#define	K_F13			153
+#define	K_F14			154
+#define	K_F15			155
+#define K_CAPSLOCK		156
+#define K_NUMLOCK		157
+#define K_COMMAND		158
+
+#endif /* __APPLE__ || MACOSX */
+
 #define K_KP_HOME		160
-#define K_KP_UPARROW	161
+#define K_KP_UPARROW		161
 #define K_KP_PGUP		162
-#define	K_KP_LEFTARROW	163
+#define	K_KP_LEFTARROW		163
 #define K_KP_5			164
-#define K_KP_RIGHTARROW	165
+#define K_KP_RIGHTARROW		165
 #define K_KP_END		166
-#define K_KP_DOWNARROW	167
+#define K_KP_DOWNARROW		167
 #define K_KP_PGDN		168
 #define	K_KP_ENTER		169
 #define K_KP_INS   		170
@@ -72,14 +83,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define K_KP_MINUS		173
 #define K_KP_PLUS		174
 
+#if defined(__APPLE__) || (MACOSX)
+
+#define K_KP_MULT		175
+#define K_KP_EQUAL		176
+
+#endif /* __APPLE__ ||ÊMACOSX */
+
 #define K_PAUSE			255
 
 //
 // mouse buttons generate virtual keys
 //
+#if !defined (__APPLE__) && !defined (MACOSX)
+
 #define	K_MOUSE1		200
 #define	K_MOUSE2		201
 #define	K_MOUSE3		202
+
+#endif /* !__APPLE__ &&Ê!MACOSX */
 
 //
 // joystick buttons
@@ -126,8 +148,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	K_AUX31			237
 #define	K_AUX32			238
 
-#define K_MWHEELDOWN	239
+#define K_MWHEELDOWN		239
 #define K_MWHEELUP		240
+
+#if defined (__APPLE__) || defined (MACOSX)
+
+#define	K_MOUSE1		241
+#define	K_MOUSE2		242
+#define	K_MOUSE3		243
+#define	K_MOUSE4		244
+#define	K_MOUSE5		245
+
+#endif /* __APPLE__ ||ÊMACOSX */
+
 
 extern char		*keybindings[256];
 extern	int		key_repeats[256];
@@ -143,4 +176,3 @@ void Key_WriteBindings (FILE *f);
 void Key_SetBinding (int keynum, char *binding);
 void Key_ClearStates (void);
 int Key_GetKey (void);
-

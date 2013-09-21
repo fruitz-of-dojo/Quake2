@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>*</string>
+			</array>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>****</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>q2plug</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>plug-in.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Quake II Game Plug-In</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>q2pl</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>q2renderer</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>plug-in.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>Quake II renderer plug-in</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>q2pl</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>Quake II</string>
+	<key>CFBundleGetInfoString</key>
+	<string>Quake II 1.1; Copyright 2002-2006 Fruitz Of Dojo</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>Quake II Help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>Quake II Help</string>
+	<key>CFBundleIconFile</key>
+	<string>Quake II</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.fruitz-of-dojo.quake2</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Quake II</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.1</string>
+	<key>CFBundleSignature</key>
+	<string>Qua2</string>
+	<key>CFBundleVersion</key>
+	<string>1.1.0</string>
+	<key>NSAppleScriptEnabled</key>
+	<true/>
+	<key>NSMainNibFile</key>
+	<string>Controller</string>
+	<key>NSPrincipalClass</key>
+	<string>Quake2Application</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Quake II/Connect To Server</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>connectToServer</string>
+			<key>NSPortName</key>
+			<string>Quake II</string>
+			<key>NSSendTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

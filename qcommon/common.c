@@ -104,7 +104,11 @@ void Com_Printf (char *fmt, ...)
 	char		msg[MAXPRINTMSG];
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
 	vsprintf (msg,fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 
 	if (rd_target)
@@ -131,7 +135,10 @@ void Com_Printf (char *fmt, ...)
 		if (!logfile)
 		{
 			Com_sprintf (name, sizeof(name), "%s/qconsole.log", FS_Gamedir ());
-			logfile = fopen (name, "w");
+			if (logfile_active->value > 2)
+				logfile = fopen (name, "a");
+			else
+				logfile = fopen (name, "w");
 		}
 		if (logfile)
 			fprintf (logfile, "%s", msg);
@@ -157,7 +164,11 @@ void Com_DPrintf (char *fmt, ...)
 		return;			// don't confuse non-developers with techie stuff...
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
 	vsprintf (msg,fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 	
 	Com_Printf ("%s", msg);
@@ -183,7 +194,11 @@ void Com_Error (int code, char *fmt, ...)
 	recursive = true;
 
 	va_start (argptr,fmt);
+#if defined (__APPLE__) || defined (MACOSX)
+	vsnprintf (msg,MAXPRINTMSG,fmt,argptr);
+#else
 	vsprintf (msg,fmt,argptr);
+#endif /* __APPLE__ || MACOSX */
 	va_end (argptr);
 	
 	if (code == ERR_DISCONNECT)
@@ -1400,7 +1415,9 @@ void Qcommon_Init (int argc, char **argv)
 	char	*s;
 
 	if (setjmp (abortframe) )
+        {
 		Sys_Error ("Error during initialization");
+        }
 
 	z_chain.next = z_chain.prev = &z_chain;
 
@@ -1468,6 +1485,8 @@ void Qcommon_Init (int argc, char **argv)
 	// add + commands from command line
 	if (!Cbuf_AddLateCommands ())
 	{	// if the user didn't give any commands, run default action
+
+
 		if (!dedicated->value)
 			Cbuf_AddText ("d1\n");
 		else
@@ -1479,7 +1498,6 @@ void Qcommon_Init (int argc, char **argv)
 		// so drop the loading plaque
 		SCR_EndLoadingPlaque ();
 	}
-
 	Com_Printf ("====== Quake2 Initialized ======\n\n");	
 }
 
@@ -1550,17 +1568,28 @@ void Qcommon_Frame (int msec)
 
 	if (host_speeds->value)
 		time_before = Sys_Milliseconds ();
+#if defined (__APPLE__) || defined (MACOSX)
+        else
+                time_before = 0;
+#endif /* __APPLE__ || MACOSX */
 
 	SV_Frame (msec);
 
 	if (host_speeds->value)
 		time_between = Sys_Milliseconds ();		
+#if defined (__APPLE__) || defined (MACOSX)
+        else
+                time_between = 0;
+#endif /* __APPLE__ || MACOSX */
 
 	CL_Frame (msec);
 
 	if (host_speeds->value)
 		time_after = Sys_Milliseconds ();		
-
+#if defined (__APPLE__) || defined (MACOSX)
+        else
+                time_after = 0;
+#endif /* __APPLE__ || MACOSX */
 
 	if (host_speeds->value)
 	{

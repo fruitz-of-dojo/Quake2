@@ -377,7 +377,11 @@ G_SetStats
 void G_SetStats (edict_t *ent)
 {
 	gitem_t		*item;
+#if defined (__APPLE__) || defined (MACOSX)
+	int			index, cells = 0;
+#else
 	int			index, cells;
+#endif /* __APPLE__ || MACOSX */
 	int			power_armor_type;
 
 	//
