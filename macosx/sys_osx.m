@@ -92,7 +92,6 @@ extern	void	IN_ShowCursor (BOOL theState);
 extern	void	IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY);
 extern  BOOL	CDAudio_GetTrackList (void);
 extern	void	CDAudio_Enable (BOOL theState);
-extern qboolean	SNDDMA_ReserveBufferSize (void);
 extern	void	VID_SetPaused (BOOL theState);
 
 int				Sys_CheckSpecialKeys (int theKey);

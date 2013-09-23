@@ -713,7 +713,6 @@
         [startupWindow close];
         
         // scan for medias, show a dialog since this can take a while:
-		SNDDMA_ReserveBufferSize ();
         [mediascanWindow center];
         [mediascanWindow makeKeyAndOrderFront: nil];
         [mediascanProgressIndicator startAnimation: self];

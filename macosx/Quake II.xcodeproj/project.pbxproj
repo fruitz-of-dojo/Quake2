@@ -46,7 +46,7 @@
 		D2AD4EFC17EFFDBB00DA8777 /* FDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE917EFFDBA00DA8777 /* FDWindow.m */; };
 		D2AD4EFE17EFFE2200DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */; };
 		D2AD4EFF17EFFE2200DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */; };
-		D2C36114152A049F00E73AC1 /* snddma_osx.c in Sources */ = {isa = PBXBuildFile; fileRef = D2C36113152A049F00E73AC1 /* snddma_osx.c */; };
+		D2C36114152A049F00E73AC1 /* snddma_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C36113152A049F00E73AC1 /* snddma_osx.m */; };
 		D2C8359E1529122500867DFC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2C8359D1529122500867DFC /* Cocoa.framework */; };
 		D2C835E3152916DE00867DFC /* cd_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C835CF152916DE00867DFC /* cd_osx.m */; };
 		D2C835E6152916DE00867DFC /* in_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C835D5152916DE00867DFC /* in_osx.m */; };
@@ -328,7 +328,7 @@
 		D2AD4EE717EFFDBA00DA8777 /* FDViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDViewInternal.h; path = FDFramework/FDViewInternal.h; sourceTree = "<group>"; };
 		D2AD4EE817EFFDBA00DA8777 /* FDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDWindow.h; path = FDFramework/FDWindow.h; sourceTree = "<group>"; };
 		D2AD4EE917EFFDBA00DA8777 /* FDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDWindow.m; path = FDFramework/FDWindow.m; sourceTree = "<group>"; };
-		D2C36113152A049F00E73AC1 /* snddma_osx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = snddma_osx.c; sourceTree = "<group>"; };
+		D2C36113152A049F00E73AC1 /* snddma_osx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = snddma_osx.m; sourceTree = "<group>"; };
 		D2C835991529122500867DFC /* Quake II.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quake II.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2C8359D1529122500867DFC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D2C835A01529122500867DFC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -767,7 +767,7 @@
 				D2C835CF152916DE00867DFC /* cd_osx.m */,
 				D2C835D5152916DE00867DFC /* in_osx.m */,
 				D2C835D6152916DE00867DFC /* net_udp.c */,
-				D2C36113152A049F00E73AC1 /* snddma_osx.c */,
+				D2C36113152A049F00E73AC1 /* snddma_osx.m */,
 				D2C835E0152916DE00867DFC /* sys_osx.m */,
 				D2C835E1152916DE00867DFC /* vid_menu.c */,
 				D2C835E2152916DE00867DFC /* vid_osx.m */,
@@ -1575,7 +1575,7 @@
 				D2C835EA152916DE00867DFC /* Quake2Toolbar.m in Sources */,
 				D2C835EC152916DE00867DFC /* sys_osx.m in Sources */,
 				D2C835EE152916DE00867DFC /* vid_osx.m in Sources */,
-				D2C36114152A049F00E73AC1 /* snddma_osx.c in Sources */,
+				D2C36114152A049F00E73AC1 /* snddma_osx.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
