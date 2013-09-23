@@ -34,7 +34,7 @@
 #import <AppKit/AppKit.h>
 #import <IOKit/graphics/IOGraphicsTypes.h>
 #import <OpenGL/OpenGL.h>
-#import "FDScreenshot.h"
+#import "FDFramework/FDScreenshot.h"
 
 #include "gl_local.h"
 
@@ -689,7 +689,7 @@ void	GLimp_CheckForARBMultiSample (void)
     CGLRendererInfoObj			myRendererInfo;
     CGLError				myError;
     UInt64				myDisplayMask;
-    long				myCount,
+    GLint				myCount,
                                         myIndex,
                                         mySampleBuffers,
                                         mySamples;
@@ -988,7 +988,7 @@ void	GLimp_AppActivate (qboolean active)
 #pragma mark -
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+/*
 @implementation NSOpenGLContext (CGLContextAccess)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -999,7 +999,7 @@ void	GLimp_AppActivate (qboolean active)
 }
 
 @end
-
+*/
 #pragma mark -
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------

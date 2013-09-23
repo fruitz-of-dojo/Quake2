@@ -34,7 +34,7 @@
 	mDenyDrag			= NO;
 
 	// set the URL at the FDLinkView:
-	[linkView setURLString: SYS_FRUITZ_OF_DOJO_URL];
+	[linkView setURL: [NSURL URLWithString: SYS_FRUITZ_OF_DOJO_URL]];
 
     // initialize the toolbar:
     mToolbarItems = [[NSMutableDictionary dictionary] retain];

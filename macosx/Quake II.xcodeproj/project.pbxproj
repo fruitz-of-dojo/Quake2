@@ -24,11 +24,28 @@
 		D207604A152969C500F14280 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2076049152969C500F14280 /* ForceFeedback.framework */; };
 		D207604D15296A1000F14280 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2C83654152918D800867DFC /* OpenGL.framework */; };
 		D207605015296AF400F14280 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D207604E15296AF400F14280 /* InfoPlist.strings */; };
-		D2AD4EBA17EFF9EF00DA8777 /* FDLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EB517EFF9EE00DA8777 /* FDLinkView.m */; };
-		D2AD4EBB17EFF9EF00DA8777 /* FDModifierCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EB717EFF9EE00DA8777 /* FDModifierCheck.m */; };
-		D2AD4EBD17EFFA1B00DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EB917EFF9EF00DA8777 /* FDScreenshot.m */; };
-		D2AD4EBE17EFFA1B00DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EB917EFF9EF00DA8777 /* FDScreenshot.m */; };
 		D2AD4EC017EFFA4B00DA8777 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AD4EBF17EFFA4B00DA8777 /* QuickTime.framework */; };
+		D2AD4EEA17EFFDBB00DA8777 /* FDAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EC317EFFDBA00DA8777 /* FDAudioBuffer.m */; };
+		D2AD4EEB17EFFDBB00DA8777 /* FDAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EC517EFFDBA00DA8777 /* FDAudioFile.m */; };
+		D2AD4EEC17EFFDBB00DA8777 /* FDAudioMixer.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EC817EFFDBA00DA8777 /* FDAudioMixer.m */; };
+		D2AD4EED17EFFDBB00DA8777 /* FDDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ECA17EFFDBA00DA8777 /* FDDebug.m */; };
+		D2AD4EEE17EFFDBB00DA8777 /* FDDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ECD17EFFDBA00DA8777 /* FDDisplay.m */; };
+		D2AD4EEF17EFFDBB00DA8777 /* FDDisplayMode.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ECF17EFFDBA00DA8777 /* FDDisplayMode.m */; };
+		D2AD4EF017EFFDBB00DA8777 /* FDGLScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ED217EFFDBA00DA8777 /* FDGLScreenshot.m */; };
+		D2AD4EF117EFFDBB00DA8777 /* FDHIDActuator.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ED417EFFDBA00DA8777 /* FDHIDActuator.m */; };
+		D2AD4EF217EFFDBB00DA8777 /* FDHIDDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ED617EFFDBA00DA8777 /* FDHIDDevice.m */; };
+		D2AD4EF317EFFDBB00DA8777 /* FDHIDGamePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ED717EFFDBA00DA8777 /* FDHIDGamePad.m */; };
+		D2AD4EF417EFFDBB00DA8777 /* FDHIDKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4ED917EFFDBA00DA8777 /* FDHIDKeyboard.m */; };
+		D2AD4EF517EFFDBB00DA8777 /* FDHIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EDB17EFFDBA00DA8777 /* FDHIDManager.m */; };
+		D2AD4EF617EFFDBB00DA8777 /* FDHIDMouse.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EDC17EFFDBA00DA8777 /* FDHIDMouse.m */; };
+		D2AD4EF717EFFDBB00DA8777 /* FDLinkView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EDE17EFFDBA00DA8777 /* FDLinkView.m */; };
+		D2AD4EF817EFFDBB00DA8777 /* FDModifierCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE017EFFDBA00DA8777 /* FDModifierCheck.m */; };
+		D2AD4EF917EFFDBB00DA8777 /* FDPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE217EFFDBA00DA8777 /* FDPreferences.m */; };
+		D2AD4EFA17EFFDBB00DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */; };
+		D2AD4EFB17EFFDBB00DA8777 /* FDView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE617EFFDBA00DA8777 /* FDView.m */; };
+		D2AD4EFC17EFFDBB00DA8777 /* FDWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE917EFFDBA00DA8777 /* FDWindow.m */; };
+		D2AD4EFE17EFFE2200DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */; };
+		D2AD4EFF17EFFE2200DA8777 /* FDScreenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */; };
 		D2C36114152A049F00E73AC1 /* snddma_osx.c in Sources */ = {isa = PBXBuildFile; fileRef = D2C36113152A049F00E73AC1 /* snddma_osx.c */; };
 		D2C8359E1529122500867DFC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2C8359D1529122500867DFC /* Cocoa.framework */; };
 		D2C835E3152916DE00867DFC /* cd_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C835CF152916DE00867DFC /* cd_osx.m */; };
@@ -270,13 +287,47 @@
 		D20760461529699E00F14280 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = ../../../../../../../System/Library/Frameworks/AudioUnit.framework; sourceTree = "<group>"; };
 		D2076049152969C500F14280 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = ../../../../../../../System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<group>"; };
 		D207604F15296AF400F14280 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = "Resources/Quake II/English.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		D2AD4EB417EFF9EE00DA8777 /* FDLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDLinkView.h; sourceTree = "<group>"; };
-		D2AD4EB517EFF9EE00DA8777 /* FDLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDLinkView.m; sourceTree = "<group>"; };
-		D2AD4EB617EFF9EE00DA8777 /* FDModifierCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDModifierCheck.h; sourceTree = "<group>"; };
-		D2AD4EB717EFF9EE00DA8777 /* FDModifierCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDModifierCheck.m; sourceTree = "<group>"; };
-		D2AD4EB817EFF9EE00DA8777 /* FDScreenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FDScreenshot.h; sourceTree = "<group>"; };
-		D2AD4EB917EFF9EF00DA8777 /* FDScreenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FDScreenshot.m; sourceTree = "<group>"; };
 		D2AD4EBF17EFFA4B00DA8777 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		D2AD4EC217EFFDBA00DA8777 /* FDAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDAudioBuffer.h; path = FDFramework/FDAudioBuffer.h; sourceTree = "<group>"; };
+		D2AD4EC317EFFDBA00DA8777 /* FDAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDAudioBuffer.m; path = FDFramework/FDAudioBuffer.m; sourceTree = "<group>"; };
+		D2AD4EC417EFFDBA00DA8777 /* FDAudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDAudioFile.h; path = FDFramework/FDAudioFile.h; sourceTree = "<group>"; };
+		D2AD4EC517EFFDBA00DA8777 /* FDAudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDAudioFile.m; path = FDFramework/FDAudioFile.m; sourceTree = "<group>"; };
+		D2AD4EC617EFFDBA00DA8777 /* FDAudioInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDAudioInternal.h; path = FDFramework/FDAudioInternal.h; sourceTree = "<group>"; };
+		D2AD4EC717EFFDBA00DA8777 /* FDAudioMixer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDAudioMixer.h; path = FDFramework/FDAudioMixer.h; sourceTree = "<group>"; };
+		D2AD4EC817EFFDBA00DA8777 /* FDAudioMixer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDAudioMixer.m; path = FDFramework/FDAudioMixer.m; sourceTree = "<group>"; };
+		D2AD4EC917EFFDBA00DA8777 /* FDDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDDebug.h; path = FDFramework/FDDebug.h; sourceTree = "<group>"; };
+		D2AD4ECA17EFFDBA00DA8777 /* FDDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDDebug.m; path = FDFramework/FDDebug.m; sourceTree = "<group>"; };
+		D2AD4ECB17EFFDBA00DA8777 /* FDDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDDefines.h; path = FDFramework/FDDefines.h; sourceTree = "<group>"; };
+		D2AD4ECC17EFFDBA00DA8777 /* FDDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDDisplay.h; path = FDFramework/FDDisplay.h; sourceTree = "<group>"; };
+		D2AD4ECD17EFFDBA00DA8777 /* FDDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDDisplay.m; path = FDFramework/FDDisplay.m; sourceTree = "<group>"; };
+		D2AD4ECE17EFFDBA00DA8777 /* FDDisplayMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDDisplayMode.h; path = FDFramework/FDDisplayMode.h; sourceTree = "<group>"; };
+		D2AD4ECF17EFFDBA00DA8777 /* FDDisplayMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDDisplayMode.m; path = FDFramework/FDDisplayMode.m; sourceTree = "<group>"; };
+		D2AD4ED017EFFDBA00DA8777 /* FDFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDFramework.h; path = FDFramework/FDFramework.h; sourceTree = "<group>"; };
+		D2AD4ED117EFFDBA00DA8777 /* FDGLScreenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDGLScreenshot.h; path = FDFramework/FDGLScreenshot.h; sourceTree = "<group>"; };
+		D2AD4ED217EFFDBA00DA8777 /* FDGLScreenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDGLScreenshot.m; path = FDFramework/FDGLScreenshot.m; sourceTree = "<group>"; };
+		D2AD4ED317EFFDBA00DA8777 /* FDHIDActuator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDHIDActuator.h; path = FDFramework/FDHIDActuator.h; sourceTree = "<group>"; };
+		D2AD4ED417EFFDBA00DA8777 /* FDHIDActuator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDActuator.m; path = FDFramework/FDHIDActuator.m; sourceTree = "<group>"; };
+		D2AD4ED517EFFDBA00DA8777 /* FDHIDDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDHIDDevice.h; path = FDFramework/FDHIDDevice.h; sourceTree = "<group>"; };
+		D2AD4ED617EFFDBA00DA8777 /* FDHIDDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDDevice.m; path = FDFramework/FDHIDDevice.m; sourceTree = "<group>"; };
+		D2AD4ED717EFFDBA00DA8777 /* FDHIDGamePad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDGamePad.m; path = FDFramework/FDHIDGamePad.m; sourceTree = "<group>"; };
+		D2AD4ED817EFFDBA00DA8777 /* FDHIDInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDHIDInternal.h; path = FDFramework/FDHIDInternal.h; sourceTree = "<group>"; };
+		D2AD4ED917EFFDBA00DA8777 /* FDHIDKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDKeyboard.m; path = FDFramework/FDHIDKeyboard.m; sourceTree = "<group>"; };
+		D2AD4EDA17EFFDBA00DA8777 /* FDHIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDHIDManager.h; path = FDFramework/FDHIDManager.h; sourceTree = "<group>"; };
+		D2AD4EDB17EFFDBA00DA8777 /* FDHIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDManager.m; path = FDFramework/FDHIDManager.m; sourceTree = "<group>"; };
+		D2AD4EDC17EFFDBA00DA8777 /* FDHIDMouse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDHIDMouse.m; path = FDFramework/FDHIDMouse.m; sourceTree = "<group>"; };
+		D2AD4EDD17EFFDBA00DA8777 /* FDLinkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDLinkView.h; path = FDFramework/FDLinkView.h; sourceTree = "<group>"; };
+		D2AD4EDE17EFFDBA00DA8777 /* FDLinkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDLinkView.m; path = FDFramework/FDLinkView.m; sourceTree = "<group>"; };
+		D2AD4EDF17EFFDBA00DA8777 /* FDModifierCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDModifierCheck.h; path = FDFramework/FDModifierCheck.h; sourceTree = "<group>"; };
+		D2AD4EE017EFFDBA00DA8777 /* FDModifierCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDModifierCheck.m; path = FDFramework/FDModifierCheck.m; sourceTree = "<group>"; };
+		D2AD4EE117EFFDBA00DA8777 /* FDPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDPreferences.h; path = FDFramework/FDPreferences.h; sourceTree = "<group>"; };
+		D2AD4EE217EFFDBA00DA8777 /* FDPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDPreferences.m; path = FDFramework/FDPreferences.m; sourceTree = "<group>"; };
+		D2AD4EE317EFFDBA00DA8777 /* FDScreenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDScreenshot.h; path = FDFramework/FDScreenshot.h; sourceTree = "<group>"; };
+		D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDScreenshot.m; path = FDFramework/FDScreenshot.m; sourceTree = "<group>"; };
+		D2AD4EE517EFFDBA00DA8777 /* FDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDView.h; path = FDFramework/FDView.h; sourceTree = "<group>"; };
+		D2AD4EE617EFFDBA00DA8777 /* FDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDView.m; path = FDFramework/FDView.m; sourceTree = "<group>"; };
+		D2AD4EE717EFFDBA00DA8777 /* FDViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDViewInternal.h; path = FDFramework/FDViewInternal.h; sourceTree = "<group>"; };
+		D2AD4EE817EFFDBA00DA8777 /* FDWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FDWindow.h; path = FDFramework/FDWindow.h; sourceTree = "<group>"; };
+		D2AD4EE917EFFDBA00DA8777 /* FDWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FDWindow.m; path = FDFramework/FDWindow.m; sourceTree = "<group>"; };
 		D2C36113152A049F00E73AC1 /* snddma_osx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = snddma_osx.c; sourceTree = "<group>"; };
 		D2C835991529122500867DFC /* Quake II.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Quake II.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2C8359D1529122500867DFC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -579,6 +630,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D2AD4EC117EFFDA100DA8777 /* FDFramework */ = {
+			isa = PBXGroup;
+			children = (
+				D2AD4EFD17EFFDE300DA8777 /* Source */,
+				D2AD4EC217EFFDBA00DA8777 /* FDAudioBuffer.h */,
+				D2AD4EC417EFFDBA00DA8777 /* FDAudioFile.h */,
+				D2AD4EC617EFFDBA00DA8777 /* FDAudioInternal.h */,
+				D2AD4EC717EFFDBA00DA8777 /* FDAudioMixer.h */,
+				D2AD4EC917EFFDBA00DA8777 /* FDDebug.h */,
+				D2AD4ECB17EFFDBA00DA8777 /* FDDefines.h */,
+				D2AD4ECC17EFFDBA00DA8777 /* FDDisplay.h */,
+				D2AD4ECE17EFFDBA00DA8777 /* FDDisplayMode.h */,
+				D2AD4ED017EFFDBA00DA8777 /* FDFramework.h */,
+				D2AD4ED117EFFDBA00DA8777 /* FDGLScreenshot.h */,
+				D2AD4ED317EFFDBA00DA8777 /* FDHIDActuator.h */,
+				D2AD4ED517EFFDBA00DA8777 /* FDHIDDevice.h */,
+				D2AD4ED817EFFDBA00DA8777 /* FDHIDInternal.h */,
+				D2AD4EDA17EFFDBA00DA8777 /* FDHIDManager.h */,
+				D2AD4EDD17EFFDBA00DA8777 /* FDLinkView.h */,
+				D2AD4EDF17EFFDBA00DA8777 /* FDModifierCheck.h */,
+				D2AD4EE117EFFDBA00DA8777 /* FDPreferences.h */,
+				D2AD4EE317EFFDBA00DA8777 /* FDScreenshot.h */,
+				D2AD4EE517EFFDBA00DA8777 /* FDView.h */,
+				D2AD4EE717EFFDBA00DA8777 /* FDViewInternal.h */,
+				D2AD4EE817EFFDBA00DA8777 /* FDWindow.h */,
+			);
+			name = FDFramework;
+			sourceTree = "<group>";
+		};
+		D2AD4EFD17EFFDE300DA8777 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				D2AD4EC317EFFDBA00DA8777 /* FDAudioBuffer.m */,
+				D2AD4EC517EFFDBA00DA8777 /* FDAudioFile.m */,
+				D2AD4EC817EFFDBA00DA8777 /* FDAudioMixer.m */,
+				D2AD4ECA17EFFDBA00DA8777 /* FDDebug.m */,
+				D2AD4ECD17EFFDBA00DA8777 /* FDDisplay.m */,
+				D2AD4ECF17EFFDBA00DA8777 /* FDDisplayMode.m */,
+				D2AD4ED217EFFDBA00DA8777 /* FDGLScreenshot.m */,
+				D2AD4ED417EFFDBA00DA8777 /* FDHIDActuator.m */,
+				D2AD4ED617EFFDBA00DA8777 /* FDHIDDevice.m */,
+				D2AD4ED717EFFDBA00DA8777 /* FDHIDGamePad.m */,
+				D2AD4ED917EFFDBA00DA8777 /* FDHIDKeyboard.m */,
+				D2AD4EDB17EFFDBA00DA8777 /* FDHIDManager.m */,
+				D2AD4EDC17EFFDBA00DA8777 /* FDHIDMouse.m */,
+				D2AD4EDE17EFFDBA00DA8777 /* FDLinkView.m */,
+				D2AD4EE017EFFDBA00DA8777 /* FDModifierCheck.m */,
+				D2AD4EE217EFFDBA00DA8777 /* FDPreferences.m */,
+				D2AD4EE417EFFDBA00DA8777 /* FDScreenshot.m */,
+				D2AD4EE617EFFDBA00DA8777 /* FDView.m */,
+				D2AD4EE917EFFDBA00DA8777 /* FDWindow.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
 		D2C8358E1529122500867DFC = {
 			isa = PBXGroup;
 			children = (
@@ -656,13 +762,8 @@
 		D2C835C71529161800867DFC /* MacOS X */ = {
 			isa = PBXGroup;
 			children = (
+				D2AD4EC117EFFDA100DA8777 /* FDFramework */,
 				D2C835CD1529167100867DFC /* Headers */,
-				D2AD4EB417EFF9EE00DA8777 /* FDLinkView.h */,
-				D2AD4EB517EFF9EE00DA8777 /* FDLinkView.m */,
-				D2AD4EB617EFF9EE00DA8777 /* FDModifierCheck.h */,
-				D2AD4EB717EFF9EE00DA8777 /* FDModifierCheck.m */,
-				D2AD4EB817EFF9EE00DA8777 /* FDScreenshot.h */,
-				D2AD4EB917EFF9EF00DA8777 /* FDScreenshot.m */,
 				D2C835CF152916DE00867DFC /* cd_osx.m */,
 				D2C835D5152916DE00867DFC /* in_osx.m */,
 				D2C835D6152916DE00867DFC /* net_udp.c */,
@@ -1406,26 +1507,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2AD4EEB17EFFDBB00DA8777 /* FDAudioFile.m in Sources */,
 				D2C836231529178F00867DFC /* cl_cin.c in Sources */,
 				D2C836241529178F00867DFC /* cl_ents.c in Sources */,
+				D2AD4EF317EFFDBB00DA8777 /* FDHIDGamePad.m in Sources */,
+				D2AD4EF817EFFDBB00DA8777 /* FDModifierCheck.m in Sources */,
+				D2AD4EEC17EFFDBB00DA8777 /* FDAudioMixer.m in Sources */,
 				D2C836251529178F00867DFC /* cl_fx.c in Sources */,
 				D2C836261529178F00867DFC /* cl_input.c in Sources */,
-				D2AD4EBA17EFF9EF00DA8777 /* FDLinkView.m in Sources */,
+				D2AD4EFB17EFFDBB00DA8777 /* FDView.m in Sources */,
 				D2C836271529178F00867DFC /* cl_inv.c in Sources */,
 				D2C836281529178F00867DFC /* cl_main.c in Sources */,
+				D2AD4EF517EFFDBB00DA8777 /* FDHIDManager.m in Sources */,
 				D2C836291529178F00867DFC /* cl_newfx.c in Sources */,
 				D2C8362A1529178F00867DFC /* cl_parse.c in Sources */,
 				D2C8362B1529178F00867DFC /* cl_pred.c in Sources */,
 				D2C8362C1529178F00867DFC /* cl_scrn.c in Sources */,
 				D2C8362D1529178F00867DFC /* cl_tent.c in Sources */,
+				D2AD4EEE17EFFDBB00DA8777 /* FDDisplay.m in Sources */,
 				D2C8362E1529178F00867DFC /* cl_view.c in Sources */,
 				D2C835FC1529171F00867DFC /* cmd.c in Sources */,
 				D2C835FD1529171F00867DFC /* cmodel.c in Sources */,
 				D2C835FE1529171F00867DFC /* common.c in Sources */,
 				D2C8362F1529178F00867DFC /* console.c in Sources */,
 				D2C835FF1529171F00867DFC /* crc.c in Sources */,
+				D2AD4EEA17EFFDBB00DA8777 /* FDAudioBuffer.m in Sources */,
 				D2C836001529171F00867DFC /* cvar.c in Sources */,
+				D2AD4EF417EFFDBB00DA8777 /* FDHIDKeyboard.m in Sources */,
 				D2C836011529171F00867DFC /* files.c in Sources */,
+				D2AD4EF717EFFDBB00DA8777 /* FDLinkView.m in Sources */,
+				D2AD4EF017EFFDBB00DA8777 /* FDGLScreenshot.m in Sources */,
+				D2AD4EF117EFFDBB00DA8777 /* FDHIDActuator.m in Sources */,
+				D2AD4EF217EFFDBB00DA8777 /* FDHIDDevice.m in Sources */,
 				D2C8365E15291FD500867DFC /* glob.c in Sources */,
 				D2C836301529178F00867DFC /* keys.c in Sources */,
 				D2C837131529449E00867DFC /* m_flash.c in Sources */,
@@ -1434,24 +1547,29 @@
 				D2C836031529171F00867DFC /* net_chan.c in Sources */,
 				D2C835E7152916DE00867DFC /* net_udp.c in Sources */,
 				D2C836041529171F00867DFC /* pmove.c in Sources */,
+				D2AD4EF617EFFDBB00DA8777 /* FDHIDMouse.m in Sources */,
 				D2C836621529201500867DFC /* q_shared.c in Sources */,
 				D2C8365F15291FD500867DFC /* q_shosx.c in Sources */,
+				D2AD4EFC17EFFDBB00DA8777 /* FDWindow.m in Sources */,
 				D2C836321529178F00867DFC /* qmenu.c in Sources */,
 				D2C83639152917CA00867DFC /* snd_dma.c in Sources */,
 				D2C8363A152917CA00867DFC /* snd_mem.c in Sources */,
+				D2AD4EED17EFFDBB00DA8777 /* FDDebug.m in Sources */,
 				D2C8363B152917CA00867DFC /* snd_mix.c in Sources */,
 				D2C83646152917F300867DFC /* sv_ccmds.c in Sources */,
+				D2AD4EEF17EFFDBB00DA8777 /* FDDisplayMode.m in Sources */,
 				D2C83647152917F300867DFC /* sv_ents.c in Sources */,
 				D2C83648152917F300867DFC /* sv_game.c in Sources */,
 				D2C83649152917F300867DFC /* sv_init.c in Sources */,
+				D2AD4EF917EFFDBB00DA8777 /* FDPreferences.m in Sources */,
 				D2C8364A152917F300867DFC /* sv_main.c in Sources */,
 				D2C8364B152917F300867DFC /* sv_send.c in Sources */,
 				D2C8364C152917F300867DFC /* sv_user.c in Sources */,
 				D2C8364D152917F300867DFC /* sv_world.c in Sources */,
 				D2C835ED152916DE00867DFC /* vid_menu.c in Sources */,
-				D2AD4EBB17EFF9EF00DA8777 /* FDModifierCheck.m in Sources */,
 				D2C835E3152916DE00867DFC /* cd_osx.m in Sources */,
 				D2C835E6152916DE00867DFC /* in_osx.m in Sources */,
+				D2AD4EFA17EFFDBB00DA8777 /* FDScreenshot.m in Sources */,
 				D2C835E8152916DE00867DFC /* Quake2.m in Sources */,
 				D2C835E9152916DE00867DFC /* Quake2Application.m in Sources */,
 				D2C835EA152916DE00867DFC /* Quake2Toolbar.m in Sources */,
@@ -1590,7 +1708,7 @@
 				D2DF6DEA152955F200B80579 /* gl_mesh.c in Sources */,
 				D2DF6DEB152955F200B80579 /* gl_model.c in Sources */,
 				D2DF6DEC152955F200B80579 /* gl_rmain.c in Sources */,
-				D2AD4EBD17EFFA1B00DA8777 /* FDScreenshot.m in Sources */,
+				D2AD4EFF17EFFE2200DA8777 /* FDScreenshot.m in Sources */,
 				D2DF6DED152955F200B80579 /* gl_rmisc.c in Sources */,
 				D2DF6DEE152955F200B80579 /* gl_rsurf.c in Sources */,
 				D2DF6DEF152955F200B80579 /* gl_warp.c in Sources */,
@@ -1627,7 +1745,7 @@
 				D2DF6E391529595000B80579 /* r_sprite.c in Sources */,
 				D2DF6E3A1529595000B80579 /* r_surf.c in Sources */,
 				D2DF6E3C1529597700B80579 /* swimp_osx.m in Sources */,
-				D2AD4EBE17EFFA1B00DA8777 /* FDScreenshot.m in Sources */,
+				D2AD4EFE17EFFE2200DA8777 /* FDScreenshot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
