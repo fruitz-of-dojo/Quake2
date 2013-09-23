@@ -118,7 +118,7 @@ char	*SV_StatusString (void)
 
 	strcpy (status, Cvar_Serverinfo());
 	strcat (status, "\n");
-	statusLength = strlen(status);
+	statusLength = (int) strlen(status);
 
 	for (i=0 ; i<maxclients->value ; i++)
 	{
@@ -127,7 +127,7 @@ char	*SV_StatusString (void)
 		{
 			Com_sprintf (player, sizeof(player), "%i %i \"%s\"\n", 
 				cl->edict->client->ps.stats[STAT_FRAGS], cl->ping, cl->name);
-			playerLength = strlen(player);
+			playerLength = (int) strlen(player);
 			if (statusLength + playerLength >= sizeof(status) )
 				break;		// can't hold any more
 			strcpy (status + statusLength, player);
@@ -377,7 +377,7 @@ gotnewcl:
 	// this is the only place a client_t is ever initialized
 	*newcl = temp;
 	sv_client = newcl;
-	edictnum = (newcl-svs.clients)+1;
+	edictnum = (int)((newcl-svs.clients)+1);
 	ent = EDICT_NUM(edictnum);
 	newcl->edict = ent;
 	newcl->challenge = challenge; // save challenge for checksumming

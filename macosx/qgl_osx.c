@@ -27,7 +27,7 @@
 
 #pragma mark Includes
 
-#import <mach-o/dyld.h>
+#import <dlfcn.h>
 #include "../ref_gl/gl_local.h"
 
 #pragma mark -
@@ -3483,39 +3483,23 @@ void	qglEnableAnisotropicTexture (qboolean theState)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void *	qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
+void *	qglGetProcAddress (const char* pName, enum qglGetAdrMode mode)
 {
-    NSSymbol	mySymbol		= NULL;
-    char *		mySymbolName	= malloc (strlen (theName) + 2);
-
-    if (mySymbolName != NULL)
-    {
-        strcpy (mySymbolName + 1, theName);
-
-        mySymbolName[0]	= '_';
-        mySymbol		= NULL;
-        
-		if (NSIsSymbolNameDefined (mySymbolName))
-		{
-            mySymbol = NSLookupAndBindSymbol (mySymbolName);
-		}
-		
-        free (mySymbolName);
-    }
+    void*   pSymbol = dlsym (RTLD_DEFAULT, pName);
     
-    if (theMode == QGL_SAFE_SYMBOL && mySymbol == NULL)
+    if ((mode == QGL_SAFE_SYMBOL) && (pSymbol == NULL))
     {
         ri.Sys_Error (ERR_FATAL, "Failed to import a required OpenGL function!\n");
     }
     
-    return ((mySymbol != NULL) ? NSAddressOfSymbol(mySymbol) : NULL);
+    return pSymbol;
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void *	qwglGetProcAddress (char *theSymbol)
+void *	qwglGetProcAddress (char* pName)
 {
-    return (qglGetProcAddress (theSymbol, QGL_LAZY_SYMBOL));
+    return (qglGetProcAddress (pName, QGL_LAZY_SYMBOL));
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------

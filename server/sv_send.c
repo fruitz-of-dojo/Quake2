@@ -304,7 +304,7 @@ void SV_StartSound (vec3_t origin, edict_t *entity, int channel,
 	if (timeofs < 0 || timeofs > 0.255)
 		Com_Error (ERR_FATAL, "SV_StartSound: timeofs = %f", timeofs);
 
-	ent = NUM_FOR_EDICT(entity);
+	ent = (int) NUM_FOR_EDICT(entity);
 
 	if (channel & 8)	// no PHS flag
 	{
@@ -517,7 +517,7 @@ void SV_SendClientMessages (void)
 		else
 		{
 			// get the next message
-			r = fread (&msglen, 4, 1, sv.demofile);
+			r = (int)fread (&msglen, 4, 1, sv.demofile);
 			if (r != 1)
 			{
 				SV_DemoCompleted ();
@@ -531,7 +531,7 @@ void SV_SendClientMessages (void)
 			}
 			if (msglen > MAX_MSGLEN)
 				Com_Error (ERR_DROP, "SV_SendClientMessages: msglen > MAX_MSGLEN");
-			r = fread (msgbuf, msglen, 1, sv.demofile);
+			r = (int)fread (msgbuf, msglen, 1, sv.demofile);
 			if (r != 1)
 			{
 				SV_DemoCompleted ();

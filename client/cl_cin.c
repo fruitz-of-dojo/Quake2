@@ -413,7 +413,7 @@ cblock_t Huff1Decompress (cblock_t in)
 	{
 		Com_Printf ("Decompression overread by %i", (input - in.data) - in.count);
 	}
-	out.count = out_p - out.data;
+	out.count = (int)(out_p - out.data);
 
 	return out;
 }
@@ -425,7 +425,7 @@ SCR_ReadNextFrame
 */
 byte *SCR_ReadNextFrame (void)
 {
-	int		r;
+	size_t  r;
 	int		command;
 	byte	samples[22050/14*4];
 	byte	compressed[0x20000];
@@ -553,7 +553,7 @@ qboolean SCR_DrawCinematic (void)
 
 	if (!cl.cinematicpalette_active)
 	{
-		re.CinematicSetPalette(cl.cinematicpalette);
+		re.CinematicSetPalette((unsigned char*)&(cl.cinematicpalette[0]));
 		cl.cinematicpalette_active = true;
 	}
 

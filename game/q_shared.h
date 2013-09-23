@@ -157,7 +157,7 @@ extern vec3_t vec3_origin;
 #if !defined C_ONLY && !defined __linux__ && !defined __sgi && !defined (__APPLE__) && !defined (MACOSX)
 extern long Q_ftol( float f );
 #else
-#define Q_ftol( f ) ( long ) (f)
+#define Q_ftol( f ) ( int ) (f)
 #endif
 
 #define DotProduct(x,y)			(x[0]*y[0]+x[1]*y[1]+x[2]*y[2])

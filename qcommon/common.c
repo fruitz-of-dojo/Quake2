@@ -364,7 +364,7 @@ void MSG_WriteString (sizebuf_t *sb, char *s)
 	if (!s)
 		SZ_Write (sb, "", 1);
 	else
-		SZ_Write (sb, s, strlen(s)+1);
+		SZ_Write (sb, s, (int)strlen(s)+1);
 }
 
 void MSG_WriteCoord (sizebuf_t *sb, float f)
@@ -933,7 +933,7 @@ void SZ_Print (sizebuf_t *buf, char *data)
 {
 	int		len;
 	
-	len = strlen(data)+1;
+	len = (int)strlen(data)+1;
 
 	if (buf->cursize)
 	{
@@ -1045,7 +1045,7 @@ char *CopyString (char *in)
 {
 	char	*out;
 	
-	out = Z_Malloc (strlen(in)+1);
+	out = Z_Malloc ((int)strlen(in)+1);
 	strcpy (out, in);
 	return out;
 }
@@ -1067,7 +1067,7 @@ void Info_Print (char *s)
 		while (*s && *s != '\\')
 			*o++ = *s++;
 
-		l = o - key;
+		l = (int)(o - key);
 		if (l < 20)
 		{
 			memset (o, ' ', 20-l);

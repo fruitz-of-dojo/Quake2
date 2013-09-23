@@ -91,7 +91,7 @@
 #pragma mark TypeDefs
 
 typedef struct		{
-                                CGTableCount		count;
+                                uint32_t            count;
                                 CGGammaValue		red[CG_MAX_GAMMA_TABLE_SIZE];
                                 CGGammaValue		green[CG_MAX_GAMMA_TABLE_SIZE];
                                 CGGammaValue		blue[CG_MAX_GAMMA_TABLE_SIZE];
@@ -528,7 +528,7 @@ void	GLimp_SetSwapInterval (void)
 
     if (gGLSwapInterval->modified == YES)
     {
-        long		myCurSwapInterval = (long) gGLSwapInterval->value;
+        GLint   myCurSwapInterval = (GLint) gGLSwapInterval->value;
         
         if (myCurSwapInterval > 1)
         {

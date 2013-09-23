@@ -120,9 +120,9 @@ int	Hunk_End (void)
 
 int	Sys_Milliseconds (void)
 {
-    struct timeval	myTimeValue;
-    struct timezone	myTimeZone;
-    static int		myStartSeconds;
+    struct timeval          myTimeValue;
+    struct timezone         myTimeZone;
+    static __darwin_time_t	myStartSeconds;
 
     gettimeofday (&myTimeValue, &myTimeZone);
     
@@ -132,7 +132,7 @@ int	Sys_Milliseconds (void)
         return (myTimeValue.tv_usec / 1000);
     }
 
-    curtime = (myTimeValue.tv_sec - myStartSeconds) * 1000 + myTimeValue.tv_usec / 1000;
+    curtime = (int)((myTimeValue.tv_sec - myStartSeconds) * 1000 + myTimeValue.tv_usec / 1000);
     
     return (curtime);
 }

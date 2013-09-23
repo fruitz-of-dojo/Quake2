@@ -619,7 +619,7 @@ void R_RenderFace (msurface_t *fa, int clipflags)
 			}
 
 		// assume it's cacheable
-			cacheoffset = (byte *)edge_p - (byte *)r_edges;
+			cacheoffset = (unsigned int)((byte *)edge_p - (byte *)r_edges);
 			r_leftclipped = r_rightclipped = false;
 			R_ClipEdge (&r_pcurrentvertbase[r_pedge->v[0]],
 						&r_pcurrentvertbase[r_pedge->v[1]],
@@ -665,7 +665,7 @@ void R_RenderFace (msurface_t *fa, int clipflags)
 			}
 
 		// assume it's cacheable
-			cacheoffset = (byte *)edge_p - (byte *)r_edges;
+			cacheoffset = (unsigned int)((byte *)edge_p - (byte *)r_edges);
 			r_leftclipped = r_rightclipped = false;
 			R_ClipEdge (&r_pcurrentvertbase[r_pedge->v[1]],
 						&r_pcurrentvertbase[r_pedge->v[0]],

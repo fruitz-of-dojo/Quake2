@@ -92,7 +92,7 @@ void SV_New_f (void)
 	if (sv.state == ss_cinematic || sv.state == ss_pic)
 		playernum = -1;
 	else
-		playernum = sv_client - svs.clients;
+		playernum = (int) (sv_client - svs.clients);
 	MSG_WriteShort (&sv_client->netchan.message, playernum);
 
 	// send full levelname

@@ -643,7 +643,7 @@ static void M_UnbindCommand (char *command)
 	int		l;
 	char	*b;
 
-	l = strlen(command);
+	l = (int)strlen(command);
 
 	for (j=0 ; j<256 ; j++)
 	{
@@ -663,7 +663,7 @@ static void M_FindKeysForCommand (char *command, int *twokeys)
 	char	*b;
 
 	twokeys[0] = twokeys[1] = -1;
-	l = strlen(command);
+	l = (int)strlen(command);
 	count = 0;
 
 	for (j=0 ; j<256 ; j++)
@@ -709,7 +709,7 @@ static void DrawKeyBindingFunc( void *self )
 
 		Menu_DrawString( a->generic.x + a->generic.parent->x + 16, a->generic.y + a->generic.parent->y, name );
 
-		x = strlen(name) * 8;
+		x = (int)strlen(name) * 8;
 
 		if (keys[1] != -1)
 		{
@@ -1798,7 +1798,7 @@ void M_Credits_MenuDraw( void )
 		{
 			int x;
 
-			x = ( viddef.width - strlen( credits[i] ) * 8 - stringoffset * 8 ) / 2 + ( j + stringoffset ) * 8;
+			x = ( ( (int) viddef.width ) - ( (int) strlen( credits[i] ) ) * 8 - stringoffset * 8 ) / 2 + ( j + stringoffset ) * 8;
 
 			if ( bold )
 				re.DrawChar( x, y, credits[i][j+stringoffset] + 128 );
@@ -2280,7 +2280,7 @@ void JoinServerFunc( void *self )
 	char	buffer[128];
 	int		index;
 
-	index = ( menuaction_s * ) self - s_joinserver_server_actions;
+	index = (int)( ( menuaction_s * ) self - s_joinserver_server_actions );
 
 	if ( Q_stricmp( local_server_names[index], NO_SERVER_STRING ) == 0 )
 		return;
@@ -2574,7 +2574,7 @@ void StartServer_MenuInit( void )
 		length = filelength( fileno( fp  ) );
 #else
 		fseek(fp, 0, SEEK_END);
-		length = ftell(fp);
+		length = (int)ftell(fp);
 		fseek(fp, 0, SEEK_SET);
 #endif
 		buffer = malloc( length );
@@ -2607,7 +2607,7 @@ void StartServer_MenuInit( void )
 		int		j, l;
 
 		strcpy( shortname, COM_Parse( &s ) );
-		l = strlen(shortname);
+		l = (int)strlen(shortname);
 		for (j=0 ; j<l ; j++)
 			shortname[j] = toupper(shortname[j]);
 		strcpy( longname, COM_Parse( &s ) );
@@ -3719,7 +3719,7 @@ qboolean PlayerConfig_MenuInit( void )
 	s_player_name_field.length	= 20;
 	s_player_name_field.visible_length = 20;
 	strcpy( s_player_name_field.buffer, name->string );
-	s_player_name_field.cursor = strlen( name->string );
+	s_player_name_field.cursor = (int)strlen( name->string );
 
 	s_player_model_title.generic.type = MTYPE_SEPARATOR;
 	s_player_model_title.generic.name = "model";

@@ -36,13 +36,20 @@
 
 cvar_t *					cd_volume;
 
+#if !defined(__LP64__)
+
 static UInt16				gCDTrackCount;
 static UInt16				gCurCDTrack;
 static NSMutableArray *		gCDTrackList;
 static char					gCDDevice[MAX_OSPATH];
 static BOOL					gCDLoop;
 static BOOL					gCDNextTrack;
+
+#endif // !defined(__LP64__)
+
+#if !defined(__LP64__)
 static Movie				gCDController = NULL;
+#endif // !__LP64__
 
 #pragma mark -
 
@@ -54,7 +61,9 @@ BOOL				CDAudio_GetTrackList (void);
 void				CDAudio_Enable (BOOL theState);
 
 static	void		CDAudio_Error (cderror_t theErrorNumber);
+#if !defined(__LP64__)
 static	SInt32		CDAudio_StripVideoTracks (Movie theMovie);
+#endif // !__LP64__
 static	void		CDAudio_SafePath (const char *thePath);
 static	void		CDAudio_AddTracks2List (NSString *theMountPath, NSArray *theExtensions);
 static 	void 		CD_f (void);
@@ -118,9 +127,11 @@ void	CDAudio_Error (cderror_t theErrorNumber)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#if !defined(__LP64__)
+
 SInt32	CDAudio_StripVideoTracks (Movie theMovie)
 {
-	SInt64	i = GetMovieTrackCount (theMovie);
+	long	i = GetMovieTrackCount (theMovie);
 
     for (; i >= 1; i--)
     {
@@ -218,10 +229,14 @@ void	CDAudio_SafePath (const char *thePath)
     gCDDevice[myStrLength] = 0x00;
 }
 
+#endif // !__LP64__
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 BOOL	CDAudio_GetTrackList (void)
 {
+#if !defined( __LP64__ )
+    
     NSAutoreleasePool *	myPool;
     
     // release previously allocated memory:
@@ -306,12 +321,19 @@ BOOL	CDAudio_GetTrackList (void)
     }
     
     return (1);
+
+#else
+    
+    return 0;
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Play (int theTrack, qboolean theLoop)
 {
+#if !defined( __LP64__ )
     gCDNextTrack = NO;
     
     if (gCDTrackList != NULL && gCDTrackCount != 0)
@@ -361,12 +383,15 @@ void	CDAudio_Play (int theTrack, qboolean theLoop)
             CDAudio_Error (CDERR_MEDIA_TRACK_CONTROLLER);
         }
     }
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Stop (void)
 {
+#if !defined( __LP64__ )
+    
     // just stop the audio IO:
     if (gCDController != NULL && IsMovieDone (gCDController) == NO)
     {
@@ -374,34 +399,46 @@ void	CDAudio_Stop (void)
         GoToBeginningOfMovie (gCDController);
         SetMovieActive (gCDController, NO);
     }
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Pause (void)
 {
+#if !defined( __LP64__ )
+    
     if (gCDController != NULL && GetMovieActive (gCDController) == YES && IsMovieDone (gCDController) == NO)
     {
         StopMovie (gCDController);
         SetMovieActive (gCDController, NO);
     }
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Resume (void)
 {
+#if !defined( __LP64__ )
+    
     if (gCDController != NULL && GetMovieActive (gCDController) == NO && IsMovieDone (gCDController) == NO)
     {
         SetMovieActive (gCDController, YES);
         StartMovie (gCDController);
     }
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Update (void)
 {
+#if !defined( __LP64__ )
+    
     // update volume settings:
     if (gCDController != NULL)
     {
@@ -428,12 +465,16 @@ void	CDAudio_Update (void)
             }
         }
     }
+
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CDAudio_Enable (BOOL theState)
 {
+#if !defined( __LP64__ )
+    
     static BOOL	myCDIsEnabled = YES;
     
     if (myCDIsEnabled != theState)
@@ -462,6 +503,8 @@ void	CDAudio_Enable (BOOL theState)
 		
         myCDIsEnabled = theState;
     }
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -471,6 +514,8 @@ int	CDAudio_Init (void)
     // register the volume var:
     cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE);
 
+#if !defined( __LP64__ )
+    
     // add "cd" and "mp3" console command:
     if ([[NSApp delegate] mediaFolder] != NULL)
     {
@@ -504,6 +549,8 @@ int	CDAudio_Init (void)
         Con_Print ("QuickTime MP3/MP4 driver failed.\n");
     }
     
+#endif // !__LP64__
+    
     return (0);
 }
 
@@ -511,6 +558,8 @@ int	CDAudio_Init (void)
 
 void	CDAudio_Shutdown (void)
 {
+#if !defined( __LP64__ )
+    
     // shutdown the audio IO:
     CDAudio_Stop ();
 
@@ -532,12 +581,16 @@ void	CDAudio_Shutdown (void)
         gCDTrackList = NULL;
         gCDTrackCount = 0;
     }
+    
+#endif // !__LP64__
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 void	CD_f (void)
 {
+#if !defined( __LP64__ )
+    
     char	*myCommandOption;
 
     // this command requires options!
@@ -705,6 +758,8 @@ void	CD_f (void)
         
 		return;
 	}
+
+#endif // !__LP64__
 }
 
 //______________________________________________________________________________________________________________eOF

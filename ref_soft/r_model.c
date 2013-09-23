@@ -329,7 +329,7 @@ void	R_NumberLeafs (mnode_t *node)
 	if (node->contents != -1)
 	{
 		leaf = (mleaf_t *)node;
-		leafnum = leaf - loadmodel->leafs;
+		leafnum = (int)(leaf - loadmodel->leafs);
 		if (leaf->contents & CONTENTS_SOLID)
 			return;
 		r_leaftovis[leafnum] = r_numvisleafs;

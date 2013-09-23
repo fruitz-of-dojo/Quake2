@@ -1231,9 +1231,9 @@ void R_DrawAlphaSurfaces( void )
 
 		// PGM - pass down all the texinfo flags, not just SURF_WARP.
 		if (s->texinfo->flags & SURF_TRANS66)
-			R_ClipAndDrawPoly( 0.60f, (s->texinfo->flags & SURF_WARP|SURF_FLOWING), true );
+			R_ClipAndDrawPoly( 0.60f, (s->texinfo->flags & (SURF_WARP|SURF_FLOWING)), true );
 		else
-			R_ClipAndDrawPoly( 0.30f, (s->texinfo->flags & SURF_WARP|SURF_FLOWING), true );
+			R_ClipAndDrawPoly( 0.30f, (s->texinfo->flags & (SURF_WARP|SURF_FLOWING)), true );
 //PGM
 //=======
 

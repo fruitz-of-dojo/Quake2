@@ -39,7 +39,7 @@ void PF_Unicast (edict_t *ent, qboolean reliable)
 	if (!ent)
 		return;
 
-	p = NUM_FOR_EDICT(ent);
+	p = (int) NUM_FOR_EDICT(ent);
 	if (p < 1 || p > maxclients->value)
 		return;
 
@@ -97,7 +97,7 @@ void PF_cprintf (edict_t *ent, int level, char *fmt, ...)
 
 	if (ent)
 	{
-		n = NUM_FOR_EDICT(ent);
+		n = (int) NUM_FOR_EDICT(ent);
 		if (n < 1 || n > maxclients->value)
 			Com_Error (ERR_DROP, "cprintf to a non-client");
 	}
@@ -130,7 +130,7 @@ void PF_centerprintf (edict_t *ent, char *fmt, ...)
 	va_list		argptr;
 	int			n;
 	
-	n = NUM_FOR_EDICT(ent);
+	n = (int) NUM_FOR_EDICT(ent);
 	if (n < 1 || n > maxclients->value)
 		return;	// Com_Error (ERR_DROP, "centerprintf to a non-client");
 

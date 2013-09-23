@@ -305,8 +305,8 @@ qboolean	NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			continue;
 
 		fromlen = sizeof(from);
-		ret = recvfrom (net_socket, net_message->data, net_message->maxsize
-			, 0, (struct sockaddr *)&from, &fromlen);
+		ret = (int)recvfrom (net_socket, net_message->data, net_message->maxsize
+			, 0, (struct sockaddr *)&from, (unsigned int*) &fromlen);
 
 		SockadrToNetadr (&from, net_from);
 
@@ -381,7 +381,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 	NetadrToSockadr (&to, &addr);
 
-	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
+	ret = (int)sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
 	if (ret == -1)
 	{
 		Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(),

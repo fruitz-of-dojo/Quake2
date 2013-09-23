@@ -1316,7 +1316,7 @@ image_t *GL_LoadPic (char *name, byte *pic, int width, int height, imagetype_t t
 	{
 nonscrap:
 		image->scrap = false;
-		image->texnum = TEXNUM_IMAGES + (image - gltextures);
+		image->texnum = (GLuint)(TEXNUM_IMAGES + (image - gltextures));
 		GL_Bind(image->texnum);
 		if (bits == 8)
 			image->has_alpha = GL_Upload8 (pic, width, height, (image->type != it_pic && image->type != it_sky), image->type == it_sky );
@@ -1380,7 +1380,7 @@ image_t	*GL_FindImage (char *name, imagetype_t type)
 
 	if (!name)
 		return NULL;	//	ri.Sys_Error (ERR_DROP, "GL_FindImage: NULL name");
-	len = strlen(name);
+	len = (int)strlen(name);
 	if (len<5)
 		return NULL;	//	ri.Sys_Error (ERR_DROP, "GL_FindImage: bad name: %s", name);
 
