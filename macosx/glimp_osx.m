@@ -64,9 +64,25 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+#ifndef GL_ATI_pn_triangles
+
+#define GL_PN_TRIANGLES_ATI                                  0x6090
+#define GL_MAX_PN_TRIANGLES_TESSELATION_LEVEL_ATI            0x6091
+#define GL_PN_TRIANGLES_POINT_MODE_ATI                       0x6092
+#define GL_PN_TRIANGLES_NORMAL_MODE_ATI                      0x6093
+#define GL_PN_TRIANGLES_TESSELATION_LEVEL_ATI                0x6094
+#define GL_PN_TRIANGLES_POINT_MODE_LINEAR_ATI                0x6095
+#define GL_PN_TRIANGLES_POINT_MODE_CUBIC_ATI                 0x6096
+#define GL_PN_TRIANGLES_NORMAL_MODE_LINEAR_ATI               0x6097
+#define GL_PN_TRIANGLES_NORMAL_MODE_QUADRATIC_ATI            0x6098
+
+#endif // GL_ATI_pn_triangles
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #pragma mark Defines
 
-#define CG_MAX_GAMMA_TABLE_SIZE	256		// Required for getting and setting non-overbright gamma tables.
+#define CG_MAX_GAMMA_TABLE_SIZE	1024		// Required for getting and setting non-overbright gamma tables.
 
 #pragma mark -
 
@@ -583,21 +599,21 @@ void	GLimp_SetTruform (void)
             }
             
             // enable pn_triangles. lightning required due to a bug of OpenGL!
-            qglEnable (GL_PN_TRIANGLES_ATIX);
+            qglEnable (GL_PN_TRIANGLES_ATI);
             qglEnable (GL_LIGHTING);
             qglLightModelfv (GL_LIGHT_MODEL_AMBIENT, gGLTruformAmbient);
             qglEnable (GL_COLOR_MATERIAL);
         
             // point mode:
-            //qglPNTrianglesiATIX (GL_PN_TRIANGLES_POINT_MODE_ATIX, GL_PN_TRIANGLES_POINT_MODE_LINEAR_ATIX);
-            qglPNTrianglesiATIX (GL_PN_TRIANGLES_POINT_MODE_ATIX, GL_PN_TRIANGLES_POINT_MODE_CUBIC_ATIX);
+            //qglPNTrianglesiATIX (GL_PN_TRIANGLES_POINT_MODE_ATI, GL_PN_TRIANGLES_POINT_MODE_LINEAR_ATI);
+            qglPNTrianglesiATIX (GL_PN_TRIANGLES_POINT_MODE_ATI, GL_PN_TRIANGLES_POINT_MODE_CUBIC_ATI);
             
             // normal mode (no normals used at all by Quake):
-            //qglPNTrianglesiATIX (GL_PN_TRIANGLES_NORMAL_MODE_ATIX, GL_PN_TRIANGLES_NORMAL_MODE_LINEAR_ATIX);
-            qglPNTrianglesiATIX (GL_PN_TRIANGLES_NORMAL_MODE_ATIX, GL_PN_TRIANGLES_NORMAL_MODE_QUADRATIC_ATIX);
+            //qglPNTrianglesiATIX (GL_PN_TRIANGLES_NORMAL_MODE_ATI, GL_PN_TRIANGLES_NORMAL_MODE_LINEAR_ATI);
+            qglPNTrianglesiATIX (GL_PN_TRIANGLES_NORMAL_MODE_ATI, GL_PN_TRIANGLES_NORMAL_MODE_QUADRATIC_ATI);
         
             // tesselation level:
-            qglPNTrianglesiATIX (GL_PN_TRIANGLES_TESSELATION_LEVEL_ATIX, myPNTriangleLevel);
+            qglPNTrianglesiATIX (GL_PN_TRIANGLES_TESSELATION_LEVEL_ATI, myPNTriangleLevel);
         }
         else
         {
@@ -606,7 +622,7 @@ void	GLimp_SetTruform (void)
                 myPNTriangleLevel = -1;
                 ri.Cvar_SetValue ("gl_truform", myPNTriangleLevel);
             }
-            qglDisable (GL_PN_TRIANGLES_ATIX);
+            qglDisable (GL_PN_TRIANGLES_ATI);
             qglDisable (GL_LIGHTING);
         }
         gGLTrufomTesselationLevel->modified = NO;

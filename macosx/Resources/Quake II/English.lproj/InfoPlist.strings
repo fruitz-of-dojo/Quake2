@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Quake II";
+CFBundleShortVersionString = "1.2";
+CFBundleGetInfoString = "Quake II version 1.2, Copyright 2002-2012 Fruitz Of Dojo.";
+NSHumanReadableCopyright = "Copyright 2002-2012 Fruitz Of Dojo.";

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
@@ -24,7 +24,7 @@
 				<string>q2plug</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>plug-in.icns</string>
+			<string>PlugIn</string>
 			<key>CFBundleTypeName</key>
 			<string>Quake II Game Plug-In</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -42,7 +42,7 @@
 				<string>q2renderer</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>plug-in.icns</string>
+			<string>PlugIn</string>
 			<key>CFBundleTypeName</key>
 			<string>Quake II renderer plug-in</string>
 			<key>CFBundleTypeOSTypes</key>
@@ -58,7 +58,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Quake II</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Quake II 1.1; Copyright 2002-2006 Fruitz Of Dojo</string>
+	<string>Quake II 1.2; Copyright 2002-2012 Fruitz Of Dojo</string>
 	<key>CFBundleHelpBookFolder</key>
 	<string>Quake II Help</string>
 	<key>CFBundleHelpBookName</key>
@@ -74,11 +74,15 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>CFBundleSignature</key>
 	<string>Qua2</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.0</string>
+	<string>1.2.0</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.action-games</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>10.6.0</string>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
 	<key>NSMainNibFile</key>

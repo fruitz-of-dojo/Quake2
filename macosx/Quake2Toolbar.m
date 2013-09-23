@@ -39,17 +39,17 @@
     // initialize the toolbar:
     mToolbarItems = [[NSMutableDictionary dictionary] retain];
     [self addToolbarItem: mToolbarItems identifier: SYS_ABOUT_TOOLBARITEM label: @"About" paletteLabel: @"About"
-                 toolTip: @"About Quake II." image: @"about.tiff"
+                 toolTip: @"About Quake II." image: @"About.icns"
                 selector: @selector (showAboutView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_AUDIO_TOOLBARITEM label: @"Sound" paletteLabel: @"Sound"
-                 toolTip: @"Change sound settings." image: @"sound.tiff" selector: @selector (showSoundView:)];
+                 toolTip: @"Change sound settings." image: @"Sound.icns" selector: @selector (showSoundView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_PARAM_TOOLBARITEM label: @"CLI" paletteLabel: @"CLI"
-                 toolTip: @"Set command-line parameters." image: @"cli.tiff"
-                 selector: @selector (showCLIView:)];
+                 toolTip: @"Set command-line parameters." image: @"Arguments.icns"
+                selector: @selector (showCLIView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_START_TOOLBARITEM label: @"Play" paletteLabel: @"Play"
-                 toolTip: @"Start the game." image: @"start.tiff"
-                 selector: @selector (startQuake2:)];
-                 
+                 toolTip: @"Start the game." image: @"Start.icns"
+                selector: @selector (startQuake2:)];
+    
     [myToolbar setDelegate: self];    
     [myToolbar setAllowsUserCustomization: NO];
     [myToolbar setAutosavesConfiguration: NO];
