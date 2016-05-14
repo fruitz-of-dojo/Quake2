@@ -137,7 +137,7 @@ static NSString*        sFDDebugDefaultName = @"";
     else
     {
         NSLog (@"%@An error has occured: %@\n", mLogPrefix, msg);
-        NSRunCriticalAlertPanel (@"An error has occured:", msg, nil, nil, nil);
+        NSRunCriticalAlertPanel (@"An error has occured:", @"%@", nil, nil, nil, msg);
     }
     
     [msg release];
@@ -158,7 +158,7 @@ static NSString*        sFDDebugDefaultName = @"";
     else
     {
         NSLog (@"%@An exception has occured: %@\n", mLogPrefix, msg);
-        NSRunCriticalAlertPanel (@"An exception has occured:", msg, nil, nil, nil);
+        NSRunCriticalAlertPanel (@"An exception has occured:",  @"%@", nil, nil, nil, msg);
     }
 }
 
@@ -184,7 +184,7 @@ static NSString*        sFDDebugDefaultName = @"";
             
             NSLog (@"%@%@ (%d): Assertion failed: %@", mLogPrefix, file, (unsigned int) line, msg);
             
-            resume = (NSRunCriticalAlertPanel (@"Assertion failed:", dlg, @"Resume", @"Crash", nil) == NSAlertDefaultReturn);
+            resume = (NSRunCriticalAlertPanel (@"Assertion failed:", @"%@", @"Resume", @"Crash", nil, dlg) == NSAlertDefaultReturn);
             
             [dlg release];
         }

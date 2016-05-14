@@ -43,8 +43,8 @@
                                                 myException = @"Unknown exception!";									\
                                             }																			\
                                             NSLog (@"An exception has occured: %@\n", myException);						\
-                                            NSRunCriticalAlertPanel (@"An exception has occured:", myException,			\
-                                                                     NULL, NULL, NULL);									\
+                                            NSRunCriticalAlertPanel (@"An exception has occured:", @"%@",				\
+                                                                     NULL, NULL, NULL, myException);					\
                                             exit (1);																	\
                                         }																				\
                                         NS_ENDHANDLER;

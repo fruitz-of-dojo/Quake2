@@ -29,7 +29,7 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-@interface Quake2 : NSObject
+@interface Quake2 : NSObject <NSApplicationDelegate, NSToolbarDelegate>
 {
     IBOutlet NSWindow *				mediascanWindow;
     
@@ -106,15 +106,14 @@
 - (void) closeMP3Sheet: (NSOpenPanel *) theSheet returnCode: (int) theCode contextInfo: (void *) theInfo;
 - (void) connectToServer: (NSPasteboard *) thePasteboard userData:(NSString *) theData error:(NSString **)theError;
 
-- (BOOL) hostInitialized;
-- (void) setHostInitialized: (BOOL) theState;
+@property BOOL hostInitialized;
 
 - (BOOL) allowAppleScriptRun;
 - (void) enableAppleScriptRun: (BOOL) theState;
 - (void) requestCommand: (NSString *) theCommand;
 
-- (NSString *) modFolder;
-- (NSString *) mediaFolder;
+@property (readonly, copy) NSString *modFolder;
+@property (readonly, copy) NSString *mediaFolder;
 - (BOOL) abortMediaScan;
 - (BOOL) wasDragged;
 

@@ -14,30 +14,28 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDDisplay : NSObject
-{
-}
 
-+ (NSArray*) displays;
++ (NSArray<FDDisplay*>*) displays;
 + (FDDisplay*) mainDisplay;
 
-- (NSRect) frame;
+@property (readonly) NSRect frame;
 
 - (NSString*) description;
 
-- (FDDisplayMode*) displayMode;
-- (FDDisplayMode*) originalMode;
+@property (readonly, retain) FDDisplayMode* displayMode;
+@property (readonly, retain) FDDisplayMode* originalMode;
 
-- (NSArray*) displayModes;
+- (NSArray<FDDisplayMode*>*) displayModes;
 
 - (BOOL) setDisplayMode: (FDDisplayMode*) displayMode;
 
-- (BOOL) isMainDisplay;
-- (BOOL) isBuiltinDisplay;
-- (BOOL) isCaptured;
+@property (readonly, getter=isMainDisplay) BOOL mainDisplay;
+@property (readonly, getter=isBuiltinDisplay) BOOL builtinDisplay;
+@property (readonly, getter=isCaptured) BOOL captured;
 
-- (BOOL) hasFSAA;
+@property (readonly) BOOL hasFSAA;
 
-- (float) gamma; 
+@property (readonly) float gamma;
 - (void) setGamma: (float) gamma update: (BOOL) doUpdate;
 
 - (void) fadeOutDisplay: (float) seconds;

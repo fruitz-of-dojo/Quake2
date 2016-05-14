@@ -12,10 +12,10 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDModifierCheck : NSObject
-{
-}
 
-+ (BOOL) checkForModifier: (NSUInteger) theModifierKeyMask;
+- (instancetype) init UNAVAILABLE_ATTRIBUTE;
+
++ (BOOL) checkForModifier: (NSEventModifierFlags) theModifierKeyMask;
 
 + (BOOL) checkForAlternateKey;
 + (BOOL) checkForCommandKey;

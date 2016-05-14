@@ -68,20 +68,20 @@ typedef struct
     FDHIDManager*           mDelegate;
 }
 
-+ (NSArray*) matchingDictionaries: (const FDHIDUsageToDevice*) usageMap withCount: (NSUInteger) numUsages;
++ (NSArray<NSDictionary<NSString*,NSNumber*>*>*) matchingDictionaries: (const FDHIDUsageToDevice*) usageMap withCount: (NSUInteger) numUsages;
 + (FDHIDDevice*) deviceWithDevice: (IOHIDDeviceRef) pDevice
                          usageMap: (const FDHIDUsageToDevice*) pUsageMap
                             count: (NSUInteger) numUsages;
 
-- (id) initWithDevice: (IOHIDDeviceRef) pDevice deviceDescriptors: (const FDHIDDeviceDesc*) deviceDescriptors;
+- (instancetype) initWithDevice: (IOHIDDeviceRef) pDevice deviceDescriptors: (const FDHIDDeviceDesc*) deviceDescriptors;
 
-- (void) setDelegate: (FDHIDManager*) delegate;
+@property (assign) FDHIDManager* delegate;
 - (void) pushEvent: (const FDHIDEvent*) pEvent;
 
-- (IOHIDDeviceRef) iohidDeviceRef;
+@property (readonly, assign) IOHIDDeviceRef iohidDeviceRef;
 - (void) handleInput: (IOHIDValueRef) pValue;
-- (FDHIDElementMap*) elementMap;
-- (NSUInteger) elementCount;
+@property (readonly) FDHIDElementMap* elementMap;
+@property (readonly) NSUInteger elementCount;
 - (void) flush;
 
 @end
@@ -101,7 +101,7 @@ typedef struct
 
 }
 
-- (id) initWithDevice: (_FDHIDDevice*) device;
+- (instancetype) initWithDevice: (_FDHIDDevice*) device;
 
 @end
 

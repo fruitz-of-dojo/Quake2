@@ -296,7 +296,7 @@ BOOL	CDAudio_GetTrackList (void)
             
             // preserve the device name:
             CDAudio_SafePath (myMountList[myMountCount].f_mntonname);
-            myMountPath = [NSString stringWithCString: myMountList[myMountCount].f_mntonname];
+            myMountPath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation: myMountList[myMountCount].f_mntonname length: strnlen(myMountList[myMountCount].f_mntonname, MAX_OSPATH)];
     
             Con_Print ("Scanning for audio tracks. Be patient!\n");
             CDAudio_AddTracks2List (myMountPath, [NSArray arrayWithObjects: @"aiff", @"cdda", NULL]);
@@ -711,7 +711,7 @@ void	CD_f (void)
         // eject the CD:
         if (gCDDevice[0] != 0x00)
         {
-            NSString	*myDevicePath = [NSString stringWithCString: gCDDevice];
+            NSString	*myDevicePath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation: gCDDevice length: strnlen(gCDDevice, MAX_OSPATH)];
             
             if (myDevicePath != NULL)
             {

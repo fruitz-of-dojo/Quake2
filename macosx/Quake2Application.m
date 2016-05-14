@@ -27,7 +27,7 @@
 - (void) sendEvent: (NSEvent *) theEvent
 {
     // we need to intercept NSApps "sendEvent:" action:
-    if ([[self delegate] hostInitialized] == YES)
+    if ([(Quake2*)[self delegate] hostInitialized] == YES)
     {
         if ([NSApp isHidden] == YES)
         {
@@ -56,7 +56,7 @@
 
 - (void) handleRunCommand: (NSScriptCommand *) theCommand
 {
-    if ([[self delegate] allowAppleScriptRun] == YES)
+    if ([(Quake2*)[self delegate] allowAppleScriptRun] == YES)
     {
         NSDictionary *	myArguments = [theCommand evaluatedArguments];
     
@@ -67,15 +67,15 @@
             // Check if we got command line parameters:
             if (myParameters != nil && [myParameters isEqualToString: @""] == NO)
             {
-                [[self delegate] stringToParameters: myParameters];
+                [(Quake2*)[self delegate] stringToParameters: myParameters];
             }
             else
             {
-                [[self delegate] stringToParameters: @""];
+                [(Quake2*)[self delegate] stringToParameters: @""];
             }
         }
 		
-		[[self delegate] enableAppleScriptRun: NO];
+		[(Quake2*)[self delegate] enableAppleScriptRun: NO];
     }
 }
 
@@ -93,13 +93,13 @@
         if (myCommandList != nil && [myCommandList isEqualToString: @""] == NO)
         {
             // required because of the options dialog - we have to wait with the command until host_init() is finished!
-            if ([[self delegate] hostInitialized] == YES)
+            if ([(Quake2*)[self delegate] hostInitialized] == YES)
             {
-                Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", [myCommandList cString]));
+                Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", [myCommandList cStringUsingEncoding:NSASCIIStringEncoding]));
             }
             else
             {
-				[[self delegate] requestCommand: myCommandList];
+				[(Quake2*)[self delegate] requestCommand: myCommandList];
             }
         }
     }

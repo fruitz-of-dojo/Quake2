@@ -12,8 +12,8 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDPreferences : NSObject
-{
-}
+
+- (instancetype) init UNAVAILABLE_ATTRIBUTE;
 
 + (FDPreferences*) sharedPrefs;
 

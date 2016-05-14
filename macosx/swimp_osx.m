@@ -49,7 +49,28 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-@interface Quake2View : NSView
+#pragma mark outdated functions
+
+#ifdef __MAC_10_9
+
+typedef struct _CGDirectPaletteRef * CGDirectPaletteRef NS_DEPRECATED_MAC(10_0, 10_6);
+
+extern size_t CGDisplayBytesPerRow (CGDirectDisplayID display) NS_DEPRECATED_MAC(10_0, 10_6);
+extern void * CGDisplayBaseAddress (CGDirectDisplayID display) NS_DEPRECATED_MAC(10_0, 10_6);
+extern CGDisplayErr CGDisplayWaitForBeamPositionOutsideLines (CGDirectDisplayID display, uint32_t upperScanLine, uint32_t lowerScanLine) NS_DEPRECATED_MAC(10_0, 10_6);
+extern CGDisplayErr CGDisplaySetPalette (CGDirectDisplayID display, CGDirectPaletteRef palette) NS_DEPRECATED_MAC(10_0, 10_6);
+extern boolean_t CGDisplayCanSetPalette (CGDirectDisplayID display) NS_DEPRECATED_MAC(10_0, 10_6);
+extern CGDirectPaletteRef CGPaletteCreateWithSamples (CGDeviceColor * sampleTable, uint32_t sampleCount) NS_DEPRECATED_MAC(10_0, 10_6);
+
+//#define CGDisplayCanSetPalette(...) (NO)
+
+#endif
+
+#pragma mark -
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@interface Quake2View : NSView <NSWindowDelegate>
 @end
 
 #pragma mark -
@@ -93,8 +114,8 @@ static	void		SWimp_DisableQuartzInterpolation (id theView);
 
 qboolean SWimp_Screenshot (SInt8 *theFilename, void *theBitmap, UInt32 theWidth, UInt32 theHeight, UInt32 theRowbytes)
 {
-    NSString *	myFilename		= [NSString stringWithCString: (const char*) theFilename];
-    NSSize		myBitmapSize	= NSMakeSize ((float) theWidth, (float) theHeight);
+    NSString *	myFilename		= [[NSFileManager defaultManager] stringWithFileSystemRepresentation:(const char*) theFilename length:strlen((const char*) theFilename)];
+    NSSize		myBitmapSize	= NSMakeSize ((CGFloat) theWidth, (CGFloat) theHeight);
     
     return ([FDScreenshot writeToPNG: myFilename fromRGB24: theBitmap withSize: myBitmapSize rowbytes: theRowbytes]);
 }
@@ -182,7 +203,7 @@ void	SWimp_BlitWindow (void)
                 NSRect	myViewRect			= [gVidView bounds];
                 NSPoint	myGrowboxLocation	= NSMakePoint (NSMaxX (myViewRect) - myGrowboxSize.width, NSMinY (myViewRect));
                 
-                [gVidGrowboxImage compositeToPoint: myGrowboxLocation operation: NSCompositeSourceOver];
+                [gVidGrowboxImage drawAtPoint:myGrowboxLocation fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0];
             }
             
             [gVidView unlockFocus];

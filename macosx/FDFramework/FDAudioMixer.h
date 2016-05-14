@@ -12,12 +12,10 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDAudioMixer : NSObject
-{
-}
 
 + (FDAudioMixer*) sharedAudioMixer;
 
-- (id) init;
+- (instancetype) init;
 
 - (void) start;
 - (void) stop;

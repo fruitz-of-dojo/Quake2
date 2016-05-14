@@ -247,6 +247,23 @@
 		D2DF6E6F1529635E00B80579 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E6A1529635E00B80579 /* ServicesMenu.strings */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5580B6181CE7ADB7001EF9BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2C835901529122500867DFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2DF6DCA1529551C00B80579;
+			remoteInfo = "GL Renderer Module";
+		};
+		5580B61A1CE7ADB7001EF9BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2C835901529122500867DFC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2DF6E07152958A400B80579;
+			remoteInfo = "SW Renderer Module";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		D2C8366D1529437000867DFC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -745,6 +762,7 @@
 			);
 			name = Sourcecode;
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		D2C835C61529160E00867DFC /* Application */ = {
 			isa = PBXGroup;
@@ -1322,6 +1340,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				5580B6191CE7ADB7001EF9BB /* PBXTargetDependency */,
+				5580B61B1CE7ADB7001EF9BB /* PBXTargetDependency */,
 			);
 			name = "Quake II";
 			productName = "Quake II";
@@ -1750,6 +1770,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5580B6191CE7ADB7001EF9BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2DF6DCA1529551C00B80579 /* GL Renderer Module */;
+			targetProxy = 5580B6181CE7ADB7001EF9BB /* PBXContainerItemProxy */;
+		};
+		5580B61B1CE7ADB7001EF9BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2DF6E07152958A400B80579 /* SW Renderer Module */;
+			targetProxy = 5580B61A1CE7ADB7001EF9BB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		D2075FE91529646A00F14280 /* ServicesMenu.strings */ = {
