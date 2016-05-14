@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D2075FEB1529646A00F14280 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2075FE91529646A00F14280 /* ServicesMenu.strings */; };
-		D2075FEE1529649700F14280 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2075FE91529646A00F14280 /* ServicesMenu.strings */; };
-		D2075FF0152964A800F14280 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2075FE91529646A00F14280 /* ServicesMenu.strings */; };
 		D2075FF2152965F500F14280 /* Quake II.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF1152965F500F14280 /* Quake II.scriptSuite */; };
 		D2075FFB1529666300F14280 /* About.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF31529666300F14280 /* About.icns */; };
 		D2075FFC1529666300F14280 /* Arguments.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF41529666300F14280 /* Arguments.icns */; };
@@ -240,11 +238,10 @@
 		D2DF6E4115295A8600B80579 /* glob.c in Sources */ = {isa = PBXBuildFile; fileRef = D2C8365B15291FD500867DFC /* glob.c */; };
 		D2DF6E4815295BA700B80579 /* GrowBox.tiff in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E4615295BA700B80579 /* GrowBox.tiff */; };
 		D2DF6E4E15295BB800B80579 /* Controller.nib in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E4A15295BB800B80579 /* Controller.nib */; };
-		D2DF6E5115295E2D00B80579 /* ref_gl.q2plug in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2DF6DCB1529551C00B80579 /* ref_gl.q2plug */; };
-		D2DF6E5215295E3000B80579 /* ref_soft.q2plug in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2DF6E08152958A400B80579 /* ref_soft.q2plug */; };
+		D2DF6E5115295E2D00B80579 /* ref_gl.q2plug in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2DF6DCB1529551C00B80579 /* ref_gl.q2plug */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D2DF6E5215295E3000B80579 /* ref_soft.q2plug in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2DF6E08152958A400B80579 /* ref_soft.q2plug */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D2DF6E6C1529635E00B80579 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E641529635E00B80579 /* Credits.rtf */; };
 		D2DF6E6E1529635E00B80579 /* Quake II.scriptTerminology in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E681529635E00B80579 /* Quake II.scriptTerminology */; };
-		D2DF6E6F1529635E00B80579 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2DF6E6A1529635E00B80579 /* ServicesMenu.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1439,7 +1436,7 @@
 		D2C835901529122500867DFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0730;
 			};
 			buildConfigurationList = D2C835931529122500867DFC /* Build configuration list for PBXProject "Quake II" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1475,10 +1472,7 @@
 				D2DF6E4E15295BB800B80579 /* Controller.nib in Resources */,
 				D2DF6E6C1529635E00B80579 /* Credits.rtf in Resources */,
 				D2DF6E6E1529635E00B80579 /* Quake II.scriptTerminology in Resources */,
-				D2DF6E6F1529635E00B80579 /* ServicesMenu.strings in Resources */,
 				D2075FEB1529646A00F14280 /* ServicesMenu.strings in Resources */,
-				D2075FEE1529649700F14280 /* ServicesMenu.strings in Resources */,
-				D2075FF0152964A800F14280 /* ServicesMenu.strings in Resources */,
 				D2075FF2152965F500F14280 /* Quake II.scriptSuite in Resources */,
 				D2075FFB1529666300F14280 /* About.icns in Resources */,
 				D2075FFC1529666300F14280 /* Arguments.icns in Resources */,
@@ -1827,14 +1821,6 @@
 			name = "Quake II.scriptTerminology";
 			sourceTree = "<group>";
 		};
-		D2DF6E6A1529635E00B80579 /* ServicesMenu.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-			);
-			name = ServicesMenu.strings;
-			path = "/Users/awe/Documents/Development/q2source/quake2-3.21/macosx";
-			sourceTree = "<absolute>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1843,10 +1829,20 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1856,7 +1852,9 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1869,14 +1867,25 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -1887,6 +1896,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1896,7 +1906,7 @@
 					C_ONLY,
 				);
 				INFOPLIST_FILE = "Resources/Quake II/Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fruitz-of-dojo.quake2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1906,6 +1916,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1915,7 +1926,7 @@
 					C_ONLY,
 				);
 				INFOPLIST_FILE = "Resources/Quake II/Info.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fruitz-of-dojo.quake2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1949,6 +1960,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1967,6 +1979,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1984,6 +1997,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2004,6 +2018,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2022,6 +2037,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2040,6 +2056,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2058,6 +2075,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2075,6 +2093,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = QPrefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (

@@ -358,8 +358,8 @@ qboolean VID_LoadRefresh (char *theName)
     GetRefAPI_t		myGetRefAPIProc;
     NSBundle *		myAppBundle = NULL;
     char *			myBundlePath = NULL;
-	char *			myCurrentPath[MAXPATHLEN];
-	char *			myFileName[MAXPATHLEN];
+	char 			myCurrentPath[MAXPATHLEN];
+	char 			myFileName[MAXPATHLEN];
 
     // get current game directory:
     getcwd (myCurrentPath, sizeof (myCurrentPath));

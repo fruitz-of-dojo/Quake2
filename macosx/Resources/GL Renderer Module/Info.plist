@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>ref_gl</string>
+	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Quake II 1.2; OpenGL Renderer Plugin; Copyright 2001-2012 Fruitz Of Dojo</string>
 	<key>CFBundleInfoDictionaryVersion</key>
