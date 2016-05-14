@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D2075FEB1529646A00F14280 /* ServicesMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2075FE91529646A00F14280 /* ServicesMenu.strings */; };
 		D2075FF2152965F500F14280 /* Quake II.scriptSuite in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF1152965F500F14280 /* Quake II.scriptSuite */; };
-		D2075FFB1529666300F14280 /* About.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF31529666300F14280 /* About.icns */; };
 		D2075FFC1529666300F14280 /* Arguments.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF41529666300F14280 /* Arguments.icns */; };
 		D2075FFD1529666300F14280 /* AudioCD.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF51529666300F14280 /* AudioCD.icns */; };
 		D2075FFE1529666300F14280 /* Displays.icns in Resources */ = {isa = PBXBuildFile; fileRef = D2075FF61529666300F14280 /* Displays.icns */; };
@@ -289,7 +288,6 @@
 		D2075FED1529649700F14280 /* Swedish */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Swedish; path = "Resources/Quake II/Swedish.lproj/ServicesMenu.strings"; sourceTree = "<group>"; };
 		D2075FEF152964A800F14280 /* German */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = German; path = "Resources/Quake II/German.lproj/ServicesMenu.strings"; sourceTree = "<group>"; };
 		D2075FF1152965F500F14280 /* Quake II.scriptSuite */ = {isa = PBXFileReference; lastKnownFileType = text.plist.scriptSuite; name = "Quake II.scriptSuite"; path = "Resources/Quake II/Quake II.scriptSuite"; sourceTree = "<group>"; };
-		D2075FF31529666300F14280 /* About.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = About.icns; path = "Resources/Quake II/About.icns"; sourceTree = "<group>"; };
 		D2075FF41529666300F14280 /* Arguments.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Arguments.icns; path = "Resources/Quake II/Arguments.icns"; sourceTree = "<group>"; };
 		D2075FF51529666300F14280 /* AudioCD.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = AudioCD.icns; path = "Resources/Quake II/AudioCD.icns"; sourceTree = "<group>"; };
 		D2075FF61529666300F14280 /* Displays.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Displays.icns; path = "Resources/Quake II/Displays.icns"; sourceTree = "<group>"; };
@@ -1110,7 +1108,6 @@
 		D2C837161529476D00867DFC /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				D2075FF31529666300F14280 /* About.icns */,
 				D2075FF41529666300F14280 /* Arguments.icns */,
 				D2075FF51529666300F14280 /* AudioCD.icns */,
 				D2075FF61529666300F14280 /* Displays.icns */,
@@ -1474,7 +1471,6 @@
 				D2DF6E6E1529635E00B80579 /* Quake II.scriptTerminology in Resources */,
 				D2075FEB1529646A00F14280 /* ServicesMenu.strings in Resources */,
 				D2075FF2152965F500F14280 /* Quake II.scriptSuite in Resources */,
-				D2075FFB1529666300F14280 /* About.icns in Resources */,
 				D2075FFC1529666300F14280 /* Arguments.icns in Resources */,
 				D2075FFD1529666300F14280 /* AudioCD.icns in Resources */,
 				D2075FFE1529666300F14280 /* Displays.icns in Resources */,
