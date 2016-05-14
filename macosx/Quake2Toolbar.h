@@ -18,7 +18,7 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-@interface Quake2 (Toolbar)
+@interface Quake2 (Toolbar) <NSToolbarDelegate>
 
 - (void) awakeFromNib;
 - (BOOL) validateToolbarItem: (NSToolbarItem *) theItem;
@@ -28,7 +28,10 @@
 - (NSArray *) toolbarAllowedItemIdentifiers: (NSToolbar*) theToolbar;
 - (void) addToolbarItem: (NSMutableDictionary *) theDict identifier: (NSString *) theIdentifier
                   label: (NSString *) theLabel paletteLabel: (NSString *) thePaletteLabel
-                toolTip: (NSString *) theToolTip image: (id) theItemContent selector: (SEL) theAction;
+                toolTip: (NSString *) theToolTip image: (NSImage *) theItemContent selector: (SEL) theAction;
+- (void) addToolbarItem: (NSMutableDictionary *) theDict identifier: (NSString *) theIdentifier
+                  label: (NSString *) theLabel paletteLabel: (NSString *) thePaletteLabel
+                toolTip: (NSString *) theToolTip imageNamed: (NSString *) theItemContent selector: (SEL) theAction;
 - (void) changeView: (NSView *) theView title: (NSString *) theTitle;
 - (IBAction) showAboutView: (id) theSender;
 - (IBAction) showSoundView: (id) theSender;

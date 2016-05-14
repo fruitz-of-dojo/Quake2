@@ -29,7 +29,7 @@
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-@interface Quake2 : NSObject <NSApplicationDelegate, NSToolbarDelegate>
+@interface Quake2 : NSObject <NSApplicationDelegate>
 {
     IBOutlet NSWindow *				mediascanWindow;
     
