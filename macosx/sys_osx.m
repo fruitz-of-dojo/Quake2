@@ -90,7 +90,6 @@ extern	void	IN_SetKeyboardRepeatEnabled (BOOL theState);
 extern	void	IN_SetF12EjectEnabled (qboolean theState);
 extern	void	IN_ShowCursor (BOOL theState);
 extern	void	IN_ReceiveMouseMove (int32_t theDeltaX, int32_t theDeltaY);
-extern  BOOL	CDAudio_GetTrackList (void);
 extern	void	CDAudio_Enable (BOOL theState);
 extern	void	VID_SetPaused (BOOL theState);
 
