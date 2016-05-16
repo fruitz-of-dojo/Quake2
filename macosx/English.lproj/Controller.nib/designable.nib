@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="Quake2Application">
+            <connections>
+                <outlet property="delegate" destination="195" id="196"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <customObject id="195" userLabel="Quake2" customClass="Quake2">
+            <connections>
+                <outlet property="aboutView" destination="346" id="360"/>
+                <outlet property="audioView" destination="323" id="362"/>
+                <outlet property="linkView" destination="357" id="363"/>
+                <outlet property="mediascanProgressIndicator" destination="314" id="317"/>
+                <outlet property="mediascanText" destination="313" id="316"/>
+                <outlet property="mediascanWindow" destination="311" id="315"/>
+                <outlet property="mp3Button" destination="326" id="342"/>
+                <outlet property="mp3CheckBox" destination="327" id="343"/>
+                <outlet property="mp3HelpView" destination="318" id="320"/>
+                <outlet property="mp3TextField" destination="328" id="333"/>
+                <outlet property="optionCheckBox" destination="349" id="359"/>
+                <outlet property="parameterCheckBox" destination="338" id="344"/>
+                <outlet property="parameterTextField" destination="339" id="345"/>
+                <outlet property="parameterView" destination="335" id="361"/>
+                <outlet property="pasteMenuItem" destination="209" id="290"/>
+                <outlet property="startupWindow" destination="273" id="288"/>
+            </connections>
+        </customObject>
+        <menu title="Controller" systemMenu="main" id="213" userLabel="MainMenu">
+            <items>
+                <menuItem title="Quake II" id="212">
+                    <menu key="submenu" title="Quake II" systemMenu="apple" id="206">
+                        <items>
+                            <menuItem title="About Quake II" id="197">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-2" id="258"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Preferences..." id="233"/>
+                            <menuItem isSeparatorItem="YES" id="242">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Services" id="241">
+                                <menu key="submenu" title="Services" systemMenu="services" id="236"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="231">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Hide Quake II" keyEquivalent="h" id="215">
+                                <connections>
+                                    <action selector="hide:" target="-2" id="259"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" id="230">
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-2" id="260"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="227">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-2" id="261"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="217">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Quit Quake II" keyEquivalent="q" id="200">
+                                <connections>
+                                    <action selector="terminate:" target="-2" id="282"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" id="226">
+                    <menu key="submenu" title="Edit" id="223">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="222">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="249"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="201">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="257"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="224">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Cut" keyEquivalent="x" id="244">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="254"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="221">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="246"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="209">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="289"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Clear" id="225">
+                                <connections>
+                                    <action selector="clear:" target="-1" id="253"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="202">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="247"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="214">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Find" id="210">
+                                <menu key="submenu" title="Find" id="198">
+                                    <items>
+                                        <menuItem title="Find..." keyEquivalent="f" id="243"/>
+                                        <menuItem title="Find Next" keyEquivalent="g" id="218"/>
+                                        <menuItem title="Find Previous" keyEquivalent="d" id="205"/>
+                                        <menuItem title="Use Selection for Find" keyEquivalent="e" id="238"/>
+                                        <menuItem title="Scroll to Selection" keyEquivalent="j" id="207"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Spelling" id="220">
+                                <menu key="submenu" title="Spelling" id="204">
+                                    <items>
+                                        <menuItem title="Spelling..." keyEquivalent=":" id="235">
+                                            <connections>
+                                                <action selector="showGuessPanel:" target="-1" id="250"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling" keyEquivalent=";" id="203">
+                                            <connections>
+                                                <action selector="checkSpelling:" target="-1" id="245"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling As You Type" id="228">
+                                            <connections>
+                                                <action selector="toggleContinuousSpellChecking:" target="-1" id="256"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" id="199">
+                    <menu key="submenu" title="Window" systemMenu="window" id="216">
+                        <items>
+                            <menuItem title="Minimize" keyEquivalent="m" id="232">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="251"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="237">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Bring All to Front" id="239">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="248"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" id="240">
+                    <menu key="submenu" title="Help" id="234">
+                        <items>
+                            <menuItem title="Quake II Help" keyEquivalent="?" id="219">
+                                <connections>
+                                    <action selector="showHelp:" target="-1" id="255"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="264">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Visit &quot;Fruitz Of Dojo&quot;" id="265">
+                                <connections>
+                                    <action selector="visitFOD:" target="195" id="266"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+        </menu>
+        <window title="Quake II" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="273" userLabel="Window">
+            <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="79" y="428" width="432" height="232"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="832"/>
+            <view key="contentView" id="274">
+                <rect key="frame" x="1" y="9" width="432" height="232"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+        </window>
+        <window title="Quake II" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="311" userLabel="Window1">
+            <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="192" y="351" width="329" height="79"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="832"/>
+            <view key="contentView" id="312">
+                <rect key="frame" x="1" y="9" width="329" height="79"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField verticalHuggingPriority="750" id="313">
+                        <rect key="frame" x="17" y="45" width="295" height="14"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" id="365">
+                            <font key="font" metaFont="smallSystem"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <progressIndicator verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="bar" id="314">
+                        <rect key="frame" x="19" y="21" width="223" height="12"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </progressIndicator>
+                    <button verticalHuggingPriority="750" id="321">
+                        <rect key="frame" x="244" y="13" width="70" height="28"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" inset="2" id="366">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="smallSystem"/>
+                            <string key="keyEquivalent">.</string>
+                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="stopMediaScan:" target="195" id="322"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+        </window>
+        <customView id="318" userLabel="View">
+            <rect key="frame" x="0.0" y="0.0" width="311" height="42"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" id="319">
+                    <rect key="frame" x="-3" y="0.0" width="317" height="42"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="367">
+                        <font key="font" metaFont="smallSystem"/>
+                        <string key="title">Please select a folder that holds MP3 or MP4 files. The filenames must end on the extension ".mp3" or ".mp4". Files that are stored in subfolders will be recognized, too.</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+        </customView>
+        <customView id="323" userLabel="View1">
+            <rect key="frame" x="0.0" y="0.0" width="432" height="158"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <box boxType="oldStyle" borderType="none" titlePosition="noTitle" id="324">
+                    <rect key="frame" x="0.0" y="20" width="432" height="118"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <view key="contentView" id="AOJ-eD-SoW">
+                        <rect key="frame" x="0.0" y="0.0" width="432" height="118"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button toolTip="Enable this checkbox if you want to use MP3 files instead of AudioCDs." id="327">
+                                <rect key="frame" x="12" y="84" width="404" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                <buttonCell key="cell" type="check" title="Use MP3 or MP4 files instead of AudioCDs, located at folder:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="368">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleMP3Playback:" target="195" id="332"/>
+                                </connections>
+                            </button>
+                            <textField toolTip="This is the folder which will be scanned for MP3 files." verticalHuggingPriority="750" id="328">
+                                <rect key="frame" x="11" y="56" width="402" height="22"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="369">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button toolTip="Select the folder that contains the MP3 files." verticalHuggingPriority="750" id="326">
+                                <rect key="frame" x="156" y="8" width="121" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <buttonCell key="cell" type="push" title="Select Folder" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="370">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="selectMP3Folder:" target="195" id="334"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+        </customView>
+        <customView id="335" userLabel="View2">
+            <rect key="frame" x="0.0" y="0.0" width="432" height="116"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <box boxType="oldStyle" borderType="none" titlePosition="noTitle" id="336">
+                    <rect key="frame" x="0.0" y="20" width="432" height="76"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <view key="contentView" id="aLK-sv-lQr">
+                        <rect key="frame" x="0.0" y="0.0" width="432" height="76"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button toolTip="Use this parameters if none are provided via drag'n'drop or a real command line." id="338">
+                                <rect key="frame" x="14" y="44" width="284" height="18"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <buttonCell key="cell" type="check" title="Use as default command line parameters:" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="371">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="toggleParameterTextField:" target="195" id="341"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" id="339">
+                                <rect key="frame" x="16" y="16" width="400" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" drawsBackground="YES" id="372">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+        </customView>
+        <customView id="346" userLabel="View3">
+            <rect key="frame" x="0.0" y="0.0" width="433" height="217"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <box boxType="oldStyle" borderType="none" titlePosition="noTitle" id="347">
+                    <rect key="frame" x="0.0" y="20" width="432" height="177"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <view key="contentView" id="PB9-75-FGU">
+                        <rect key="frame" x="0.0" y="0.0" width="432" height="177"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <box boxType="secondary" borderType="bezel" titlePosition="noTitle" id="350">
+                                <rect key="frame" x="16" y="46" width="400" height="115"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" id="rYi-Vn-ToG">
+                                    <rect key="frame" x="3" y="3" width="394" height="109"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField verticalHuggingPriority="750" id="352">
+                                            <rect key="frame" x="114" y="77" width="271" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Quake II for MacOS X" id="373">
+                                                <font key="font" metaFont="systemBold"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" id="358">
+                                            <rect key="frame" x="111" y="16" width="54" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="right" title="Visit:" id="374">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="354">
+                                            <rect key="frame" x="114" y="64" width="271" height="5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                            <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <font key="titleFont" metaFont="system"/>
+                                        </box>
+                                        <customView id="357" customClass="FDLinkView">
+                                            <rect key="frame" x="170" y="16" width="197" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </customView>
+                                        <imageView id="353">
+                                            <rect key="frame" x="14" y="16" width="81" height="81"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="topLeft" imageScaling="proportionallyDown" image="Quake II" id="375"/>
+                                        </imageView>
+                                        <textField verticalHuggingPriority="750" id="356">
+                                            <rect key="frame" x="111" y="41" width="277" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Ported by: Axel 'awe' Wefers" id="376">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                </view>
+                                <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                                <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <font key="titleFont" metaFont="system"/>
+                            </box>
+                            <button id="349">
+                                <rect key="frame" x="38" y="14" width="356" height="18"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <buttonCell key="cell" type="check" title="Display this dialog only when holding the Option key" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="377">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+        </customView>
+    </objects>
+    <resources>
+        <image name="Quake II" width="128" height="128"/>
+    </resources>
+</document>
