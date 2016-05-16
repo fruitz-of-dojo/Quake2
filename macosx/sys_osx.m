@@ -252,7 +252,7 @@ void *	Sys_GetGameAPI (void *theParameters)
 char *Sys_ConsoleInput (void)
 {
     static char 	myText[256];
-    int     		myLength;
+    ssize_t    		myLength;
     fd_set			myFDSet;
     struct timeval	myTimeOut;
     
