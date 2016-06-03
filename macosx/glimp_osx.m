@@ -110,9 +110,9 @@ typedef struct		{
 
 #pragma mark Variables
 
-qboolean					gGLTruformAvailable = NO;
-long						gGLMaxARBMultiSampleBuffers;
-long						gGLCurARBMultiSamples;
+qboolean					 gGLTruformAvailable = NO;
+NSOpenGLPixelFormatAttribute gGLMaxARBMultiSampleBuffers;
+NSOpenGLPixelFormatAttribute gGLCurARBMultiSamples;
 
 static CFDictionaryRef		gGLOriginalMode;
 static CGGammaValue			gGLOriginalGamma[9];
@@ -979,21 +979,6 @@ void	GLimp_AppActivate (qboolean active)
     // not required!
 }
 
-#pragma mark -
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-/*
-@implementation NSOpenGLContext (CGLContextAccess)
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- (CGLContextObj) cglContext;
-{
-    return (_contextAuxiliary);
-}
-
-@end
-*/
 #pragma mark -
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
