@@ -106,12 +106,6 @@ typedef struct		{
 
 #pragma mark -
 
-@interface NSOpenGLContext (CGLContextAccess)
-- (CGLContextObj) cglContext;
-@end
-
-#pragma mark -
-
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #pragma mark Variables
@@ -905,7 +899,7 @@ Boolean	GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate,
     if (theFullscreen)
     {
         // attach the OpenGL context to fullscreen:
-        if (CGLSetFullScreen ([gGLContext cglContext]) != CGDisplayNoErr)
+        if (CGLSetFullScreen ([gGLContext CGLContextObj]) != CGDisplayNoErr)
         {
             ri.Sys_Error (ERR_FATAL, "Unable to use the selected displaymode for fullscreen OpenGL.");
         }
