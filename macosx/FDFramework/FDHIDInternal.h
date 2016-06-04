@@ -88,6 +88,13 @@ typedef struct
 
 //----------------------------------------------------------------------------------------------------------------------------
 
+@interface _FDHIDDevice (Subclass)
++ (FDHIDDevice*) deviceWithDevice: (IOHIDDeviceRef) pDevice;
++ (NSArray<NSDictionary*>*) matchingDictionaries;
+@end
+
+//----------------------------------------------------------------------------------------------------------------------------
+
 @interface _FDHIDActuator : FDHIDActuator
 {
     io_service_t            mIoService;

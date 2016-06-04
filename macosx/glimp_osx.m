@@ -33,7 +33,7 @@
 
 #import <AppKit/AppKit.h>
 #import <IOKit/graphics/IOGraphicsTypes.h>
-#import <OpenGL/OpenGL.h>
+#include <OpenGL/OpenGL.h>
 #import "FDFramework/FDScreenshot.h"
 
 #include "gl_local.h"

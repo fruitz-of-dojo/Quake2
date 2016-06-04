@@ -201,8 +201,8 @@ extern	void	VID_SetPaused (BOOL theState);
     }
                         
     if ((vid_fullscreen != NULL && vid_fullscreen->value != 0.0f) ||
-        ((in_mouse == NULL || (in_mouse != NULL && in_mouse->value == 0.0f) &&
-         (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f))))
+        ((in_mouse == NULL || ((in_mouse != NULL && in_mouse->value == 0.0f) &&
+                               (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f)))))
     {
         IN_ShowCursor (NO);
     }
