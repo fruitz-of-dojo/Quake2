@@ -695,7 +695,6 @@ int	VID_SortDisplayModesCbk(id pMode1, id pMode2, void* pContext)
 
 void	VID_GetDisplayModes (void)
 {
-    NSArray *			myDisplayModes;
 	NSMutableArray *	mySortedModes;
     float				myRate;
     UInt16				myModeCount = 0;
@@ -712,14 +711,12 @@ void	VID_GetDisplayModes (void)
     }
 
     // retrieve a list with all display modes:
-    myDisplayModes = [(NSArray *) CGDisplayAvailableModes (kCGDirectMainDisplay) retain];
+    mySortedModes = [(NSArray *) CGDisplayAvailableModes (kCGDirectMainDisplay) mutableCopy];
     
-	if (myDisplayModes == nil)
+	if (mySortedModes == nil)
     {
         Sys_Error ("Unable to get list of available display modes.");
     }
-
-	mySortedModes = [[NSMutableArray alloc] initWithArray: myDisplayModes];
 
 	[mySortedModes sortUsingFunction: VID_SortDisplayModesCbk context: nil];
 	
@@ -773,7 +770,6 @@ void	VID_GetDisplayModes (void)
         VID_AddModeToList (myWidth, myHeight, myRate);
     }
     
-    [myDisplayModes release];
 	[mySortedModes release];
     
     if (gVIDModeCount == 0)

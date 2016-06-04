@@ -790,37 +790,24 @@ extern	void	VID_SetPaused (BOOL theState);
     [myMP3Panel setCanChooseFiles: NO];
     [myMP3Panel setCanChooseDirectories: YES];
     [myMP3Panel setAccessoryView: mp3HelpView];
-    [myMP3Panel setDirectory: [mp3TextField stringValue]];
+    [myMP3Panel setDirectoryURL:[NSURL fileURLWithPath:[mp3TextField stringValue]]];
     [myMP3Panel setTitle: @"Select the folder that holds the MP3s:"];
     
     // show the sheet:
-    [myMP3Panel beginSheetForDirectory: @""
-                                  file: NULL
-                                 types: NULL
-                        modalForWindow: startupWindow
-                         modalDelegate: self
-                        didEndSelector: @selector (closeMP3Sheet:returnCode:contextInfo:)
-                           contextInfo: NULL];
-}
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- (void) closeMP3Sheet: (NSOpenPanel *) theSheet returnCode: (int) theCode contextInfo: (void *) theInfo
-{
-    [theSheet close];
-
-    // do nothing on cancel:
-    if (theCode != NSCancelButton)
-    {
-        NSArray *		myFolderArray;
-
-        // get the path of the selected folder;
-        myFolderArray = [theSheet filenames];
-        if ([myFolderArray count] > 0)
+    [myMP3Panel beginSheetModalForWindow:startupWindow completionHandler:^(NSInteger theCode) {
+        // do nothing on cancel:
+        if (theCode != NSCancelButton)
         {
-            [mp3TextField setStringValue: [myFolderArray objectAtIndex: 0]];
+            NSArray<NSURL*> *		myFolderArray;
+            
+            // get the path of the selected folder;
+            myFolderArray = [myMP3Panel URLs];
+            if ([myFolderArray count] > 0)
+            {
+                [mp3TextField setStringValue: [myFolderArray objectAtIndex: 0].path];
+            }
         }
-    }
+    }];
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------

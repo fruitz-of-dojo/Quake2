@@ -103,7 +103,6 @@
 - (IBAction) selectMP3Folder: (id) theSender;
 - (IBAction) stopMediaScan: (id) theSender;
 
-- (void) closeMP3Sheet: (NSOpenPanel *) theSheet returnCode: (int) theCode contextInfo: (void *) theInfo;
 - (void) connectToServer: (NSPasteboard *) thePasteboard userData:(NSString *) theData error:(NSString **)theError;
 
 @property BOOL hostInitialized;
