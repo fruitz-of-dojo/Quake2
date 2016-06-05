@@ -48,6 +48,7 @@
 // but this would result in awfully switches between renderer selections, since we would have to clean-up the
 // captured device list each time...
 
+#undef CAPTURE_ALL_DISPLAYS
 #ifdef CAPTURE_ALL_DISPLAYS
 
 #define GL_CAPTURE_DISPLAYS()	CGCaptureAllDisplays ()
@@ -114,7 +115,7 @@ qboolean					 gGLTruformAvailable = NO;
 NSOpenGLPixelFormatAttribute gGLMaxARBMultiSampleBuffers;
 NSOpenGLPixelFormatAttribute gGLCurARBMultiSamples;
 
-static CFDictionaryRef		gGLOriginalMode;
+static CGDisplayModeRef		gGLOriginalMode;
 static CGGammaValue			gGLOriginalGamma[9];
 static gl_gammatable_t		gGLOriginalGammaTable;
 static NSRect				gGLMiniWindowRect;
@@ -145,14 +146,15 @@ static const float			gGLTruformAmbient[4]		= { 1.0f, 1.0f, 1.0f, 1.0f };
 
 static void						GLimp_SetMiniWindowBuffer (void);
 static void						GLimp_DestroyContext (void);
-static NSOpenGLPixelFormat *	GLimp_CreateGLPixelFormat (int theDepth, Boolean theFullscreen);
+static NSOpenGLPixelFormat *	GLimp_CreateGLPixelFormat (int theDepth, Boolean theFullscreen) NS_RETURNS_RETAINED;
 static Boolean					GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate, Boolean theFullscreen);
 static void						GLimp_SetSwapInterval (void);
 static void						GLimp_SetAnisotropyTextureLevel (void);
 static void						GLimp_SetTruform (void);
 static void						GLimp_SetARBMultiSample (void);
 static void						GLimp_CheckForARBMultiSample (void);
-
+static int						GLimp_BitDepth(CGDisplayModeRef vidmode);
+static CGDisplayModeRef			GLimp_BestModeForParameters(CFArrayRef modes, size_t bitsPerPixel, size_t width, size_t height, boolean_t * __nullable exactMatch) CF_RETURNS_RETAINED;
 #pragma mark -
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -353,7 +355,7 @@ int 	GLimp_Init (void *hinstance, void *hWnd)
     gGLOverbrightGamma = ri.Cvar_Get ("gl_overbright_gamma", "0", CVAR_ARCHIVE);
     
     // save the original display mode:
-    gGLOriginalMode = CGDisplayCurrentMode (kCGDirectMainDisplay);
+    gGLOriginalMode = CGDisplayCopyDisplayMode (kCGDirectMainDisplay);
 
     // get the gamma:
     myError = CGGetDisplayTransferByFormula (kCGDirectMainDisplay,
@@ -416,7 +418,12 @@ void	GLimp_Shutdown (void)
     // get the original display mode back:
     if (gGLOriginalMode)
     {
-        CGDisplaySwitchToMode (kCGDirectMainDisplay, gGLOriginalMode);
+        CGDirectDisplayID display = CGMainDisplayID();
+        CGDisplaySetDisplayMode (display, gGLOriginalMode, NULL);
+        CGDisplayModeRelease(gGLOriginalMode);
+        gGLOriginalMode = NULL;
+        CGDisplayRelease (display);
+        CGDisplayShowCursor (display);
     }
 }
 
@@ -766,7 +773,7 @@ NSOpenGLPixelFormat *	GLimp_CreateGLPixelFormat (int theDepth, Boolean theFullsc
     // are we running fullscreen or windowed?
     if (theFullscreen)
     {
-        myAttributeList[i++] = NSOpenGLPFAFullScreen;
+        myAttributeList[i++] = NSOpenGLPFASingleRenderer;
     }
     else
     {
@@ -803,14 +810,109 @@ NSOpenGLPixelFormat *	GLimp_CreateGLPixelFormat (int theDepth, Boolean theFullsc
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+static CGDisplayModeRef GLimp_BestModeForParameters(CFArrayRef modes, size_t bitsPerPixel, size_t width, size_t height, boolean_t * exactMatch)
+{
+    const CFIndex arrSize = CFArrayGetCount(modes);
+    CGDisplayModeRef theBest = NULL;
+    *exactMatch = NO;
+    // first, check for exact matches
+    for (CFIndex i = 0; i < arrSize; i++) {
+        CGDisplayModeRef theCurrent = (CGDisplayModeRef)CFArrayGetValueAtIndex(modes, i);
+        if (width == CGDisplayModeGetWidth(theCurrent) && height == CGDisplayModeGetHeight(theCurrent)) {
+            theBest = theCurrent;
+            if (GLimp_BitDepth(theCurrent) == bitsPerPixel) {
+                *exactMatch = YES;
+                break;
+            }
+        }
+    }
+    
+    // prefer smaller resolutions
+    if (!theBest) {
+        for (CFIndex i = 0; i < arrSize; i++) {
+            CGDisplayModeRef theCurrent = (CGDisplayModeRef)CFArrayGetValueAtIndex(modes, i);
+            if (width < CGDisplayModeGetWidth(theCurrent) && height < CGDisplayModeGetHeight(theCurrent)) {
+                theBest = theCurrent;
+                
+            }
+        }
+    }
+    
+    // Try getting those with similar aspect ratios
+    if (!theBest) {
+        const CGFloat requestedRatio = (CGFloat)width / (CGFloat)height;
+        for (CFIndex i = 0; i < arrSize; i++) {
+            CGDisplayModeRef theCurrent = (CGDisplayModeRef)CFArrayGetValueAtIndex(modes, i);
+            CGFloat modeRatio = (CGFloat)CGDisplayModeGetWidth(theCurrent) / (CGFloat)CGDisplayModeGetHeight(theCurrent);
+            // TODO: account for floating-point "jitter"
+            if (requestedRatio == modeRatio) {
+                theBest = theCurrent;
+                break;
+            }
+        }
+    }
+
+    
+    // fallback to 640x480 if a comparable resolution isn't found
+    if (!theBest) {
+        for (CFIndex i = 0; i < arrSize; i++) {
+            CGDisplayModeRef theCurrent = (CGDisplayModeRef)CFArrayGetValueAtIndex(modes, i);
+            if (640 == CGDisplayModeGetWidth(theCurrent) || 480 == CGDisplayModeGetHeight(theCurrent)) {
+                theBest = theCurrent;
+                break;
+            }
+        }
+    }
+
+    
+    if (theBest) {
+        return CGDisplayModeRetain(theBest);
+    }
+    
+    //We must return something...
+    return CGDisplayCopyDisplayMode (kCGDirectMainDisplay);
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+static int GLimp_BitDepth(CGDisplayModeRef vidmode)
+{
+    CFStringRef fmt = CGDisplayModeCopyPixelEncoding(vidmode);
+    int bpp;
+
+    if (CFStringCompare(fmt, CFSTR(IO32BitDirectPixels),
+                        kCFCompareCaseInsensitive) == kCFCompareEqualTo ||
+        CFStringCompare(fmt, CFSTR(kIO32BitFloatPixels),
+                        kCFCompareCaseInsensitive) == kCFCompareEqualTo) {
+        bpp = 32;
+    } else if (CFStringCompare(fmt, CFSTR(IO16BitDirectPixels),
+                               kCFCompareCaseInsensitive) == kCFCompareEqualTo ||
+               CFStringCompare(fmt, CFSTR(kIO16BitFloatPixels),
+                               kCFCompareCaseInsensitive) == kCFCompareEqualTo) {
+        bpp = 16;
+    } else if (CFStringCompare(fmt, CFSTR(kIO30BitDirectPixels),
+                               kCFCompareCaseInsensitive) == kCFCompareEqualTo) {
+        bpp = 30;
+    } else {
+        bpp = 0;  /* ignore 8-bit and such for now. */
+    }
+    
+    CFRelease(fmt);
+
+    return bpp;
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Boolean	GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate, Boolean theFullscreen)
 {
     NSOpenGLPixelFormat	*	myPixelFormat = NULL;
     int						myDisplayDepth;
+    int						iErr;
 
     if (theFullscreen)
     {
-        CFDictionaryRef		myDisplayMode;
+        CGDisplayModeRef	myDisplayMode;
         boolean_t			myExactMatch;
 
         if (CGDisplayIsCaptured (kCGDirectMainDisplay) != true)
@@ -829,43 +931,40 @@ Boolean	GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate,
         }
         
         // get the requested mode:
-        if (theRefreshRate > 0)
-        {
-            myDisplayMode = CGDisplayBestModeForParametersAndRefreshRate (kCGDirectMainDisplay, myDisplayDepth,
-                                                                          *theWidth, *theHeight, theRefreshRate,
-                                                                          &myExactMatch);
-        }
-        else
-        {
-            myDisplayMode = CGDisplayBestModeForParameters (kCGDirectMainDisplay, myDisplayDepth, *theWidth,
-                                                            *theHeight, &myExactMatch);
-        }
+        CFArrayRef modes = CGDisplayCopyAllDisplayModes(kCGDirectMainDisplay, NULL);
+        
+        myDisplayMode = GLimp_BestModeForParameters(modes, myDisplayDepth, *theWidth, *theHeight, &myExactMatch);
+        CFRelease(modes);
 
         // got we an exact mode match? if not report the new resolution again:
         if (myExactMatch == NO)
         {
-            *theWidth	= [[(NSDictionary *) myDisplayMode objectForKey: (NSString *) kCGDisplayWidth] intValue];
-            *theHeight	= [[(NSDictionary *) myDisplayMode objectForKey: (NSString *) kCGDisplayHeight] intValue];
+            *theWidth	= (int)CGDisplayModeGetWidth(myDisplayMode);
+            *theHeight	= (int)CGDisplayModeGetHeight(myDisplayMode);
 			
             ri.Con_Printf (PRINT_ALL, "can\'t switch to requested mode. using %d x %d.\n", *theWidth, *theHeight);
         }
 
+        // hide the cursor
+        CGDisplayHideCursor (kCGDirectMainDisplay);
+
         // switch to the new display mode:
-        if (CGDisplaySwitchToMode (kCGDirectMainDisplay, myDisplayMode) != kCGErrorSuccess)
+        iErr = CGDisplaySetDisplayMode (kCGDirectMainDisplay, myDisplayMode, NULL);
+        if (iErr != kCGErrorSuccess)
         {
             ri.Sys_Error (ERR_FATAL, "Can\'t switch to the selected mode!\n");
         }
 
-        myDisplayDepth = [[(NSDictionary *) myDisplayMode objectForKey: (id) kCGDisplayBitsPerPixel] intValue];
+        myDisplayDepth = GLimp_BitDepth(myDisplayMode);
     }
     else
     {
         if (gGLOriginalMode)
         {
-            CGDisplaySwitchToMode (kCGDirectMainDisplay, gGLOriginalMode);
+            CGDisplaySetDisplayMode (kCGDirectMainDisplay, gGLOriginalMode, NULL);
         }
     
-        myDisplayDepth = [[(NSDictionary *)  gGLOriginalMode objectForKey: (id) kCGDisplayBitsPerPixel] intValue];
+        myDisplayDepth = GLimp_BitDepth (gGLOriginalMode);
     }
     
     // check if we have access to sample buffers:
@@ -899,9 +998,10 @@ Boolean	GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate,
     if (theFullscreen)
     {
         // attach the OpenGL context to fullscreen:
-        if (CGLSetFullScreen ([gGLContext CGLContextObj]) != CGDisplayNoErr)
+        iErr = CGLSetFullScreen ([gGLContext CGLContextObj]);
+        if (iErr != CGDisplayNoErr)
         {
-            ri.Sys_Error (ERR_FATAL, "Unable to use the selected displaymode for fullscreen OpenGL.");
+            ri.Sys_Error (ERR_FATAL, "Unable to use the selected displaymode for fullscreen OpenGL, error %i.", iErr);
         }
     }
     else
