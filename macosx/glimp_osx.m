@@ -773,7 +773,7 @@ NSOpenGLPixelFormat *	GLimp_CreateGLPixelFormat (int theDepth, Boolean theFullsc
     // are we running fullscreen or windowed?
     if (theFullscreen)
     {
-        myAttributeList[i++] = NSOpenGLPFASingleRenderer;
+        myAttributeList[i++] = NSOpenGLPFAFullScreen;
     }
     else
     {
@@ -998,7 +998,7 @@ Boolean	GLimp_InitGraphics (int *theWidth, int *theHeight, float theRefreshRate,
     if (theFullscreen)
     {
         // attach the OpenGL context to fullscreen:
-        iErr = CGLSetFullScreen ([gGLContext CGLContextObj]);
+        iErr = CGLSetFullScreenOnDisplay ([gGLContext CGLContextObj], CGDisplayIDToOpenGLDisplayMask (kCGDirectMainDisplay));
         if (iErr != CGDisplayNoErr)
         {
             ri.Sys_Error (ERR_FATAL, "Unable to use the selected displaymode for fullscreen OpenGL, error %i.", iErr);
