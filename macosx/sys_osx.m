@@ -89,8 +89,7 @@ extern	void	Key_Event (int key, qboolean down, unsigned time);
 extern	void	IN_SetKeyboardRepeatEnabled (BOOL theState);
 extern	void	IN_SetF12EjectEnabled (qboolean theState);
 extern	void	IN_ShowCursor (BOOL theState);
-extern	void	IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY);
-extern  BOOL	CDAudio_GetTrackList (void);
+extern	void	IN_ReceiveMouseMove (int32_t theDeltaX, int32_t theDeltaY);
 extern	void	CDAudio_Enable (BOOL theState);
 extern	void	VID_SetPaused (BOOL theState);
 
@@ -126,7 +125,7 @@ void	Sys_Error (char *theError, ...)
 
 #else
 
-    NSLog (@"An error has occured: %@\n", [NSString stringWithCString: myString]);
+    NSLog (@"An error has occured: %s\n", myString);
 
     CL_Shutdown ();
     Qcommon_Shutdown ();
@@ -135,8 +134,8 @@ void	Sys_Error (char *theError, ...)
     IN_SetKeyboardRepeatEnabled (YES);
     IN_SetF12EjectEnabled (YES);
     
-    NSRunCriticalAlertPanel (@"An error has occured:", [NSString stringWithCString: myString],
-                             NULL, NULL, NULL);
+    NSRunCriticalAlertPanel (@"An error has occured:", @"%s",
+                             NULL, NULL, NULL, myString);
     
     exit (1);
 
@@ -253,7 +252,7 @@ void *	Sys_GetGameAPI (void *theParameters)
 char *Sys_ConsoleInput (void)
 {
     static char 	myText[256];
-    int     		myLength;
+    ssize_t    		myLength;
     fd_set			myFDSet;
     struct timeval	myTimeOut;
     
@@ -383,7 +382,7 @@ char *	Sys_GetClipboardData (void)
         myClipboardString = [myPasteboard stringForType: NSStringPboardType];
         if (myClipboardString != NULL && [myClipboardString length] > 0)
         {
-            return (strdup ([myClipboardString cString]));
+            return (strdup ([myClipboardString cStringUsingEncoding:NSASCIIStringEncoding]));
         }
     }
     return (NULL);
@@ -488,7 +487,9 @@ void 	Sys_CheckForCDDirectory (void)
     // is the cd mounted?
     for (i = 0; gSysCDPath[i] != NULL; i++)
     {
-        myCurrentPath = [[NSString stringWithCString: gSysCDPath[i]] stringByAppendingString: @"/baseq2/pak0.pak"];
+        myCurrentPath = [[[NSFileManager defaultManager]
+                          stringWithFileSystemRepresentation: gSysCDPath[i]
+                          length: strlen(gSysCDPath[i])] stringByAppendingString: @"/baseq2/pak0.pak"];
         
 		if ([[NSFileManager defaultManager] fileExistsAtPath: myCurrentPath])
         {
@@ -527,7 +528,7 @@ void	Sys_CheckForIDDirectory (void)
     NSString *			myValidatePath	= nil;
     NSUserDefaults *	myDefaults		= [NSUserDefaults standardUserDefaults];
 	NSString *			myBasePath		= [myDefaults stringForKey: SYS_DEFAULT_BASE_PATH];
-    NSArray	*			myFolder;
+    NSArray<NSURL*>	*	myFolder;
     SInt				myResult;
 	SInt				myPathLength;
 
@@ -567,7 +568,7 @@ void	Sys_CheckForIDDirectory (void)
 						myFileExists = [[NSFileManager defaultManager] fileExistsAtPath: myValidatePath];
 					}
 
-#endif __ppc__
+#endif //__ppc__
 					
 					if (myFileExists == YES)
 					{
@@ -634,17 +635,17 @@ void	Sys_CheckForIDDirectory (void)
             }
         
 			// request the "baseq2" folder:
-			myResult = [myOpenPanel runModalForDirectory: nil file: nil types: nil];
+			myResult = [myOpenPanel runModal];
 			
 			// if the user selected "Cancel", quit the game:
 			if (myResult == NSOKButton)
 			{	
 				// get the selected path:
-				myFolder = [myOpenPanel filenames];
+				myFolder = [myOpenPanel URLs];
 				
 				if ([myFolder count])
 				{
-					myBasePath = [myFolder objectAtIndex: 0];
+					myBasePath = [[myFolder objectAtIndex: 0] path];
 					myPathChanged = YES;
 				}
 			}
@@ -677,9 +678,9 @@ void	Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
     
     static NSString	*	myKeyboardBuffer;
     static unichar		myCharacter;
-    static CGMouseDelta	myMouseDeltaX;
-	static CGMouseDelta	myMouseDeltaY;
-	static CGMouseDelta	myMouseWheel;
+    static int32_t	myMouseDeltaX;
+	static int32_t	myMouseDeltaY;
+	static int32_t	myMouseWheel;
     static UInt8		i;
     static UInt16		myKeyPad;
     static UInt32	 	myKeyboardBufferSize;

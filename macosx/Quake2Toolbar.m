@@ -32,6 +32,7 @@
 	mRequestedCommands	= [[NSMutableArray alloc] initWithCapacity: 0];
 	mDistantPast		= [[NSDate distantPast] retain];
 	mDenyDrag			= NO;
+    NSImage	* aboutImg	= [[NSWorkspace sharedWorkspace] iconForFileType: NSFileTypeForHFSTypeCode(kToolbarInfoIcon)];
 
 	// set the URL at the FDLinkView:
 	[linkView setURL: [NSURL URLWithString: SYS_FRUITZ_OF_DOJO_URL]];
@@ -39,15 +40,15 @@
     // initialize the toolbar:
     mToolbarItems = [[NSMutableDictionary dictionary] retain];
     [self addToolbarItem: mToolbarItems identifier: SYS_ABOUT_TOOLBARITEM label: @"About" paletteLabel: @"About"
-                 toolTip: @"About Quake II." image: @"About.icns"
+                 toolTip: @"About Quake II." image: aboutImg
                 selector: @selector (showAboutView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_AUDIO_TOOLBARITEM label: @"Sound" paletteLabel: @"Sound"
-                 toolTip: @"Change sound settings." image: @"Sound.icns" selector: @selector (showSoundView:)];
+                 toolTip: @"Change sound settings." imageNamed: @"Sound.icns" selector: @selector (showSoundView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_PARAM_TOOLBARITEM label: @"CLI" paletteLabel: @"CLI"
-                 toolTip: @"Set command-line parameters." image: @"Arguments.icns"
+                 toolTip: @"Set command-line parameters." imageNamed: @"Arguments.icns"
                 selector: @selector (showCLIView:)];
     [self addToolbarItem: mToolbarItems identifier: SYS_START_TOOLBARITEM label: @"Play" paletteLabel: @"Play"
-                 toolTip: @"Start the game." image: @"Start.icns"
+                 toolTip: @"Start the game." imageNamed: @"Start.icns"
                 selector: @selector (startQuake2:)];
     
     [myToolbar setDelegate: self];    
@@ -106,7 +107,14 @@
 
 - (void) addToolbarItem: (NSMutableDictionary *) theDict identifier: (NSString *) theIdentifier
                   label: (NSString *) theLabel paletteLabel: (NSString *) thePaletteLabel
-                toolTip: (NSString *) theToolTip image: (id) theItemContent selector: (SEL) theAction
+                toolTip: (NSString *) theToolTip imageNamed: (NSString *) theItemContent selector: (SEL) theAction
+{
+    [self addToolbarItem:theDict identifier:theIdentifier label:theLabel paletteLabel:thePaletteLabel toolTip:theToolTip image:[NSImage imageNamed:theItemContent] selector:theAction];
+}
+
+- (void) addToolbarItem: (NSMutableDictionary *) theDict identifier: (NSString *) theIdentifier
+                  label: (NSString *) theLabel paletteLabel: (NSString *) thePaletteLabel
+                toolTip: (NSString *) theToolTip image: (NSImage*) theItemContent selector: (SEL) theAction
 {
     NSToolbarItem *	myItem = [[[NSToolbarItem alloc] initWithItemIdentifier: theIdentifier] autorelease];
 
@@ -114,7 +122,7 @@
     [myItem setPaletteLabel: thePaletteLabel];
     [myItem setToolTip: theToolTip];
     [myItem setTarget: self];
-    [myItem setImage: [NSImage imageNamed: theItemContent]];
+    [myItem setImage: theItemContent];
     [myItem setAction: theAction];
     [theDict setObject: myItem forKey: theIdentifier];
 }

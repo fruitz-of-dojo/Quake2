@@ -14,13 +14,10 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDAudioFile : NSObject
-{
-}
 
-- (id) initWithMixer: (FDAudioMixer*) mixer;
+- (instancetype) initWithMixer: (FDAudioMixer*) mixer;
 
-- (void) setVolume: (float) volume;
-- (float) volume;
+@property float volume;
 
 - (BOOL) startFile: (NSURL*) url loop: (BOOL) loop;
 - (BOOL) stop;
@@ -28,9 +25,9 @@
 - (void) pause;
 - (void) resume;
 
-- (BOOL) isPlaying;
-- (BOOL) isFinished;
-- (BOOL) loops;
+@property (readonly, getter=isPlaying) BOOL playing;
+@property (readonly, getter=isFinished) BOOL finished;
+@property (readonly) BOOL loops;
 
 @end
 

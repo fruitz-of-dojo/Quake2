@@ -39,6 +39,7 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @implementation _FDHIDDevice
+@synthesize delegate = mDelegate;
 
 + (NSDictionary*) matchingDictionarForUsageMap: (const FDHIDUsageToDevice*) pUsageMap
 {
@@ -155,13 +156,6 @@
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-- (void) setDelegate: (FDHIDManager*) delegate;
-{
-    mDelegate = delegate;
-}
-
-//----------------------------------------------------------------------------------------------------------------------------
-
 - (void) pushEvent: (const FDHIDEvent*) pEvent
 {
     if (mDelegate != nil)
@@ -172,14 +166,14 @@
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-- (NSUInteger) vendorId
+- (SInt32) vendorId
 {
     return mpDeviceDesc->mVendorId;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-- (NSUInteger) productId
+- (SInt32) productId
 {
     return mpDeviceDesc->mProductId;
 }
@@ -340,7 +334,7 @@
 
 @implementation FDHIDDevice
 
-- (NSUInteger) vendorId
+- (SInt32) vendorId
 {
     [self doesNotRecognizeSelector: _cmd];
     
@@ -349,7 +343,7 @@
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-- (NSUInteger) productId
+- (SInt32) productId
 {
     [self doesNotRecognizeSelector: _cmd];
     

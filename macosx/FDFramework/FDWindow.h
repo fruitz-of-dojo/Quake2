@@ -18,28 +18,23 @@ typedef void (*FDResizeHandler) (id fdView, void* pContext);
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDWindow : NSWindow
-{
-}
 
-- (id) initForDisplay: (FDDisplay*) display;
-- (id) initForDisplay: (FDDisplay*) display samples: (NSUInteger) samples;
+- (instancetype) initForDisplay: (FDDisplay*) display;
+- (instancetype) initForDisplay: (FDDisplay*) display samples: (NSUInteger) samples NS_DESIGNATED_INITIALIZER;
 
-- (id) initWithContentRect: (NSRect) rect;
-- (id) initWithContentRect: (NSRect) rect samples: (NSUInteger) samples;
+- (instancetype) initWithContentRect: (NSRect) rect;
+- (instancetype) initWithContentRect: (NSRect) rect samples: (NSUInteger) samples NS_DESIGNATED_INITIALIZER;
 
 - (void) setResizeHandler: (FDResizeHandler) pResizeHandler forContext: (void*) pContext;
 
 - (void) centerForDisplay: (FDDisplay*) display;
 
-- (void) setCursorVisible: (BOOL) state;
-- (BOOL) isCursorVisible;
-
-- (void) setVsync: (BOOL) enabled;
-- (BOOL) vsync;
+@property (nonatomic, getter=isCursorVisible) BOOL cursorVisible;
+@property BOOL vsync;
 
 - (NSOpenGLContext*) openGLContext;
 
-- (BOOL) isFullscreen;
+@property (readonly, getter=isFullscreen) BOOL fullscreen;
 
 - (void) endFrame;
 

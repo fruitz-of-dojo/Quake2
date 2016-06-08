@@ -12,16 +12,10 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDHIDActuator : NSObject
-{
-}
 
-- (void) setIntensity: (float) intensity;
-- (float) intensity;
-
-- (void) setDuration: (float) duration;
-- (float) duration;
-
-- (BOOL) isActive;
+@property float intensity;
+@property float duration;
+@property (readonly, getter=isActive) BOOL active;
 
 - (void) start;
 - (void) stop;

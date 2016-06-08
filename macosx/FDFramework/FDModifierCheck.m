@@ -23,7 +23,7 @@
 
 //----------------------------------------------------------------------------------------------------------------------------
 
-+ (BOOL) checkForModifier: (NSUInteger) modifierKeyMask
++ (BOOL) checkForModifier: (NSEventModifierFlags) modifierKeyMask
 {
     BOOL        modifierWasPressed  = NO;    
     CGEventRef  shiftDown           = CGEventCreateKeyboardEvent (NULL, (CGKeyCode) 56, true);

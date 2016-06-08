@@ -14,18 +14,16 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDHIDDevice : NSObject
-{
-}
 
-- (NSUInteger) vendorId;
-- (NSUInteger) productId;
+@property (readonly) SInt32 vendorId;
+@property (readonly) SInt32 productId;
 
-- (NSString*) vendorName;
-- (NSString*) productName;
-- (NSString*) deviceType;
+@property (readonly, copy) NSString *vendorName;
+@property (readonly, copy) NSString *productName;
+@property (readonly, copy) NSString *deviceType;
 
-- (BOOL) hasActuator;
-- (FDHIDActuator*)  actuator;
+@property (readonly) BOOL hasActuator;
+@property (readonly, retain) FDHIDActuator *actuator;
 
 @end
 

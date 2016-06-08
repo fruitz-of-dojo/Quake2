@@ -12,15 +12,13 @@
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDDisplayMode : NSObject
-{
-}
 
-- (NSUInteger) width;
-- (NSUInteger) height;
-- (NSUInteger) bitsPerPixel;
-- (BOOL) isStretched;
-- (BOOL) isDefault;
-- (double) refreshRate;
+@property (readonly) NSUInteger width;
+@property (readonly) NSUInteger height;
+@property (readonly) NSUInteger bitsPerPixel;
+@property (readonly, getter=isStretched) BOOL stretched;
+@property (readonly, getter=isDefault) BOOL isDefault;
+@property (readonly) double refreshRate;
 
 - (NSString*) description;
 

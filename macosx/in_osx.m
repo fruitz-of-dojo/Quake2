@@ -49,18 +49,20 @@ cvar_t *				in_mouse;
 static BOOL				gInMLooking = NO;
 static cvar_t*			m_filter;
 static cvar_t *			gInSensitivity;
+#if 0
 cvar_t *				lookstrafe;
 cvar_t *				m_side;
 cvar_t *				m_yaw;
 cvar_t *				m_pitch;
 cvar_t *				m_forward;
 cvar_t *				freelook;
-static CGMouseDelta		gInMouseX;
-static CGMouseDelta		gInMouseY;
-static CGMouseDelta		gInMouseNewX;
-static CGMouseDelta		gInMouseNewY;
-static CGMouseDelta		gInMouseOldX;
-static CGMouseDelta		gInMouseOldY;
+#endif
+static int32_t			gInMouseX;
+static int32_t			gInMouseY;
+static int32_t			gInMouseNewX;
+static int32_t			gInMouseNewY;
+static int32_t			gInMouseOldX;
+static int32_t			gInMouseOldY;
 
 UInt8					gInSpecialKey[] =	{
 													K_UPARROW, K_DOWNARROW,    K_LEFTARROW,  K_RIGHTARROW,
@@ -120,7 +122,7 @@ void			IN_SetKeyboardRepeatEnabled (BOOL theState);
 void			IN_SetF12EjectEnabled (qboolean theState);
 void			IN_ShowCursor (BOOL theState);
 void			IN_CenterCursor (void);
-void			IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY);
+void			IN_ReceiveMouseMove (int32_t theDeltaX, int32_t theDeltaY);
 
 static void		IN_SetMouseScalingEnabled (BOOL theState);
 static void 	IN_MLookDown_f (void);
@@ -442,7 +444,7 @@ void	IN_Frame (void)
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-void	IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY)
+void	IN_ReceiveMouseMove (int32_t theDeltaX, int32_t theDeltaY)
 {
     gInMouseNewX = theDeltaX;
     gInMouseNewY = theDeltaY;
@@ -452,7 +454,7 @@ void	IN_ReceiveMouseMove (CGMouseDelta theDeltaX, CGMouseDelta theDeltaY)
 
 void	IN_Move (usercmd_t *cmd)
 {
-    CGMouseDelta	myMouseX = gInMouseNewX, myMouseY = gInMouseNewY;
+    int32_t	myMouseX = gInMouseNewX, myMouseY = gInMouseNewY;
 
     if ((vid_fullscreen != NULL && vid_fullscreen->value == 0.0f &&
          (_windowed_mouse == NULL || (_windowed_mouse != NULL && _windowed_mouse->value == 0.0f))) ||

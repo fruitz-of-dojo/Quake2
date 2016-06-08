@@ -117,7 +117,7 @@ enum FDHIDGamePadAxis
 
 typedef struct
 {
-    FDHIDDevice*        mDevice;
+    __unsafe_unretained FDHIDDevice*        mDevice;
     enum FDHIDEventType mType;
     unsigned int        mButton;
     
@@ -134,14 +134,12 @@ typedef struct
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDHIDManager : NSObject
-{
-}
 
 + (FDHIDManager*) sharedHIDManager;
 + (void) checkForIncompatibleDevices;
 
 - (void) setDeviceFilter: (NSArray*) deviceTypes;
-- (NSArray*) devices;
+- (NSArray<FDHIDDevice*>*) devices;
 - (const FDHIDEvent*) nextEvent;
 
 @end

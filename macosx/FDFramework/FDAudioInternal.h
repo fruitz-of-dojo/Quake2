@@ -19,8 +19,8 @@
 - (void) setVolume: (float) volume forBus: (AudioUnitElement) busNumber;
 - (float) volumeForBus: (AudioUnitElement) busNumber;
 
-- (AUGraph) audioGraph;
-- (AUNode) mixerNode;
+@property (readonly) AUGraph audioGraph;
+@property (readonly) AUNode mixerNode;
 
 - (AudioUnitElement) allocateBus;
 - (void) deallocateBus: (AudioUnitElement) busNumber;

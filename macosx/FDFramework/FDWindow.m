@@ -646,7 +646,7 @@
 {
     [self doesNotRecognizeSelector: _cmd];
     
-    return NO;[self doesNotRecognizeSelector: _cmd];
+    return NO;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------

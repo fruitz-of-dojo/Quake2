@@ -20,17 +20,14 @@ typedef void (*FDDebugLogHandler) (const char* pFormat, ...);
 //----------------------------------------------------------------------------------------------------------------------------
 
 @interface FDDebug : NSObject
-{
-}
 
 + (FDDebug*) sharedDebug;
 + (BOOL) isDebuggerAttached;
 
-- (id) init;
-- (id) initWithName: (NSString*) name;
+- (instancetype) init;
+- (instancetype) initWithName: (NSString*) name;
 
-- (void) setName: (NSString*) name;
-- (NSString*) name;
+@property (nonatomic, copy) NSString *name;
 
 - (void) setAssertHandler: (FDDebugAssertHandler) assertHandler;
 - (void) setErrorHandler: (FDDebugErrorHandler) errorHandler;

@@ -14,12 +14,30 @@
 #import "Quake2.h"
 #import "sys_osx.h"
 #import "FDModifierCheck.h"
+#include "cd_osx.h"
+
+#pragma mark -
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#pragma mark Function Prototypes
+
+extern	void	M_Menu_Quit_f (void);
+extern	void	Key_Event (int key, qboolean down, unsigned time);
+extern	void	IN_SetKeyboardRepeatEnabled (BOOL theState);
+extern	void	IN_SetF12EjectEnabled (qboolean theState);
+extern	void	IN_ShowCursor (BOOL theState);
+extern	void	IN_ReceiveMouseMove (int32_t theDeltaX, int32_t theDeltaY);
+extern	void	CDAudio_Enable (BOOL theState);
+extern	void	VID_SetPaused (BOOL theState);
 
 #pragma mark -
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 @implementation Quake2 : NSObject
+@synthesize modFolder = mModFolder;
+@synthesize mediaFolder = mMP3Folder;
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -183,8 +201,8 @@
     }
                         
     if ((vid_fullscreen != NULL && vid_fullscreen->value != 0.0f) ||
-        ((in_mouse == NULL || (in_mouse != NULL && in_mouse->value == 0.0f) &&
-         (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f))))
+        ((in_mouse == NULL || ((in_mouse != NULL && in_mouse->value == 0.0f) &&
+                               (_windowed_mouse != NULL && _windowed_mouse->value != 0.0f)))))
     {
         IN_ShowCursor (NO);
     }
@@ -343,20 +361,6 @@
 - (BOOL) wasDragged
 {
     return (mModFolder != NULL ? YES : NO);
-}
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- (NSString *) modFolder
-{
-    return (mModFolder);
-}
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- (NSString *) mediaFolder
-{
-    return (mMP3Folder);
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -532,7 +536,7 @@
         {
             if ([myArgument characterAtIndex: 0] == '\"')
             {
-                myArgument = [NSString stringWithString: @""];
+                myArgument = @"";
                 for (; i < [mySeparatedArguments count]; i++)
                 {
                     myArgument = [myArgument stringByAppendingString: [mySeparatedArguments objectAtIndex: i]];
@@ -567,7 +571,7 @@
     // insert the new parameters:
     for (i = 0; i < [myNewArguments count]; i++)
     {
-        char *	myCString = (char *) [[myNewArguments objectAtIndex: i] cString];
+        char *	myCString = (char *) [[myNewArguments objectAtIndex: i] cStringUsingEncoding:NSASCIIStringEncoding];
         
         gSysArgValues[i+1] = (char *) malloc (strlen (myCString) + 1);
         SYS_CHECK_MALLOC (gSysArgValues[i+1]);
@@ -632,7 +636,7 @@
 		{
 			NSString	*myCommand = [mRequestedCommands objectAtIndex: 0];
 
-			Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", [myCommand cString]));
+			Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", [myCommand cStringUsingEncoding:NSASCIIStringEncoding]));
 			[mRequestedCommands removeObjectAtIndex: 0];
 		}
 				    
@@ -786,37 +790,24 @@
     [myMP3Panel setCanChooseFiles: NO];
     [myMP3Panel setCanChooseDirectories: YES];
     [myMP3Panel setAccessoryView: mp3HelpView];
-    [myMP3Panel setDirectory: [mp3TextField stringValue]];
+    [myMP3Panel setDirectoryURL:[NSURL fileURLWithPath:[mp3TextField stringValue]]];
     [myMP3Panel setTitle: @"Select the folder that holds the MP3s:"];
     
     // show the sheet:
-    [myMP3Panel beginSheetForDirectory: @""
-                                  file: NULL
-                                 types: NULL
-                        modalForWindow: startupWindow
-                         modalDelegate: self
-                        didEndSelector: @selector (closeMP3Sheet:returnCode:contextInfo:)
-                           contextInfo: NULL];
-}
-
-//------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-- (void) closeMP3Sheet: (NSOpenPanel *) theSheet returnCode: (int) theCode contextInfo: (void *) theInfo
-{
-    [theSheet close];
-
-    // do nothing on cancel:
-    if (theCode != NSCancelButton)
-    {
-        NSArray *		myFolderArray;
-
-        // get the path of the selected folder;
-        myFolderArray = [theSheet filenames];
-        if ([myFolderArray count] > 0)
+    [myMP3Panel beginSheetModalForWindow:startupWindow completionHandler:^(NSInteger theCode) {
+        // do nothing on cancel:
+        if (theCode != NSCancelButton)
         {
-            [mp3TextField setStringValue: [myFolderArray objectAtIndex: 0]];
+            NSArray<NSURL*> *		myFolderArray;
+            
+            // get the path of the selected folder;
+            myFolderArray = [myMP3Panel URLs];
+            if ([myFolderArray count] > 0)
+            {
+                [mp3TextField setStringValue: [myFolderArray objectAtIndex: 0].path];
+            }
         }
-    }
+    }];
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -852,7 +843,7 @@
 
 - (void) connectToServer: (NSPasteboard *) thePasteboard userData:(NSString *)theData error: (NSString **) theError
 {
-    NSArray 	*myPasteboardTypes;
+    NSArray<NSString *> 	*myPasteboardTypes;
 
     myPasteboardTypes = [thePasteboard types];
 
@@ -863,7 +854,7 @@
         myRequestedServer = [thePasteboard stringForType: NSStringPboardType];
         if (myRequestedServer != NULL)
         {
-            Cbuf_ExecuteText (EXEC_APPEND, va("connect %s\n", [myRequestedServer cString]));
+            Cbuf_ExecuteText (EXEC_APPEND, va("connect %s\n", [myRequestedServer cStringUsingEncoding:NSASCIIStringEncoding]));
             return;
         }
     }

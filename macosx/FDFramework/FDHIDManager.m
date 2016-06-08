@@ -278,7 +278,7 @@ static void             FDHIDManager_DeviceRemovalCallback (void*, IOReturn, voi
             FD_ASSERT ([factory isSubclassOfClass: [_FDHIDDevice class]]);
             FD_ASSERT ([factory respondsToSelector: @selector (deviceWithDevice:)]);
             
-            id device = [factory deviceWithDevice: pDevice];
+            _FDHIDDevice *device = (id)[factory deviceWithDevice: pDevice];
             
             if (device != nil)
             {
